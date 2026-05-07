@@ -12,6 +12,15 @@ app.get('/', (req, res) => {
     res.send('Backend nya udh jalan boii!');
 })
 
+//API Questions
+app.get('/questions', (req, res) => {
+    res.json({
+        success: true,
+        total: questions.length,
+        data: questions
+    });
+});
+
 //Logic Matching
 function matchCareer(userScore) {
     return karirData.map(career => {
