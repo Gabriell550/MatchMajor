@@ -15,14 +15,13 @@
             </div>
             <nav class="nav-menu">
                 <a href="#home" class="nav-item active">Beranda</a>
-                <a href="#assessment" class="nav-item">Assessment</a>
+                <a href="assessment.html" class="nav-item">Assessment</a>
                 <a href="#history" class="nav-item">Riwayat Sesi</a>
                 <a href="#career-desc" class="nav-item">Deskripsi Karir</a>
             </nav>
             <div class="user-card">
                 <div class="user-info">
-                    <p class="user-name">Alex Chandra</p>
-                    <p class="user-role">Siswa Kelas XII</p>
+                    <p class="user-name">User</p>
                 </div>
                 <button class="btn-logout">Keluar</button>
             </div>
@@ -38,8 +37,8 @@
 
                 <div class="home-grid">
                     <div class="stat-card">
-                        <h3>Sesi Terakhir</h3>
-                        <p class="stat-value">10 Mei 2024</p>
+                        <h3>Waktu Saat Ini</h3>
+                        <p class="stat-value" id="realtime-clock">Memuat Waktu...</p>
                         <span class="stat-desc">Data Science (94.2%)</span>
                     </div>
                     <div class="stat-card highlight">
@@ -53,7 +52,7 @@
                     <div class="hero-text">
                         <h2>Siap Menentukan Masa Depan?</h2>
                         <p>Mulai asesmen baru untuk mendapatkan rekomendasi jurusan terbaru berdasarkan minat dan mata pelajaran favoritmu.</p>
-                        <button class="btn-primary-large">Mulai Assessment Sekarang</button>
+                        <button class="btn-primary-large" onclick="window.location.href='assessment.html'">Mulai Assessment Sekarang</button>
                     </div>
                     <div class="hero-image-placeholder">
                         <div class="icon-circle">🚀</div>
@@ -63,5 +62,19 @@
 
         </main>
     </div>
+
+    <script>
+        function updateClock(){
+            const now = new Date();
+            const options = {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+                hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+            };
+            const timeString = now .toLocaleDateString('id-ID', options).replace('pukul','-');
+            document.getElementById('realtime-clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
 </body>
 </html>
