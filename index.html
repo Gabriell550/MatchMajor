@@ -3,139 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Career Planner - Assessment</title>
+    <title>Career Planner - Dashboard</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Menggunakan Font Awesome untuk ikon, opsional jika Anda menggunakan SVG asli -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 
 </head>
 <body>
-    <div class="container">
+    <div class="app-container">
         <aside class="sidebar">
-            <div class="logo">Match Major</div>
-            <nav>
-                <ul>
-                    <li class="active"Kuesioner Minat></li>
-                    <li>Assesment</li>
-                    <li>Riwayat Sesi</li>
-                </ul>
+            <div class="logo-section">
+                <span class="logo-text">CAREER</span>
+                <span class="logo-subtext">Planner</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#home" class="nav-item active">Beranda</a>
+                <a href="#assessment" class="nav-item">Assessment</a>
+                <a href="#history" class="nav-item">Riwayat Sesi</a>
+                <a href="#career-desc" class="nav-item">Deskripsi Karir</a>
             </nav>
-            <div class="user-profile">
-                <p>Anindhiya Fathia</p>
-                <span>Siswa Kelas XII</span>
+            <div class="user-card">
+                <div class="user-info">
+                    <p class="user-name">Alex Chandra</p>
+                    <p class="user-role">Siswa Kelas XII</p>
+                </div>
                 <button class="btn-logout">Keluar</button>
             </div>
         </aside>
-    
-        <main class="main-content">
-            <header>
-                <h1>Mari Temukan Potensimu!</h1>
-                <p>Jawablah pertanyaan berikut dengan sejujur-jujurnya. Tidak ada jawaban benar atau salah; hasil ini akan membantu mesin cerdas kami merekomendasikan karir yang paling cocok untuk Anda.</p>
-            </header>
 
-            <section class="Assesment-section">
-                <div class="progress-container">
-                    <span>Progress Penilaian: 355</span>
-                    <div class="progress-bar"><div class="progress-fill"></div></div>
-                </div>
+        <main class="content-area">
+            
+            <section id="home" class="page-section">
+                <header class="welcome-header">
+                    <h1>Selamat Datang di Career Planner</h1>
+                    <p>Temukan jalur pendidikan dan karir yang paling sesuai dengan kepribadian dan kemampuanmu.</p>
+                </header>
 
-                <div class="card card-question">
-                    <h3>Bagian 1: Eksplorasi Diri</h3>
-
-                <div class="guestion-group">
-                    <div class="badge">Minat</div>
-                    <p>Saya Senang memecahkan masalah matematika yang kompleks</p>
-                    <div class="scale-input">
-                        <span>Sangat Tidak Setuju</span>
-                        <div class="options-wrapper">
-                            <label><input type="radio" name="q1" value="1">1</label>
-                            <label><input type="radio" name="q1" value="2">2</label>
-                            <label><input type="radio" name="q1" value="3">3</label>
-                            <label><input type="radio" name="q1" value="4">4</label>
-                            <label><input type="radio" name="q1" value="5">5</label>
-                </div>
-                        <span>Sangat Setuju</span>
+                <div class="home-grid">
+                    <div class="stat-card">
+                        <h3>Sesi Terakhir</h3>
+                        <p class="stat-value">10 Mei 2024</p>
+                        <span class="stat-desc">Data Science (94.2%)</span>
                     </div>
-                <div class="guestion-group">
-                        <div class="badge">Kemampuan</div>
-                        <p>Saya merasa percaya diri saat berbicara di depan orang banyak</p>
-                    <div class="scale-input">
-                        <span>Sangat Tidak Setuju</span>
-                        <div class="options-wrapper">
-                            <label><input type="radio" name="q1" value="1">1</label>
-                            <label><input type="radio" name="q1" value="2">2</label>
-                            <label><input type="radio" name="q1" value="3">3</label>
-                            <label><input type="radio" name="q1" value="4">4</label>
-                            <label><input type="radio" name="q1" value="5">5</label>
-                </div>
-                        <span>Sangat Setuju</span>
-                    </div>
-                <div class="guestion-group">
-                        <div class="badge">Kepribadian</div>
-                        <p>Saya lebih suka bekerja secara mandiri daripada dalam tim</p>
-                    <div class="scale-input">
-                        <span>Sangat Tidak Setuju</span>
-                        <div class="options-wrapper">
-                            <label><input type="radio" name="q1" value="1">1</label>
-                            <label><input type="radio" name="q1" value="2">2</label>
-                            <label><input type="radio" name="q1" value="3">3</label>
-                            <label><input type="radio" name="q1" value="4">4</label>
-                            <label><input type="radio" name="q1" value="5">5</label>
-                </div>
-                        <span>Sangat Setuju</span>
-                    </div>
-                <div class="guestion-group">
-                        <div class="badge">Minat</div>
-                        <p>Saya menikmati kegiatan yang berhubungan dengan seni dan kreativitas</p>
-                    <div class="scale-input">
-                        <span>Sangat Tidak Setuju</span>
-                        <div class="options-wrapper">
-                            <label><input type="radio" name="q1" value="1">1</label>
-                            <label><input type="radio" name="q1" value="2">2</label>
-                            <label><input type="radio" name="q1" value="3">3</label>
-                            <label><input type="radio" name="q1" value="4">4</label>
-                            <label><input type="radio" name="q1" value="5">5</label>
-                </div>
-                        <span>Sangat Setuju</span>
-                    </div>
-                <div class="guestion-group">
-                        <div class="badge">Kemampuan</div>
-                        <p>Saya mahir dalam mengorganisir data dan jadwal</p>
-                    <div class="scale-input">
-                        <span>Sangat Tidak Setuju</span>
-                        <div class="options-wrapper">
-                            <label><input type="radio" name="q1" value="1">1</label>
-                            <label><input type="radio" name="q1" value="2">2</label>
-                            <label><input type="radio" name="q1" value="3">3</label>
-                            <label><input type="radio" name="q1" value="4">4</label>
-                            <label><input type="radio" name="q1" value="5">5</label>
-                </div>
-                        <span>Sangat Setuju</span>
+                    <div class="stat-card highlight">
+                        <h3>Status SPK</h3>
+                        <p class="stat-value">Active</p>
+                        <span class="stat-desc">AHP-TOPSIS Engine</span>
                     </div>
                 </div>
 
-                <div class="card">
-                    <h3>Bagian 2: Mata Pelajaran Favorit</h3>
-                    <p class="instruction">Tarik dan lepas untuk menentukan urutan prioritas.</p>
-                    <ul class="subject-list">
-                        <li draggable="true">:: Matematika</li>
-                        <li draggable="true">:: Biologi</li>
-                        <li draggable="true">:: Kimia</li>
-                        <li draggable="true">:: Fisika</li>
-                        <li draggable="true">:: Bahasa Indonesia</li>
-                        <li draggable="true">:: Bahasa Inggris</li>
-                        <li draggable="true">:: Bahasa Prancis</li>
-                        <li draggable="true">:: Bahasa Jepang</li>
-                        <li draggable="true">:: Seni Rupa</li>
-                        <li draggable="true">:: Sejarah</li>
-                    </ul>
-                    <button class="btn-add"> + Tambah Mata Pelajaran</button>
-                </div>
-
-                <div class="action-buttons">
-                    <button class="btn-secondary">Kembali</button>
-                    <button class="btn-primary">Simpan & Lanjut</button>
+                <div class="hero-action-card">
+                    <div class="hero-text">
+                        <h2>Siap Menentukan Masa Depan?</h2>
+                        <p>Mulai asesmen baru untuk mendapatkan rekomendasi jurusan terbaru berdasarkan minat dan mata pelajaran favoritmu.</p>
+                        <button class="btn-primary-large">Mulai Assessment Sekarang</button>
+                    </div>
+                    <div class="hero-image-placeholder">
+                        <div class="icon-circle">🚀</div>
+                    </div>
                 </div>
             </section>
+
         </main>
     </div>
 </body>
