@@ -3,46 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Match Major | Assesment </title>
+    <title>Career Planner - Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="app-container">
         <aside class="sidebar">
-            <div class="logo">Match Major</div>
-            <nav>
-                <ul>
-                    <li class="active"Assesment></li>
-                    <li>Riwayat Sesi</li>
-
-                </ul>
+            <div class="logo-section">
+                <span class="logo-text">CAREER</span>
+                <span class="logo-subtext">Planner</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#home" class="nav-item active">Beranda</a>
+                <a href="assessment.html" class="nav-item">Assessment</a>
+                <a href="#history" class="nav-item">Riwayat Sesi</a>
+                <a href="#career-desc" class="nav-item">Deskripsi Karir</a>
             </nav>
-            <div class="user-profile">
-                <p>Anindhiya Fathia</p>
-                <span>Siswa Kelas XII</span>
+            <div class="user-card">
+                <div class="user-info">
+                    <p class="user-name">User</p>
+                </div>
                 <button class="btn-logout">Keluar</button>
-
             </div>
         </aside>
 
-        <main class="main-content">
-            <header>
-                <h1>Mari Temukan Potensimu!</h1>
-                <p>Jawablah pertanyaan berikut untuk mendapatkan rekomendasi karir terbaik</p>
-            </header>
+        <main class="content-area">
+            
+            <section id="home" class="page-section">
+                <header class="welcome-header">
+                    <h1>Selamat Datang di Career Planner</h1>
+                    <p>Temukan jalur pendidikan dan karir yang paling sesuai dengan kepribadian dan kemampuanmu.</p>
+                </header>
 
-            <section class="Assesment-section">
-                <div class="progress-container">
-                    <span>Progress Penilaian</span>
-                    <div class="progress-bar"><div class="progress-fill"></div></div>
+                <div class="home-grid">
+                    <div class="stat-card">
+                        <h3>Waktu Saat Ini</h3>
+                        <p class="stat-value" id="realtime-clock">Memuat Waktu...</p>
+                        <span class="stat-desc">Data Science (94.2%)</span>
+                    </div>
+                    <div class="stat-card highlight">
+                        <h3>Status SPK</h3>
+                        <p class="stat-value">Active</p>
+                        <span class="stat-desc">AHP-TOPSIS Engine</span>
+                    </div>
                 </div>
 
-                <div class="card">
-                    <h3>Bagian 1: Eksplorasi Diri</h3>
+                <div class="hero-action-card">
+                    <div class="hero-text">
+                        <h2>Siap Menentukan Masa Depan?</h2>
+                        <p>Mulai asesmen baru untuk mendapatkan rekomendasi jurusan terbaru berdasarkan minat dan mata pelajaran favoritmu.</p>
+                        <button class="btn-primary-large" onclick="window.location.href='assessment.html'">Mulai Assessment Sekarang</button>
+                    </div>
+                    <div class="hero-image-placeholder">
+                        <div class="icon-circle">🚀</div>
+                    </div>
                 </div>
-        
             </section>
+
         </main>
     </div>
+
+    <script>
+        function updateClock(){
+            const now = new Date();
+            const options = {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+                hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+            };
+            const timeString = now .toLocaleDateString('id-ID', options).replace('pukul','-');
+            document.getElementById('realtime-clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
 </body>
 </html>
