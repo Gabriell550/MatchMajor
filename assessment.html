@@ -16,8 +16,8 @@
         input[type="radio"] { accent-color: #7A1315; width: 1.2rem; height: 1.2rem;}
     </style>
 </head>
-<body class="p-6 md:p-10 flex justify-col items-center min-h-screen">
-    <div class="max-w-4xl w-full">
+<body class="p-6 md:p-10 flex justify-center items-center min-h-screen bg-white">
+    <div class="max-w-4xl w-full mx-auto">
         <div class="flex items-center mb-10">
             <div class="w-1.5 h-8 bg-yellow-400 mr-4 rounded-sm"></div>
             <h1 class="text-3xl font-bold text-maroon">Progres Assessment</h1>
@@ -294,8 +294,11 @@
                     </div>
                 </div>
 
-                <div class="sticky bottom-4 pt-4">
-                    <button type="button" onclick="completeStep('eksplorasi')" class="w-full bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">Simpan Semua Jawaban Eksplorasi</button>
+
+                <div class="flex gap-4 sticky bottom-4 pt-4">
+                    <button type="button" onclick="goBack()" class="w-1/3 border-2 border-maroon text-maroon px-6 py-4 rounded-xl font-bold hover:bg-maroon hover:text-white transition-all">Kembali</button>
+                    <button type="button" onclick="completeStep('eksplorasi')" class="w-2/3 bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">Simpan</button>
+
                 </div>
             </form>
         </div>
@@ -315,7 +318,12 @@
                 <button onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100">Biologi</button>
             </div>
 
-            <button type="button" onclick="completeStep('mapel')" class="w-full bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg">Konfirmasi Pilihan Mata Pelajaran</button>
+            <div class="space-y-4">
+                <button type="button" onclick="completeStep('mapel')" class="w-full bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg">Konfirmasi Pilihan Mata Pelajaran</button>
+                <button type="button" onclick="goBack()" class="w-full border-2 border-maroon text-maroon px-6 py-4 rounded-xl font-bold hover:bg-maroon hover:text-white transition-all">Kembali</button>
+                <button id="btn-hasil"type="button" onclick="lihatHasil()" class="hidden w-full bg-yellow-400 text-maroon px-8 py-4 rounded-xl font-bold hover:bg-yellow-300 transition-all shadow-lg">Lihat Hasil</button>
+
+            </div>
         </div>
 
         <div class="w-full max-w-lg mx-auto pb-20">
@@ -369,18 +377,30 @@
                 document.getElementById('progress-bar').style.width = '50%';
                 document.getElementById('section-eksplorasi').classList.add('hidden');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else if (step === 'mapel') {
+            }
+            
+            else if (step === 'mapel') {
                 document.getElementById('step-2-dot').classList.replace('bg-gray-300', 'bg-maroon');
                 document.getElementById('label-step-2').classList.replace('text-gray-400', 'text-maroon');
                 document.getElementById('status-2').innerText = 'Selesai diisi';
                 document.getElementById('progress-bar').style.width = '100%';
                 document.getElementById('section-mapel').classList.add('hidden');
+                document.getElementById('btn-hasil').classList.remove('hidden');
                 
                 setTimeout(() => {
                     alert('Selamat! Assessment selesai. Menuju halaman hasil...');
                 }, 800);
             }
         }
+        function goBack() {
+            document.getElementById('section-eksplorasi').classList.add('hidden');
+            document.getElementById('section-mapel').classList.add('hidden');
+            window.scrollTo({top: 0,behavior: 'smooth'});
+        }
+
+function lihatHasil() {
+    window.location.href = "hasil.html";
+}
     </script>
 </body>
 </html>
