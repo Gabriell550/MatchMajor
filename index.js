@@ -1,7 +1,11 @@
+require('dotenv').config();
+
 const express = require('express');
 const karirData = require('./data/careers');
 const questions = require('./data/questions');
+const Question = require('./models/Question');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -19,6 +23,27 @@ app.get('/questions', (req, res) => {
         total: questions.length,
         data: questions
     });
+});
+
+//API Add Question
+app.post('/questions', async (req, res) => {
+  try {
+
+    const newQuestion = await Question.create(req.body);
+
+    res.json({
+      success: true,
+      data: newQuestion
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+
+  }
 });
 
 //Logic Matching
@@ -56,3 +81,7 @@ app.post('/match', (req, res) => {
 app.listen(3000, () => {
     console.log('Server jalan di port 3000 nih!');
 });
+
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log('MongoDB Connected!'))
+.catch(err => console.log(err));
