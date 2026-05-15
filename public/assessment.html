@@ -321,8 +321,6 @@
             <div class="space-y-4">
                 <button type="button" onclick="completeStep('mapel')" class="w-full bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg">Konfirmasi Pilihan Mata Pelajaran</button>
                 <button type="button" onclick="goBack()" class="w-full border-2 border-maroon text-maroon px-6 py-4 rounded-xl font-bold hover:bg-maroon hover:text-white transition-all">Kembali</button>
-                <button id="btn-hasil"type="button" onclick="lihatHasil()" class="hidden w-full bg-yellow-400 text-maroon px-8 py-4 rounded-xl font-bold hover:bg-yellow-300 transition-all shadow-lg">Lihat Hasil</button>
-
             </div>
         </div>
 
@@ -349,6 +347,10 @@
                     Mata Pelajaran Favorit <br><span class="text-xs font-normal" id="status-2">Belum Dimulai</span>
                 </div>
             </div>
+
+            <div id="hasil-btn-container" class="hidden mt-10 text-center">
+                <button onclick="lihatHasil()" class="bg-yellow-400 text-maroon px-10 py-4 rounded-xl font-bold hover:bg-yellow-300 transition-all shadow-lg">Lihat Hasil</button></div>
+
         </div>
     </div>
 
@@ -385,7 +387,7 @@
                 document.getElementById('status-2').innerText = 'Selesai diisi';
                 document.getElementById('progress-bar').style.width = '100%';
                 document.getElementById('section-mapel').classList.add('hidden');
-                document.getElementById('btn-hasil').classList.remove('hidden');
+                document.getElementById('hasil-btn-container').classList.remove('hidden');
                 
                 setTimeout(() => {
                     alert('Selamat! Assessment selesai. Menuju halaman hasil...');
