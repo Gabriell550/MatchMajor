@@ -1,54 +1,26 @@
 require('dotenv').config();
 
 const express = require('express');
-const karirData = require('./data/careers');
-const questions = require('./data/questions');
-const Question = require('./models/Question');
 const cors = require('cors');
 const mongoose = require('mongoose');
-
+const Career = require('./models/Career');
+const careerRoutes = require('./routes/careerRoutes');
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use('/careers', careerRoutes);
 
 app.get('/', (req, res) => {
     res.send('Backend nya udh jalan boii!');
 })
 
-//API Questions
-app.get('/questions', (req, res) => {
-    res.json({
-        success: true,
-        total: questions.length,
-        data: questions
-    });
-});
 
-//API Add Question
-app.post('/questions', async (req, res) => {
-  try {
+// Logic Matching
+async function matchCareer(userScore) {
+    const careers = await Career.find();
 
-    const newQuestion = await Question.create(req.body);
-
-    res.json({
-      success: true,
-      data: newQuestion
-    });
-
-  } catch (error) {
-
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
-
-  }
-});
-
-//Logic Matching
-function matchCareer(userScore) {
-    return karirData.map(career => {
+    return careers.map(career => {
         let score = 0;
 
         for (let key in career.traits) {
@@ -65,23 +37,37 @@ function matchCareer(userScore) {
     }).sort((a, b) => a.score - b.score);
 }
 
-app.post('/match', (req, res) => {
-    const userScore = req.body;
+app.post('/match', async (req, res) => {
+    try {
 
-    const result = matchCareer(userScore);
+        const userScore = req.body;
 
-    res.json({
-        success: true,
-        topMatch: result[0],
-        alternatives: result.slice(1, 3),
-        message: `Karir yang paling cocok untuk kamu adalah ${result[0].name}!`
-    });
-});
+        const result = await matchCareer(userScore);
 
-app.listen(3000, () => {
-    console.log('Server jalan di port 3000 nih!');
+        res.json({
+            success: true,
+            topMatch: result[0],
+            alternatives: result.slice(1, 3),
+            message: `Karir yang paling cocok untuk kamu adalah ${result[0].name}!`
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
 });
 
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log('MongoDB Connected!'))
+.then(() => {
+    console.log('MongoDB Connected!');
+
+    app.listen(3000, () => {
+        console.log('Server jalan di port 3000 nih!');
+    });
+
+})
 .catch(err => console.log(err));
