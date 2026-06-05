@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin Sidebar</title>
+        <style>
+            body{
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdena, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+            .sidebar{
+                width: 250px;
+                height: 100vh;
+                background-color: #800000;
+                color: white;
+                display: flex;
+                flex-direction: column;
+            }
+            .logo-container{
+                padding: 30px 20px;
+            }
+            .logo-title{
+                font-size: 24px;
+                font-weight: bold;
+                margin: 0;
+                letter-spcacing: 1px;
+            }
+            .logo-subtitle{
+                font-size: 16px;
+                color: #FFD700;
+                font-style: italic;
+                margin: 0;
+            }
+            .menu-item{
+                padding: 15px 20px;
+                color: white;
+                text-decoration: none;
+                display: block;
+                font-size: 14px;
+            }
+            .menu-item:hover, .menu-item.active{
+                background-color: rgba(255,255,255,0.1);
+            }
+            .menu-group-title{
+                padding: 20px 20px 10px 20px;
+                font-size: 12px;
+                color: #FFB6C1;
+                text-transform: uppercase;
+                font-weight: bold;
+                letter-spacing: 0.5px;
+            }
+            .sub-menu{
+                padding: 10px 20px 10px 40px;
+                color: #E0E0E0;
+                text-decoration: none;
+                display: block;
+                font-size: 13px;
+            }
+            .sub-menu:hover{
+                color: white;
+                background-color: rgba(255,255,255,0.05);
+            }
+            .user-section{
+                margin-top: auto;
+                padding: 20px;
+            }
+            .user-role{
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+            .btn-logout{
+                background-color: white;
+                color: black;
+                border: none;
+                padding: 5px 10px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="sidebar">
+            <div class="logo-container">
+                <h1 class="logo-title">Match</h1>
+                <p class="logo-subtitle">Major</p>
+            </div>
+            <a href="#" class="menu-item active">Beranda</a>
+
+            <div class="menu-group-title">Manajemen Pertanyaan</div>
+            <a href="#" class="sub-menu">Tambah Pertanyaan</a>
+            <a href="#" class="sub-menu">Edit Pertanyaan</a>
+            <a href="#" class="sub-menu">Hapus Pertanyaan</a>
+
+            <div class="menu-group-title">Manajemen Jurusan</div>
+            <a href="#" class="sub-menu">Tambah Jurusan</a>
+            <a href="#" class="sub-menu">Edit Jurusan</a>
+            <a href="#" class="sub-menu">Hapus Jurusan</a>
+
+            <div class="user-section">
+                <div class="user-role">Admin</div>
+                <button class="btn-logout">Keluar</button>
+            </div>
+        </div>
+    </body>
+</html>

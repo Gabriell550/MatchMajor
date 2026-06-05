@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MATCH MAJOR</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .btn-admin-login{
+            background-color: transparent;
+            color: #FFD700;
+            border: 1px solid #FFD700;
+            padding: 8px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .btn-admin-login:hover{
+            background-color: #FFD700;
+            color: #800000;
+        }
+    </style>
 </head>
 <body>
     <div class="app-container">
@@ -24,6 +44,7 @@
                     <p class="user-name">User</p>
                 </div>
                 <button class="btn-logout">Keluar</button>
+                <button class="btn-admin-login" onclick="window.location.href='index.html'">Login Admin</button>
             </div>
         </aside>
 
