@@ -89,7 +89,7 @@ body { font-family: 'Segoe UI', Roboto, sans-serif; background: var(--gray-bg); 
 .btn-primary-large:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(253, 245, 2, 0.4); }
 
 .icon-circle {
-    width: 100px;
+    width: 105px;
     height: 100px;
     background: rgba(255,255,255,0.1);
     border-radius: 50%;
