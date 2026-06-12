@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API</title>
+</head>
+<body>
+
+    <h1>Daftar Pertanyaan</h1>
+
+    <div id="questions"></div>
+
+    <script>
+
+        fetch('http://localhost:3000/questions')
+            .then(res => res.json())
+            .then(result => {
+
+                const container =
+                    document.getElementById('questions');
+
+                result.data.forEach(q => {
+
+                    container.innerHTML += `
+                        <p>${q.question}</p>
+                    `;
+
+                });
+
+            })
+            .catch(err => console.log(err));
+
+    </script>
+
+</body>
+</html>
