@@ -43,6 +43,7 @@
             color: #FFFFFF; /* Warna Putih */
             font-size: 42px;
             font-weight: 900; /* Tebal maksimal */
+            font-style: bold; 
             letter-spacing: 0.5px;
             display: block;
         }
@@ -51,16 +52,9 @@
             color: #FFEA00; /* Warna Kuning Terang */
             font-size: 34px;
             font-weight: 600;
-            font-style: italic; /* Membuat teks miring */
+            font-style: italic; 
             display: block;
             margin-top: 5px;
-        }
-
-        .logo-area h1 {
-            font-size: 28px;
-            font-weight: bold;
-            font-style: italic;
-            line-height: 1.1;
         }
 
         .logo-area span {
@@ -482,16 +476,62 @@
         }
     </style>
 </head>
-<body>
-    <div class="sidebar">
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+
+    let riwayat =
+        JSON.parse(localStorage.getItem("riwayatAssessment")) || [];
+
+    let tabel =
+        document.getElementById("riwayatTable");
+
+    tabel.innerHTML = "";
+
+    riwayat.forEach((item,index)=>{
+
+        tabel.innerHTML += `
+        <tr>
+            <td>
+                <strong>${item.tanggal}</strong>
+                <span class="session-tag">
+                    Sesi #${riwayat.length-index}
+                </span>
+            </td>
+
+            <td>
+                <div class="rekomendasi-wrapper">
+                    <span class="score-badge">
+                        ${item.skor}%
+                    </span>
+                    <strong>${item.rekom1}</strong>
+                </div>
+            </td>
+
+            <td>${item.rekom2}</td>
+
+            <td>${item.rekom3}</td>
+
+            <td>
+                <a href="#" class="btn-table-detail">
+                    👁️ Detail Sesi
+                </a>
+            </td>
+        </tr>
+        `;
+    });
+
+});
+</script>
+<tbody id="riwayatTable">
+    <tr>
+        <div class="sidebar">
         <div class="logo-area">
             <h1>MATCH<br><span>Major</span></h1>
-            
             <ul class="nav-links">
-                <li><a href="#home">Beranda</a></li>
-                <li><a href="#assessment">Assessment</a></li>
-                <li><a href="#riwayat" class="active">Riwayat Sesi</a></li>
-                <li><a href="#deskripsi">Deskripsi Karir</a></li>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="assessment.html">Assessment</a></li>
+            <li><a href="riwayatsesi.html" class="active">Riwayat Sesi</a></li>
+            <li><a href="deskripsikarir.html">Deskripsi Karir</a></li>
             </ul>
         </div>
 
@@ -501,174 +541,9 @@
             <button class="btn-logout">← Keluar</button>
         </div>
     </div>
-
-    <div class="main-content">
-        
-        <div class="top-bar">
-            <h2>Riwayat Sesi & Progres Karir</h2>
-            <div class="spk-badge">⚙️ SPK Engine Active (AHP-TOPSIS)</div>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="icon">📋</div>
-                <div class="label">Total Sesi</div>
-                <div class="value">12</div>
-                <div class="subtext">Sejak Januari 2024</div>
-            </div>
-            <div class="stat-card">
-                <div class="icon">🎖️</div>
-                <div class="badge-up">+4.2%</div>
-                <div class="label">Skor Tertinggi</div>
-                <div class="value">94.2</div>
-                <div class="subtext">Sesi 10 Mei 2026</div>
-            </div>
-            <div class="stat-card">
-                <div class="icon">📈</div>
-                <div class="label">Konsistensi Karir</div>
-                <div class="value">Sangat Stabil</div>
-                <div class="subtext">Domain: Teknologi Data</div>
-            </div>
-        </div>
-
-        <div class="full-width-card" style="display: flex; align-items: center; gap: 15px;">
-            <div style="font-size: 24px; background: #fff5f5; padding: 10px; border-radius: 50%;">🕒</div>
-            <div>
-                <div style="font-size: 12px; color: #888;">Sesi Terakhir</div>
-                <div style="font-size: 20px; font-weight: bold; color: #111; margin: 2px 0;">10 Mei 2026</div>
-                <div style="font-size: 11px; color: #a00000; font-weight: 500;">4 hari yang lalu</div>
-            </div>
-        </div>
-
-        <div class="control-bar">
-            <div class="filters">
-                <button class="btn-filter">📅 Jan 2026 - Mei 2026</button>
-                <button class="btn-filter">🎛️ Filter Kategori</button>
-            </div>
-            <div class="action-buttons">
-                <button class="btn-action">📊 Grafik</button>
-                <button class="btn-action">📑 Tabel</button>
-                <button class="btn-action active">Keduanya</button>
-                <button class="btn-action btn-export">📥 Ekspor PDF</button>
-            </div>
-        </div>
-
-        <div class="section-box">
-            <div class="section-title">Tren Keselarasan Karir</div>
-            <div class="section-subtitle">Visualisasi perkembangan skor kecocokan antara minat dan kriteria jurusan.</div>
-            <div style="height: 300px; width: 100%;">
-                <canvas id="careerChart"></canvas>
-            </div>
-        </div>
-
-        <div class="section-box">
-            <div class="section-title">Log Riwayat Sesi</div>
-            <div class="section-subtitle">Daftar lengkap seluruh asesmen yang telah diselesaikan.</div>
-            
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Tanggal Sesi</th>
-                            <th>Rekomendasi #1</th>
-                            <th>Rekomendasi #2</th>
-                            <th>Rekomendasi #3</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <strong>10 Mei 2026</strong>
-                                <span class="session-tag">Sesi #5</span>
-                            </td>
-                            <td>
-                                <div class="rekomendasi-wrapper">
-                                    <span class="score-badge">94%</span> <strong>Data Science</strong>
-                                </div>
-                            </td>
-                            <td>Analitik Bisnis</td>
-                            <td>Kecerdasan Buatan</td>
-                            <td><a href="#" class="btn-table-detail">👁️ Detail Sesi</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>22 Apr 2026</strong>
-                                <span class="session-tag">Sesi #4</span>
-                            </td>
-                            <td>
-                                <div class="rekomendasi-wrapper">
-                                    <span class="score-badge">90%</span> <strong>Data Science</strong>
-                                </div>
-                            </td>
-                            <td>Kecerdasan Buatan</td>
-                            <td>Teknik Informatika</td>
-                            <td><a href="#" class="btn-table-detail">👁️ Detail Sesi</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>18 Mar 2026</strong>
-                                <span class="session-tag">Sesi #3</span>
-                            </td>
-                            <td>
-                                <div class="rekomendasi-wrapper">
-                                    <span class="score-badge">89%</span> <strong>Data Science</strong>
-                                </div>
-                            </td>
-                            <td>Teknik Informatika</td>
-                            <td>Statistika</td>
-                            <td><a href="#" class="btn-table-detail">👁️ Detail Sesi</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>05 Feb 2026</strong>
-                                <span class="session-tag">Sesi #2</span>
-                            </td>
-                            <td>
-                                <div class="rekomendasi-wrapper">
-                                    <span class="score-badge">86%</span> <strong>Teknik Informatika</strong>
-                                </div>
-                            </td>
-                            <td>Data Science</td>
-                            <td>Matematika</td>
-                            <td><a href="#" class="btn-table-detail">👁️ Detail Sesi</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>12 Jan 2026</strong>
-                                <span class="session-tag">Sesi #1</span>
-                            </td>
-                            <td>
-                                <div class="rekomendasi-wrapper">
-                                    <span class="score-badge">85%</span> <strong>Teknik Informatika</strong>
-                                </div>
-                            </td>
-                            <td>Sistem Informasi</td>
-                            <td>DKV</td>
-                            <td><a href="#" class="btn-table-detail">👁️ Detail Sesi</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="insight-grid">
-            <div class="insight-card insight-red">
-                <h4>💡 Insight Progres</h4>
-                <p>Berdasarkan 5 sesi terakhir, minat Anda pada <strong>Data Science</strong> menunjukkan pertumbuhan skor sebesar 12%. Ini menandakan keselarasan yang kuat antara kemampuan akademis dan profil kepribadian Anda.</p>
-            </div>
-            <div class="insight-card insight-yellow">
-                <h4>↗️ Langkah Selanjutnya</h4>
-                <ul>
-                    <li>Ikuti sertifikasi dasar Python untuk memperkuat profil Data Science.</li>
-                    <li>Konsultasikan hasil ini dengan Guru BK atau Mentor Karir.</li>
-                </ul>
-            </div>
-        </div>
-
-        <p class="footer-text">© 2026 Career Planner. Sistem Pendukung Keputusan Karir.</p>
-    </div>
-
+        <td>
+            <p class="footer-text">© 2026 Career Planner. Sistem Pendukung Keputusan Karir.</p>
+</tbody>
     <script>
         const ctx = document.getElementById('careerChart').getContext('2d');
         new Chart(ctx, {
