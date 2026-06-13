@@ -1,3 +1,5 @@
+console.log("MATCH ROUTE LOADED");
+
 const express = require("express");
 const router = express.Router();
 
@@ -10,15 +12,27 @@ async function matchCareer(userScore) {
     .map((career) => {
       let score = 0;
 
-      for (let key in career.traits) {
-        score += Math.abs((career.traits[key] || 0) - (userScore[key] || 0));
+      const traits = career.traits.toObject();
+
+      for (const key of Object.keys(traits)) {
+        score += Math.abs(
+          Number(traits[key] || 0) - Number(userScore[key] || 0),
+        );
       }
 
       const maxScore = 32;
 
-      const percentage = Math.round(((maxScore - score) / maxScore) * 100);
+      const percentage = Math.max(
+        0,
+        Math.round(((maxScore - score) / maxScore) * 100),
+      );
+
+      console.log("CAREER:", career.name);
+      console.log("SCORE:", score);
+      console.log("PERCENTAGE:", percentage);
 
       return {
+        id: career._id,
         name: career.name,
         description: career.description,
         score,
@@ -38,6 +52,9 @@ router.post("/", async (req, res) => {
         message: "Data karir belum tersedia",
       });
     }
+
+    console.log(result);
+    console.log(result[0]);
 
     res.json({
       success: true,
