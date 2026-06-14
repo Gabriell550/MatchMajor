@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -14,6 +15,8 @@ app.use(express.json());
 app.use("/careers", careerRoutes);
 app.use("/questions", questionRoutes);
 app.use("/match", resultRoutes);
+
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
   res.send("Backend working!");

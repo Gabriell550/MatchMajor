@@ -400,9 +400,60 @@
             window.scrollTo({top: 0,behavior: 'smooth'});
         }
 
-function lihatHasil() {
-    window.location.href = "hasil.html";
+function getAverage(prefix, count) {
+    let total = 0;
+
+    for(let i = 1; i <= count; i++) {
+        const checked = document.querySelector(
+            `input[name="${prefix}${i}"]:checked`
+        );
+
+        total += checked ? Number(checked.value) : 0;
+    }
+
+    return Math.round(total / count);
 }
+
+function getUserScore() {
+    return {
+        creativity: getAverage("cr", 2),
+        curiosity: getAverage("cu", 3),
+        logic: getAverage("lo", 2),
+        analytical: getAverage("an", 3),
+        social: getAverage("so", 3),
+        empathy: getAverage("em", 2),
+        leadership: getAverage("le", 2),
+        practical: getAverage("pr", 3)
+    };
+}
+
+async function lihatHasil() {
+    const scores = getUserScore();
+
+    console.log("User Scores:", scores);
+
+    try {
+        const response = await fetch("http://localhost:3000/match", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(scores)
+        });
+
+        const data = await response.json();
+        console.log("Response from server:", data);
+
+        localStorage.setItem("assessmentResult", JSON.stringify(data));
+        window.location.href = "hasil.html";
+
+    } catch (error) {
+        console.error(error);
+        alert("Maaf, terjadi kesalahan saat memproses hasil. Silakan coba lagi.");
+    }
+
+}    
+
     </script>
 </body>
 </html>
