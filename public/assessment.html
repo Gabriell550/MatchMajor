@@ -46,7 +46,7 @@
             
             <form id="form-eksplorasi" class="space-y-10">
                 
-                <div class="space-y-4">
+                <!-- <div class="space-y-4">
                     <h4 class="font-bold text-maroon bg-yellow-50 px-4 py-2 rounded-lg inline-block">Creativity</h4>
                     <div class="space-y-6 pl-4">
                         <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
@@ -300,7 +300,7 @@
                     <button type="button" onclick="completeStep('eksplorasi')" class="w-2/3 bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">Simpan</button>
 
                 </div>
-            </form>
+            </form> -->
         </div>
 
         <div id="section-mapel" class="hidden bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mb-10">
@@ -355,6 +355,48 @@
     </div>
 
     <script>
+
+        async function loadQuestions() {
+            try {
+                const response = await fetch('http://localhost:3000/questions');
+                const result = await response.json();
+                renderQuestions(result.data);
+            } catch (error) {
+                console.error('Error loading questions:', error);
+            }
+        }
+
+        function renderQuestions(questions) {
+            const form = document.getElementById('eksplorasi-form');
+            form.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                form.innerHTML += `
+                    <div class="p-4 border rounded-xl">
+                <p class="mb-4 font-medium">
+                    ${q.question}
+                </p>
+
+                <div class="flex gap-4">
+
+                    ${[1,2,3,4,5].map(score => `
+                        <label>
+                            <input
+                                type="radio"
+                                name="${q._id}"
+                                value="${score}"
+                                data-trait="${q.trait}"
+                            >
+                            ${score}
+                        </label>
+                    `).join("")}
+
+                </div>
+            </div>
+        `;
+    });
+}
+
         function showSection(section) {
             document.getElementById('section-eksplorasi').classList.add('hidden');
             document.getElementById('section-mapel').classList.add('hidden');
@@ -400,59 +442,101 @@
             window.scrollTo({top: 0,behavior: 'smooth'});
         }
 
-function getAverage(prefix, count) {
-    let total = 0;
+        function getAverage(prefix, count) {
+            let total = 0;
 
-    for(let i = 1; i <= count; i++) {
-        const checked = document.querySelector(
-            `input[name="${prefix}${i}"]:checked`
-        );
+            for(let i = 1; i <= count; i++) {
+                const checked = document.querySelector(
+                    `input[name="${prefix}${i}"]:checked`
+                );
 
-        total += checked ? Number(checked.value) : 0;
-    }
+                total += checked ? Number(checked.value) : 0;
+            }
 
-    return Math.round(total / count);
-}
+            return Math.round(total / count);
+        }
 
-function getUserScore() {
-    return {
-        creativity: getAverage("cr", 2),
-        curiosity: getAverage("cu", 3),
-        logic: getAverage("lo", 2),
-        analytical: getAverage("an", 3),
-        social: getAverage("so", 3),
-        empathy: getAverage("em", 2),
-        leadership: getAverage("le", 2),
-        practical: getAverage("pr", 3)
-    };
-}
+        function getUserScore() {
 
-async function lihatHasil() {
-    const scores = getUserScore();
+            const scores = {
+                logic: 0,
+                creativity: 0,
+                social: 0,
+                analytical: 0,
+                leadership: 0,
+                practical: 0,
+                empathy: 0,
+                curiosity: 0
+            };
 
-    console.log("User Scores:", scores);
+            const counts = {
+                logic: 0,
+                creativity: 0,
+                social: 0,
+                analytical: 0,
+                leadership: 0,
+                practical: 0,
+                empathy: 0,
+                curiosity: 0
+            };
 
-    try {
-        const response = await fetch("http://localhost:3000/match", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(scores)
-        });
+            const checked =
+                document.querySelectorAll(
+                    'input[type="radio"]:checked'
+                );
 
-        const data = await response.json();
-        console.log("Response from server:", data);
+            checked.forEach(input => {
 
-        localStorage.setItem("assessmentResult", JSON.stringify(data));
-        window.location.href = "hasil.html";
+                const trait =
+                    input.dataset.trait;
 
-    } catch (error) {
-        console.error(error);
-        alert("Maaf, terjadi kesalahan saat memproses hasil. Silakan coba lagi.");
-    }
+                scores[trait] +=
+                    Number(input.value);
 
-}    
+                counts[trait]++;
+            });
+
+            for (let trait in scores) {
+
+                if (counts[trait] > 0) {
+                    scores[trait] =
+                        Math.round(
+                            scores[trait] /
+                            counts[trait]
+                        );
+                }
+            }
+
+            return scores;
+        }
+
+        async function lihatHasil() {
+            const scores = getUserScore();
+
+            console.log("User Scores:", scores);
+
+            try {
+                const response = await fetch("http://localhost:3000/match", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(scores)
+                });
+
+                const data = await response.json();
+                console.log("Response from server:", data);
+
+                localStorage.setItem("assessmentResult", JSON.stringify(data));
+                window.location.href = "hasil.html";
+
+            } catch (error) {
+                console.error(error);
+                alert("Maaf, terjadi kesalahan saat memproses hasil. Silakan coba lagi.");
+            }
+
+        }    
+        loadQuestions();
 
     </script>
 </body>
