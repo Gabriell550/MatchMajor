@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eksplorasi Diri Saya</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #fdfaf3; scroll-behavior: smooth;}
         .text-maroon { color: #7A1315;}
         .bg-maroon { background-color: #7A1315;}
@@ -15,265 +15,206 @@
         input[type="radio"] { accent-color: #7A1315; width: 1.2rem; height: 1.2rem;}
         
         .form-locked {
-            opacity: 0.6;
+            opacity: 0.5;
             pointer-events: none;
             user-select: none;
         }
         .page-hidden {
             display: none;
         }
+
+        /* Custom Scrollbar untuk list rekomendasi agar tetap estetik */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .animate-spin-slow {
+            animation: spin 12s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
-<body class="p-4 md:p-10 flex flex-col items-center min-h-screen">
-    <div class="max-w-4xl w-full mx-auto space-y-8">
+<body class="p-4 md:p-8 flex items-center justify-center min-h-screen">
+
+    <div class="max-w-4xl w-full mx-auto space-y-6">
         
-        <!-- Header Utama -->
-        <div class="flex items-center mb-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <div class="w-1.5 h-8 bg-yellow-400 mr-4 rounded-sm"></div>
-            <h1 class="text-3xl font-bold text-maroon">Eksplorasi Diri Saya</h1>
-        </div>
-
-        <!-- STATE 1: HALAMAN PENGANTAR / MULAI -->
-        <div id="welcome-container" class="bg-white border border-gray-100 rounded-2xl p-8 md:p-12 shadow-md text-center space-y-6 transition-all duration-500">
-            <div class="w-20 h-20 bg-yellow-50 rounded-full flex items-center justify-center mx-auto">
-                <i class="fa-solid fa-compass text-4xl text-maroon animate-spin-slow"></i>
+        <header id="main-nav" class="bg-white border border-gray-100 rounded-2xl px-6 py-4 shadow-sm flex items-center justify-between transition-all duration-500">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-compass text-maroon text-xl"></i>
+                <span class="font-extrabold text-gray-800 text-base tracking-tight">Eksplorasi Diri</span>
             </div>
-            <div class="space-y-3">
-                <h2 class="text-2xl font-bold text-maroon">Selamat Datang di Eksplorasi Diri</h2>
-                <p class="text-gray-600 max-w-xl mx-auto leading-relaxed">
-                    Melalui assessment ini, kamu akan diajak untuk mengenali potensi, karakter, serta minat belajarmu secara lebih mendalam. 
-                </p>
-            </div>
+            <nav class="flex items-center gap-6 text-sm font-semibold">
+                <a href="#" class="text-maroon border-b-2 border-maroon pb-0.5">Beranda</a>
+                <a href="#" class="text-gray-400 hover:text-gray-600 transition-colors">Asesmen</a>
+                <a href="#" class="text-gray-400 hover:text-gray-600 transition-colors">Rekomendasi</a>
+            </nav>
+        </header>
+        
+        <div id="welcome-container" class="bg-white border border-gray-100 rounded-3xl p-8 md:p-12 shadow-sm transition-all duration-500 relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-48 h-48 bg-amber-50 rounded-full opacity-60"></div>
+            <div class="absolute -bottom-16 -left-16 w-64 h-64 bg-red-50/40 rounded-full opacity-60"></div>
             
-            <div class="bg-yellow-50/70 border-l-4 border-yellow-400 p-4 rounded-r-xl max-w-xl mx-auto text-left flex items-start gap-3">
-                <i class="fa-solid fa-circle-exclamation text-yellow-600 mt-1"></i>
-                <p class="text-sm text-yellow-900 font-medium">
-                    <strong class="block text-maroon mb-0.5">Penting!</strong>
-                    Isilah seluruh pernyataan di dalam kuesioner ini dengan <span class="underline decoration-2 decoration-yellow-500 font-bold">sejujur-jujurnya</span> sesuai dengan apa yang benar-benar kamu rasakan. Tidak ada jawaban salah atau benar di sini.
-                </p>
-            </div>
-
-            <div class="pt-4">
-                <button type="button" onclick="startExploration()" class="bg-maroon text-white px-10 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg flex items-center gap-3 mx-auto">
-                    Mulai Eksplorasi Sekarang <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- MAIN APP CONTAINER -->
-        <div id="main-app-container" class="hidden space-y-8 opacity-0 transition-all duration-500">
-            
-            <!-- SECTION 1: KUESIONER EKSPLORASI DIRI -->
-            <div id="section-eksplorasi" class="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-md transition-all duration-500">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 pb-4 border-b border-gray-100">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-vial text-2xl text-maroon"></i>
-                        <h3 class="text-2xl font-bold text-maroon">Psikotest & Karakter</h3>
+            <div class="relative grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                <div class="md:col-span-7 space-y-6 text-left z-10">
+                    <div class="inline-flex items-center gap-2 bg-red-50 border border-red-100 px-3 py-1.5 rounded-full text-xs font-bold text-maroon">
+                        <i class="fa-solid fa-sparkles"></i> Pengembangan Diri Siswa
                     </div>
-                    <div class="flex items-center gap-4">
-                        <span id="page-indicator" class="text-sm font-bold text-maroon bg-yellow-50 px-3 py-1 rounded-md">Halaman 1 dari 4</span>
-                        <span class="text-xs font-semibold bg-yellow-100 text-yellow-700 px-4 py-1.5 rounded-full uppercase tracking-wider">Skala 1 (STS) - 5 (SS)</span>
+                    <div class="space-y-3">
+                        <h2 class="text-3xl md:text-5xl font-extrabold text-maroon leading-tight">Eksplorasi<br>Diri Saya</h2>
+                        <p class="text-gray-500 text-sm md:text-base leading-relaxed max-w-sm">Temukan potensi terbaik, kekuatan karakter, dan minat mata pelajaranmu untuk merancang masa depan yang gemilang.</p>
                     </div>
-                </div>
-                
-                <form id="form-eksplorasi" class="space-y-6">
-                    
-                    <!-- PAGE 1 (Pertanyaan 1 - 5) -->
-                    <div id="page-1" class="quiz-page space-y-6">
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">1.</span> Gue sering dapet ide-ide unik atau konsep visual yang muncul tiba-tiba bahkan pas lagi nggak mikirin tugas. (Creativity)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr1" value="1" class="mb-1" required>1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr1" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">2.</span> Gue lebih suka ngerjain sesuatu yang bebas gue desain sendiri daripada cuma ngikutin template yang udah ada. (Creativity)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr2" value="1" class="mb-1" required>1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr2" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr2" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr2" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr2" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">3.</span> Kalau ada topik yang lagi viral, gue biasanya bakal ulik sampai ke akar-akarnya karena kepo maksimal. (Curiosity)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu1" value="1" class="mb-1" required>1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu1" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">4.</span> Gue sering "tersesat" di internet cuma buat cari tahu cara kerja benda-benda atau fenomena di sekitar gue. (Curiosity)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu2" value="1" class="mb-1" required>1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu2" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu2" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu2" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu2" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">5.</span> Gue selalu tertarik buat nyoba aplikasi, fitur, atau gadget baru meskipun nggak ada yang nyuruh. (Curiosity)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu3" value="1" class="mb-1" required>1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu3" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu3" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu3" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu3" value="5" class="mb-1">5</label>
+
+                    <div class="bg-red-50 border-l-4 border-maroon p-4 rounded-r-xl max-w-md shadow-sm">
+                        <div class="flex gap-3">
+                            <i class="fa-solid fa-circle-exclamation text-maroon text-lg mt-0.5"></i>
+                            <div>
+                                <h4 class="font-bold text-maroon text-sm">Penting Sebelum Memulai!</h4>
+                                <p class="text-xs text-red-900/80 mt-1 leading-relaxed">Isilah seluruh kuesioner dengan jujur dan apa adanya sesuai dengan dirimu. Tidak ada jawaban salah atau benar dalam asesmen eksplorasi ini.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- PAGE 2 (Pertanyaan 6 - 10) -->
-                    <div id="page-2" class="quiz-page space-y-6 page-hidden">
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">6.</span> Gue selalu ngelihat masalah sebagai rangkaian sebab-akibat yang harus diselesaikan secara urut dan masuk akal. (Logic)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo1" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo1" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">7.</span> Gue paling nggak suka kalau ada orang ngambil keputusan cuma pakai perasaan tanpa ada alasan kuat di baliknya. (Logic)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo2" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo2" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo2" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo2" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo2" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">8.</span> Gue merasa jauh lebih nyaman bekerja dengan aturan atau sistem yang jelas dan terstruktur. (Logic)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo3" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo3" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo3" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo3" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo3" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">9.</span> Sebelum mutusin sesuatu, gue biasanya bakal bandingin data, harga, atau review dulu secara detail. (Analytical)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an1" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an1" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">10.</span> Gue suka merhatiin pola atau tren di balik sebuah kejadian daripada cuma tahu info permukaannya aja. (Analytical)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an2" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an2" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an2" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an2" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an2" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PAGE 3 (Pertanyaan 11 - 15) -->
-                    <div id="page-3" class="quiz-page space-y-6 page-hidden">
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">11.</span> Gue ngerasa puas banget kalau berhasil nemuin detail kecil atau kesalahan yang orang lain nggak sadar. (Analytical)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an3" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an3" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an3" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an3" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an3" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">12.</span> Gue ngerasa energi gue makin nambah kalau lagi nongkrong atau kolaborasi bareng banyak orang. (Social)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so1" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so1" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">13.</span> Gue tipe orang yang gampang banget cairin suasana dan mulai obrolan seru sama orang baru. (Social)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so2" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so2" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so2" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so2" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so2" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">14.</span> Gue lebih suka diskusi langsung (ketemu/call) daripada harus nunggu balesan chat yang lama. (Social)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so3" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so3" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so3" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so3" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so3" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">15.</span> Gue bisa langsung peka kalau mood temen lagi nggak enak, meskipun dia berusaha nutupin. (Empathy)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em1" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em1" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PAGE 4 (Pertanyaan 16 - 17) -->
-                    <div id="page-4" class="quiz-page space-y-6 page-hidden">
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">16.</span> Pas lagi ambil keputusan, gue selalu mempertimbangkan gimana dampaknya bagi perasaan orang lain. (Empathy)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em2" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em2" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em2" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em2" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em2" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
-                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">17.</span> Gue refleks bakal ngambil alih komando kalau gue lihat kerja kelompok udah mulai nggak jelas arahnya. (Leadership)</p>
-                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="le1" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="le1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="le1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="le1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="le1" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tombol Navigasi Next (Satu Arah) -->
-                    <div id="nav-container" class="pt-4 flex justify-end">
-                        <button id="btn-next" type="button" onclick="nextPage()" disabled class="bg-gray-300 text-gray-500 font-bold px-8 py-3 rounded-xl cursor-not-allowed transition-all flex items-center gap-2 shadow-sm">
-                            Pertanyaan Selanjutnya <i class="fa-solid fa-arrow-right"></i>
+                    <div class="pt-2">
+                        <button type="button" onclick="startExploration()" class="bg-maroon text-white hover:bg-red-900 px-8 py-4 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-3 group">
+                            Mulai Asesmen Sekarang <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                         </button>
                     </div>
+                </div>
+
+                <div class="md:col-span-5 flex justify-center items-center relative py-6 md:py-0">
+                    <div class="w-40 h-40 md:w-48 md:h-48 bg-gradient-to-br from-amber-50 to-red-50 rounded-full flex items-center justify-center border border-amber-100 shadow-inner relative animate-spin-slow">
+                        <i class="fa-solid fa-compass text-6xl md:text-7xl text-maroon opacity-80"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="main-app-container" class="hidden opacity-0 space-y-8 transition-all duration-500">
+            
+            <div id="section-eksplorasi" class="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-md space-y-6 transition-all duration-300">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-4 border-b border-gray-100">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-clipboard-question text-2xl text-maroon"></i>
+                        <h3 class="text-2xl font-bold text-maroon">Psikotest &amp; Karakter</h3>
+                    </div>
+                    <span id="page-indicator" class="text-xs font-bold text-maroon bg-yellow-100 px-3 py-1.5 rounded-xl self-start sm:self-auto">Halaman 1 dari 4</span>
+                </div>
+
+                <form id="form-eksplorasi" class="space-y-6">
+                    <div id="page-1" class="space-y-6">
+                        <div class="space-y-3">
+                            <p class="text-gray-800 font-semibold text-base">1. Saya suka menciptakan ide-ide baru yang unik dan belum pernah terpikirkan oleh orang lain sebelumnya.</p>
+                            <div class="grid grid-cols-5 gap-2 text-center text-xs font-bold text-gray-500">
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cr_q1" value="1" required><span>STS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cr_q1" value="2"><span>TS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cr_q1" value="3"><span>N</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cr_q1" value="4"><span>S</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cr_q1" value="5"><span>SS</span></label>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <p class="text-gray-800 font-semibold text-base">2. Menemukan cara baru untuk menyelesaikan masalah harian memberikan kepuasan tersendiri bagi saya.</p>
+                            <div class="grid grid-cols-5 gap-2 text-center text-xs font-bold text-gray-500">
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cr_q2" value="1" required><span>STS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cr_q2" value="2"><span>TS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cr_q2" value="3"><span>N</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cr_q2" value="4"><span>S</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cr_q2" value="5"><span>SS</span></label>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <p class="text-gray-800 font-semibold text-base">3. Saya selalu penasaran tentang bagaimana sesuatu bekerja dan mengeksplorasi hal-hal baru secara mendalam.</p>
+                            <div class="grid grid-cols-5 gap-2 text-center text-xs font-bold text-gray-500">
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cu_q1" value="1" required><span>STS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cu_q1" value="2"><span>TS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cu_q1" value="3"><span>N</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cu_q1" value="4"><span>S</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="cu_q1" value="5"><span>SS</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="page-2" class="space-y-6 page-hidden">
+                        <div class="space-y-3">
+                            <p class="text-gray-800 font-semibold text-base">4. Mengambil keputusan berdasarkan data dan logika yang masuk akal adalah prinsip utama saya.</p>
+                            <div class="grid grid-cols-5 gap-2 text-center text-xs font-bold text-gray-500">
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="lo_q1" value="1"><span>STS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="lo_q1" value="2"><span>TS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="lo_q1" value="3"><span>N</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="lo_q1" value="4"><span>S</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="lo_q1" value="5"><span>SS</span></label>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <p class="text-gray-800 font-semibold text-base">5. Saya senang menganalisis situasi yang rumit dan memecahkannya menjadi bagian-bagian kecil yang teratur.</p>
+                            <div class="grid grid-cols-5 gap-2 text-center text-xs font-bold text-gray-500">
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="an_q1" value="1"><span>STS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="an_q1" value="2"><span>TS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="an_q1" value="3"><span>N</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="an_q1" value="4"><span>S</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="an_q1" value="5"><span>SS</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="page-3" class="space-y-6 page-hidden">
+                        <div class="space-y-3">
+                            <p class="text-gray-800 font-semibold text-base">6. Berinteraksi, mengobrol, dan bersosialisasi dengan orang-orang baru adalah hal yang menyenangkan bagi saya.</p>
+                            <div class="grid grid-cols-5 gap-2 text-center text-xs font-bold text-gray-500">
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="so_q1" value="1"><span>STS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="so_q1" value="2"><span>TS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="so_q1" value="3"><span>N</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="so_q1" value="4"><span>S</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="so_q1" value="5"><span>SS</span></label>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <p class="text-gray-800 font-semibold text-base">7. Saya mudah merasakan apa yang dirasakan oleh orang lain dan tergerak untuk membantu mereka.</p>
+                            <div class="grid grid-cols-5 gap-2 text-center text-xs font-bold text-gray-500">
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="em_q1" value="1"><span>STS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="em_q1" value="2"><span>TS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="em_q1" value="3"><span>N</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="em_q1" value="4"><span>S</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="em_q1" value="5"><span>SS</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="page-4" class="space-y-6 page-hidden">
+                        <div class="space-y-3">
+                            <p class="text-gray-800 font-semibold text-base">8. Saya merasa percaya diri saat memimpin kelompok, mengarahkan tugas, atau mengambil tanggung jawab besar.</p>
+                            <div class="grid grid-cols-5 gap-2 text-center text-xs font-bold text-gray-500">
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="le_q1" value="1"><span>STS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="le_q1" value="2"><span>TS</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="le_q1" value="3"><span>N</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="le_q1" value="4"><span>S</span></label>
+                                <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50"><input type="radio" name="le_q1" value="5"><span>SS</span></label>
+                            </div>
+                        </div>
+                    </div>
                 </form>
+
+                <div id="nav-container" class="pt-4 border-t border-gray-100 flex justify-end">
+                    <button id="btn-next" type="button" onclick="nextPage()" disabled class="bg-gray-300 text-gray-500 cursor-not-allowed px-6 py-3 rounded-xl font-bold transition-all inline-flex items-center gap-2">
+                        Lanjut <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
             </div>
 
-            <!-- SECTION 2: MATA PELAJARAN FAVORIT -->
             <div id="section-mapel" class="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-md opacity-40 transition-all duration-500">
                 <div class="flex items-center gap-3 mb-6">
                     <i class="fa-solid fa-book-open text-2xl text-maroon"></i>
@@ -292,156 +233,356 @@
                     <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Biologi</button>
                 </div>
 
-                <div class="space-y-4">
-                    <button id="btn-submit-all" type="button" onclick="submitAssessment()" class="w-full bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg hidden">Konfirmasi & Selesai</button>
+                <div id="submit-action-container" class="text-center">
+                    <button id="btn-submit-all" type="button" onclick="kunciSeluruhAsesmen()" class="w-full bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg">Konfirmasi &amp; Selesai</button>
                 </div>
             </div>
 
+            <div id="final-action-wrapper" class="hidden space-y-4 text-center transition-all duration-500">
+                </div>
         </div>
+
+        <div id="hasil-container" class="hidden opacity-0 bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-md space-y-6 transition-all duration-500">
+            <div class="flex items-center gap-3 pb-4 border-b border-gray-100">
+                <i class="fa-solid fa-chart-pie text-2xl text-maroon"></i>
+                <h3 class="text-2xl font-bold text-maroon">Hasil Asesmen Karaktermu</h3>
+            </div>
+            
+            <p class="text-gray-600">Berdasarkan jawaban kuesioner dan mata pelajaran pilihanmu, berikut ringkasan snapshot kekuatan karaktermu:</p>
+            
+            <div id="karakter-skor-wrapper" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                </div>
+
+            <div class="bg-yellow-50/50 border border-yellow-200 p-4 rounded-xl">
+                <h4 class="font-bold text-maroon mb-2"><i class="fa-solid fa-book-bookmark mr-1"></i> Mata Pelajaran Fokusmu:</h4>
+                <div id="mapel-hasil-wrapper" class="flex flex-wrap gap-2">
+                    </div>
+            </div>
+
+            <div class="pt-4 flex flex-col sm:flex-row justify-center items-center gap-4">
+                <button type="button" onclick="window.location.reload()" class="w-full sm:w-auto border-2 border-maroon text-maroon hover:bg-yellow-50 px-6 py-3 rounded-xl font-bold transition-all inline-flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate-left"></i> Ulangi Kuesioner
+                </button>
+                <button type="button" onclick="bukaHasilDetail()" class="w-full sm:w-auto bg-maroon text-white hover:bg-red-900 px-6 py-3 rounded-xl font-bold transition-all inline-flex items-center justify-center gap-2 shadow-md">
+                    Detail Analisis Rekomendasi <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="detail-container" class="hidden opacity-0 space-y-6 transition-all duration-500">
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+                <div class="text-xs text-gray-400 flex items-center gap-2 mb-2 font-medium">
+                    <span>Asesmen Selesai</span> &bull; <span>Analisis Selesai</span> &bull; <span class="text-maroon font-bold">Hasil Rekomendasi</span>
+                </div>
+                <div class="flex justify-between items-baseline flex-wrap gap-2">
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-maroon">Pilihan Karakter Masa Depanmu</h2>
+                    <span class="text-xs font-bold text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">Data Akurat 99%</span>
+                </div>
+                <p class="text-sm text-gray-500 mt-2">Berdasarkan minat, kemampuan, kepribadian, dan mata pelajaran favoritmu, berikut adalah rekomendasi terbaik yang kami analisis untukmu.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="flex justify-between items-center px-1">
+                        <span class="text-sm font-bold text-maroon inline-flex items-center gap-1.5"><i class="fa-regular fa-star text-yellow-500"></i> Top 3 Rekomendasi</span>
+                    </div>
+
+                    <div class="max-h-[500px] overflow-y-auto pr-2 space-y-4 custom-scrollbar">
+                        
+                        <div class="bg-white border-2 border-maroon rounded-2xl p-5 relative shadow-sm">
+                            <span class="absolute top-0 left-5 -translate-y-1/2 bg-maroon text-[9px] font-bold text-white uppercase tracking-wider px-2 py-0.5 rounded">Rekomendasi Terbaik</span>
+                            <div class="flex justify-between items-start mb-2 mt-1">
+                                <span class="text-[10px] font-bold text-yellow-700 bg-yellow-50 px-2 py-0.5 rounded">Teknologi Informasi</span>
+                                <div class="text-right"><span class="text-xl font-extrabold text-maroon block">94%</span></div>
+                            </div>
+                            <h4 class="font-bold text-gray-800 text-lg mb-1">Data Scientist</h4>
+                            <p class="text-xs text-gray-500 leading-relaxed mb-3">Profesional yang mengekstrak pola bernilai dari tumpukan data besar.</p>
+                            <div class="flex gap-2">
+                                <button class="flex-1 bg-maroon text-white text-xs font-bold py-2 px-3 rounded-lg hover:bg-red-900 transition-all"><i class="fa-solid fa-eye text-[10px] mr-1"></i> Terpilih</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:border-gray-300 transition-all cursor-pointer">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-[10px] font-bold text-gray-600 bg-gray-100 px-2 py-0.5 rounded">Teknik &amp; Dirgantara</span>
+                                <div class="text-right"><span class="text-xl font-extrabold text-gray-700 block">88%</span></div>
+                            </div>
+                            <h4 class="font-bold text-gray-800 text-lg mb-1">Aerospace Engineer</h4>
+                            <p class="text-xs text-gray-500 leading-relaxed">Bertanggung jawab atas perancangan sistem mekanis dan struktural pesawat terbang.</p>
+                        </div>
+
+                        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:border-gray-300 transition-all cursor-pointer">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-[10px] font-bold text-gray-600 bg-gray-100 px-2 py-0.5 rounded">Desain &amp; Kreatif</span>
+                                <div class="text-right"><span class="text-xl font-extrabold text-gray-700 block">85%</span></div>
+                            </div>
+                            <h4 class="font-bold text-gray-800 text-lg mb-1">UI/UX Designer</h4>
+                            <p class="text-xs text-gray-500 leading-relaxed">Merancang antarmuka produk digital agar memiliki estetika tinggi dan ramah pengguna.</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 space-y-6">
+                    
+                    <div class="bg-gradient-to-br from-red-50/50 to-amber-50/30 border border-red-100 rounded-2xl p-6 shadow-sm">
+                        <h4 class="font-bold text-maroon text-base mb-3"><i class="fa-solid fa-chart-simple mr-1"></i> Analisis Kecocokan: Data Scientist</h4>
+                        <div class="grid grid-cols-4 gap-2 text-center">
+                            <div class="bg-white border border-red-50 p-2 rounded-xl"><span class="text-[10px] text-gray-400 block mb-1">Minat</span><span class="text-sm font-extrabold text-gray-800">90%</span></div>
+                            <div class="bg-white border border-red-50 p-2 rounded-xl"><span class="text-[10px] text-gray-400 block mb-1">Mampu</span><span class="text-sm font-extrabold text-gray-800">95%</span></div>
+                            <div class="bg-white border border-red-50 p-2 rounded-xl"><span class="text-[10px] text-gray-400 block mb-1">Fisik</span><span class="text-sm font-extrabold text-gray-800">85%</span></div>
+                            <div class="bg-white border border-red-50 p-2 rounded-xl border-l-2 border-l-amber-400"><span class="text-[10px] text-gray-400 block mb-1">Mapel</span><span class="text-sm font-extrabold text-maroon">98%</span></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm space-y-4">
+                        <div class="flex items-center gap-2 pb-2 border-b border-gray-100">
+                            <i class="fa-solid fa-route text-maroon text-lg"></i>
+                            <h4 class="font-bold text-gray-800 text-base">Langkah Selanjutnya / Action Plan</h4>
+                        </div>
+                        
+                        <ul class="space-y-3 text-xs md:text-sm text-gray-600 leading-relaxed">
+                            <li class="flex items-start gap-3">
+                                <span class="flex items-center justify-center w-5 h-5 rounded-full bg-red-100 text-maroon font-bold text-[11px] shrink-0 mt-0.5">1</span>
+                                <div>
+                                    <strong class="text-gray-800">Pelajari Pemrograman Dasar:</strong> Mulailah mengeksplorasi bahasa pemrograman populer seperti Python atau R, serta dasar pengolahan logika data statistika.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="flex items-center justify-center w-5 h-5 rounded-full bg-red-100 text-maroon font-bold text-[11px] shrink-0 mt-0.5">2</span>
+                                <div>
+                                    <strong class="text-gray-800">Perkuat Kemampuan Matematika:</strong> Fokus pada materi sekolah yang berkaitan dengan statistika, peluang, aljabar linear, dan kalkulus dasar.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="flex items-center justify-center w-5 h-5 rounded-full bg-red-100 text-maroon font-bold text-[11px] shrink-0 mt-0.5">3</span>
+                                <div>
+                                    <strong class="text-gray-800">Ikuti Kursus / Bootcamp Mini:</strong> Cari sertifikasi gratis atau proyek mandiri di platform pembelajaran online terpercaya untuk mengasah portofolio awalmu.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
         let currentPage = 1;
         const totalPages = 4;
-        let isEksplorasiComplete = false;
+        let selectedMapel = [];
 
-        const welcomeContainer = document.getElementById('welcome-container');
-        const mainAppContainer = document.getElementById('main-app-container');
-        const formEksplorasi = document.getElementById('form-eksplorasi');
-        const sectionEksplorasi = document.getElementById('section-eksplorasi');
-        const sectionMapel = document.getElementById('section-mapel');
-        const btnNext = document.getElementById('btn-next');
-        const btnSubmitAll = document.getElementById('btn-submit-all');
-        const pageIndicator = document.getElementById('page-indicator');
-        const navContainer = document.getElementById('nav-container');
-
-        // Daftar input names per page untuk mengecek validitas lokal
-        const pageInputs = {
-            1: ['cr1', 'cr2', 'cu1', 'cu2', 'cu3'],
-            2: ['lo1', 'lo2', 'lo3', 'an1', 'an2'],
-            3: ['an3', 'so1', 'so2', 'so3', 'em1'],
-            4: ['em2', 'le1']
+        const kategoriMap = {
+            cr: "Creativity",
+            cu: "Curiosity",
+            lo: "Logic",
+            an: "Analytical",
+            so: "Social",
+            em: "Empathy",
+            le: "Leadership"
         };
 
         function startExploration() {
-            welcomeContainer.classList.add('opacity-0', 'scale-95');
+            const welcome = document.getElementById('welcome-container');
+            const mainApp = document.getElementById('main-app-container');
+            
+            welcome.classList.add('opacity-0', 'scale-95');
             setTimeout(() => {
-                welcomeContainer.classList.add('hidden');
-                mainAppContainer.classList.remove('hidden');
+                welcome.classList.add('hidden');
+                mainApp.classList.remove('hidden');
                 setTimeout(() => {
-                    mainAppContainer.classList.remove('opacity-0');
+                    mainApp.classList.remove('opacity-0');
+                    checkPageValidity();
+                    updateNavBar('asesmen');
                 }, 50);
-            }, 400);
+            }, 500);
         }
 
-        // Listener validasi real-time per halaman
-        formEksplorasi.addEventListener('change', () => {
-            if (isEksplorasiComplete) return;
-            checkPageValidity();
-        });
-
-        function checkPageValidity() {
-            const currentInputs = pageInputs[currentPage];
-            const allChecked = currentInputs.every(name => {
-                return document.querySelector(`input[name="${name}"]:checked`) !== null;
+        function updateNavBar(state) {
+            const navLinks = document.querySelectorAll('#main-nav nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('text-maroon', 'border-b-2', 'border-maroon');
+                link.classList.add('text-gray-400');
             });
 
-            if (allChecked) {
-                // Aktifkan tombol next jika di page 1-3
-                if (currentPage < totalPages) {
-                    btnNext.disabled = false;
-                    btnNext.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
-                    btnNext.classList.add('bg-maroon', 'text-white', 'hover:bg-red-900');
-                } else {
-                    // Jika di page terakhir (Page 4) sudah diisi lengkap, langsung AUTO-ROUTE
-                    isEksplorasiComplete = true;
-                    activateMapelSection();
+            if (state === 'beranda') {
+                navLinks[0].classList.add('text-maroon', 'border-b-2', 'border-maroon');
+                navLinks[0].classList.remove('text-gray-400');
+            } else if (state === 'asesmen') {
+                navLinks[1].classList.add('text-maroon', 'border-b-2', 'border-maroon');
+                navLinks[1].classList.remove('text-gray-400');
+            } else if (state === 'rekomendasi') {
+                navLinks[2].classList.add('text-maroon', 'border-b-2', 'border-maroon');
+                navLinks[2].classList.remove('text-gray-400');
+            }
+        }
+
+        document.getElementById('form-eksplorasi').addEventListener('change', checkPageValidity);
+
+        function checkPageValidity() {
+            const currentPageEl = document.getElementById(`page-${currentPage}`);
+            const radios = currentPageEl.querySelectorAll('input[type="radio"]');
+            
+            const names = new Set();
+            radios.forEach(r => names.add(r.name));
+            
+            let allChecked = true;
+            names.forEach(name => {
+                if (!currentPageEl.querySelector(`input[name="${name}"]:checked`)) {
+                    allChecked = false;
                 }
+            });
+
+            const btnNext = document.getElementById('btn-next');
+            if (allChecked) {
+                btnNext.disabled = false;
+                btnNext.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                btnNext.classList.add('bg-maroon', 'text-white', 'hover:bg-red-900', 'shadow-md');
             } else {
                 btnNext.disabled = true;
+                btnNext.classList.remove('bg-maroon', 'text-white', 'hover:bg-red-900', 'shadow-md');
                 btnNext.classList.add('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
-                btnNext.classList.remove('bg-maroon', 'text-white', 'hover:bg-red-900');
             }
         }
 
         function nextPage() {
-            // Sembunyikan halaman sekarang
-            document.getElementById(`page-${currentPage}`).classList.add('page-hidden');
-            
-            // Naikkan index page
-            currentPage++;
-            
-            // Tampilkan halaman berikutnya
-            document.getElementById(`page-${currentPage}`).classList.remove('page-hidden');
-            
-            // Update teks indikator halaman
-            pageIndicator.innerText = `Halaman ${currentPage} dari ${totalPages}`;
-            
-            // Reset state tombol 'Next' untuk halaman baru
-            checkPageValidity();
-
-            // Sembunyikan tombol next secara permanen jika sudah menginjak halaman terakhir
-            if (currentPage === totalPages) {
-                navContainer.classList.add('hidden');
+            if (currentPage < totalPages) {
+                document.getElementById(`page-${currentPage}`).classList.add('page-hidden');
+                currentPage++;
+                document.getElementById(`page-${currentPage}`).classList.remove('page-hidden');
+                document.getElementById('page-indicator').innerText = `Halaman ${currentPage} dari ${totalPages}`;
+                checkPageValidity();
+                document.getElementById('section-eksplorasi').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                const sectionMapel = document.getElementById('section-mapel');
+                sectionMapel.classList.remove('opacity-40');
+                sectionMapel.scrollIntoView({ behavior: 'smooth' });
+                
+                document.getElementById('nav-container').innerHTML = `
+                    <span class="text-green-700 font-bold bg-green-50 px-4 py-2 rounded-xl border border-green-200 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check"></i> Data Kuesioner Terisi
+                    </span>
+                `;
             }
-
-            // Scroll otomatis kembali ke atas form kuesioner biar rapi
-            sectionEksplorasi.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        function activateMapelSection() {
-            // Kunci semua kuesioner
-            sectionEksplorasi.classList.add('form-locked');
-            navContainer.classList.add('hidden');
-            
-            // Aktifkan formulir mapel favorit
-            sectionMapel.classList.remove('opacity-40');
-            btnSubmitAll.classList.remove('hidden');
-            
-            // Auto smooth scroll langsung meluncur ke section mapel
-            setTimeout(() => {
-                sectionMapel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 300);
         }
 
         function toggleMapel(button) {
-            if (!isEksplorasiComplete) {
-                alert('Silahkan selesaikan semua pengisian kuisioner di atas terlebih dahulu.');
+            if (document.getElementById('nav-container').querySelector('span') === null) {
+                alert("Selesaikan pengisian kuesioner terlebih dahulu!");
                 return;
             }
-            
-            if (button.classList.contains('border-maroon')) {
-                button.classList.remove('border-maroon', 'text-maroon', 'bg-yellow-50/50');
-                button.classList.add('border-gray-100', 'text-gray-700', 'bg-white');
+
+            const mapelName = button.innerText.trim();
+            if (selectedMapel.includes(mapelName)) {
+                selectedMapel = selectedMapel.filter(item => item !== mapelName);
+                button.classList.remove('border-yellow-400', 'bg-yellow-50/50', 'text-maroon');
+                button.classList.add('border-gray-100', 'bg-white', 'text-gray-700');
             } else {
-                button.classList.remove('border-gray-100', 'text-gray-700', 'bg-white');
-                button.classList.add('border-maroon', 'text-maroon', 'bg-yellow-50/50');
+                selectedMapel.push(mapelName);
+                button.classList.remove('border-gray-100', 'bg-white', 'text-gray-700');
+                button.classList.add('border-yellow-400', 'bg-yellow-50/50', 'text-maroon');
             }
         }
 
-        function submitAssessment() {
-            const selectedMapel = [];
-            document.querySelectorAll('#section-mapel button.border-maroon').forEach(btn => {
-                selectedMapel.push(btn.innerText);
-            });
-
+        function kunciSeluruhAsesmen() {
             if (selectedMapel.length === 0) {
-                alert('Pilih minimal satu mata pelajaran favorit kamu.');
+                alert("Silakan pilih minimal 1 mata pelajaran favorit kamu terlebih dahulu!");
                 return;
             }
 
-            alert('Terima kasih! Seluruh data assessment berhasil disimpan secara valid.');
+            document.getElementById('section-eksplorasi').classList.add('form-locked');
+            document.getElementById('section-mapel').classList.add('form-locked');
+            document.getElementById('submit-action-container').classList.add('hidden');
+
+            const wrapper = document.getElementById('final-action-wrapper');
+            wrapper.classList.remove('hidden');
+            wrapper.innerHTML = `
+                <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-md flex flex-col items-center gap-4">
+                    <span class="text-green-700 font-bold bg-green-50 px-5 py-3 rounded-xl border border-green-200 flex items-center gap-2 shadow-sm text-base">
+                        <i class="fa-solid fa-circle-check text-xl"></i> Seluruh Rangkaian Asesmen Selesai!
+                    </span>
+                    <button id="btn-lihat-hasil-final" type="button" onclick="bukaHalamanHasil()" class="w-full bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-xl flex items-center justify-center gap-2">
+                        Lihat Hasil Eksplorasi <i class="fa-solid fa-square-poll-vertical text-lg"></i>
+                    </button>
+                </div>
+            `;
+            wrapper.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function bukaHalamanHasil() {
+            const formData = new FormData(document.getElementById('form-eksplorasi'));
+            let skorKategori = { "Creativity": 0, "Curiosity": 0, "Logic": 0, "Analytical": 0, "Social": 0, "Empathy": 0, "Leadership": 0 };
+
+            for (let [name, value] of formData.entries()) {
+                const prefix = name.substring(0, 2);
+                const kategori = kategoriMap[prefix];
+                if (kategori) skorKategori[kategori] += parseInt(value);
+            }
+
+            const wrapperKarakter = document.getElementById('karakter-skor-wrapper');
+            if (wrapperKarakter) {
+                wrapperKarakter.innerHTML = '';
+                for (const [key, val] of Object.entries(skorKategori)) {
+                    const persen = Math.min((val / 10) * 100, 100).toFixed(0); 
+                    wrapperKarakter.innerHTML += `
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-bold text-gray-700 text-sm">${key}</span>
+                                <span class="text-xs font-bold text-maroon bg-yellow-100 px-2 py-0.5 rounded">${val} Poin</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                                <div class="bg-maroon h-full transition-all duration-1000" style="width: ${persen}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            const wrapperMapel = document.getElementById('mapel-hasil-wrapper');
+            if (wrapperMapel) {
+                wrapperMapel.innerHTML = '';
+                selectedMapel.forEach(mapel => {
+                    wrapperMapel.innerHTML += `
+                        <span class="bg-white border border-maroon text-maroon px-3 py-1 rounded-lg text-sm font-semibold shadow-sm">
+                            ${mapel}
+                        </span>
+                    `;
+                });
+            }
+
+            const mainApp = document.getElementById('main-app-container');
+            const hasilContainer = document.getElementById('hasil-container');
+
+            mainApp.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                mainApp.classList.add('hidden');
+                hasilContainer.classList.remove('hidden');
+                setTimeout(() => {
+                    hasilContainer.classList.remove('opacity-0');
+                    updateNavBar('asesmen');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 50);
+            }, 500);
+        }
+
+        function bukaHasilDetail() {
+            const hasilContainer = document.getElementById('hasil-container');
+            const detailContainer = document.getElementById('detail-container');
+
+            hasilContainer.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                hasilContainer.classList.add('hidden');
+                detailContainer.classList.remove('hidden');
+                setTimeout(() => {
+                    detailContainer.classList.remove('opacity-0');
+                    updateNavBar('rekomendasi');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 50);
+            }, 500);
         }
     </script>
-    
-    <style>
-        .animate-spin-slow {
-            animation: spin 8s linear infinite;
-        }
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-    </style>
 </body>
 </html>
