@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MATCH MAJOR</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    
     <style>
         .btn-admin-login{
             background-color: transparent;
@@ -39,16 +42,12 @@
                 <a href="riwayatsesi.html" class="nav-item">Riwayat Sesi</a>
             </nav>
             <div class="user-card">
-                <div class="user-info">
-                    <p class="user-name">User</p>
-                </div>
-                <button class="btn-logout">Keluar</button>
-                <button class="btn-admin-login" onclick="window.location.href='index.html'">Login Admin</button>
+                <button id="auth-btn" class="btn-admin-login" onclick="window.location.href='login.html'">Login User</button>
+                <button class="btn-admin-login" onclick="window.location.href='loginadmin.html'">Login Admin</button>
             </div>
         </aside>
 
         <main class="content-area">
-            
             <section id="home" class="page-section">
                 <header class="welcome-header">
                     <h1>Selamat Datang di Match Major</h1>
@@ -79,18 +78,37 @@
                     </div>
                 </div>
             </section>
-
         </main>
     </div>
 
     <script>
+        // Inisialisasi Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyA0TKujQ_u9GU9eFJelMuo_ykXA1T0063c",
+            authDomain: "matchmajor-78a97.firebaseapp.com",
+            projectId: "matchmajor-78a97",
+            storageBucket: "matchmajor-78a97.firebasestorage.app",
+            messagingSenderId: "113944926778",
+            appId: "1:113944926778:web:0d4fc483d51fc5640e7303"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Skrip untuk mengubah tombol saat user sudah login
+        firebase.auth().onAuthStateChanged((user) => {
+            const authBtn = document.getElementById('auth-btn');
+            if (user) {
+                authBtn.textContent = "Logout User";
+                authBtn.onclick = () => firebase.auth().signOut().then(() => location.reload());
+            }
+        });
+
         function updateClock(){
             const now = new Date();
             const options = {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
                 hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
             };
-            const timeString = now .toLocaleDateString('id-ID', options).replace('pukul','-');
+            const timeString = now.toLocaleDateString('id-ID', options).replace('pukul','-');
             document.getElementById('realtime-clock').textContent = timeString;
         }
         setInterval(updateClock, 1000);

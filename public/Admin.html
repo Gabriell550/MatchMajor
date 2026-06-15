@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; }
+        .sidebar { width: 250px; height: 100vh; background-color: #800000; color: white; display: flex; flex-direction: column; position: fixed; }
+        .menu-item, .sub-menu { padding: 15px 20px; color: white; text-decoration: none; display: block; }
+        .menu-item:hover, .sub-menu:hover { background-color: rgba(255,255,255,0.15); }
+        .user-section { margin-top: auto; padding: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .btn-logout { background: white; color: #800000; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .main-content { margin-left: 250px; padding: 40px; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div style="padding: 30px 20px;">
+            <h1 style="font-size: 24px; margin:0;">Match</h1>
+            <p style="color: #FFD700;">Major</p>
+        </div>
+        
+        <a href="index.html" class="menu-item">Kembali ke Beranda</a>
+        <div style="padding: 20px 20px 10px; color: #FFB6C1; font-size: 11px;">MANAJEMEN</div>
+        <a href="tambah.html" class="sub-menu">Tambah Pertanyaan</a>
+        <a href="edit.html" class="sub-menu">Edit Pertanyaan</a>
+        
+        <div class="user-section">
+            <div style="margin-bottom: 10px;">Admin</div>
+            <button class="btn-logout" onclick="window.location.href='index.html'">Keluar</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h2>Dashboard Admin</h2>
+        <p>Gunakan menu di samping untuk mengelola konten.</p>
+    </div>
+
+</body>
+</html>

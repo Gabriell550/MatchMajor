@@ -620,6 +620,16 @@
                 }, 50);
             }, 500);
         }
+
+      
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                // Jika tidak ada user, tendang ke halaman login
+                window.location.href = 'login.html';
+            }
+        });
+</script>
+
     </script>
 </body>
 </html>

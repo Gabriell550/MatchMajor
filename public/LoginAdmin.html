@@ -1,107 +1,42 @@
 <!DOCTYPE html>
 <html lang="id">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin Sidebar</title>
-        <style>
-            body{
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdena, sans-serif;
-                margin: 0;
-                padding: 0;
-            }
-            .sidebar{
-                width: 250px;
-                height: 100vh;
-                background-color: #800000;
-                color: white;
-                display: flex;
-                flex-direction: column;
-            }
-            .logo-container{
-                padding: 30px 20px;
-            }
-            .logo-title{
-                font-size: 24px;
-                font-weight: bold;
-                margin: 0;
-                letter-spcacing: 1px;
-            }
-            .logo-subtitle{
-                font-size: 16px;
-                color: #FFD700;
-                font-style: italic;
-                margin: 0;
-            }
-            .menu-item{
-                padding: 15px 20px;
-                color: white;
-                text-decoration: none;
-                display: block;
-                font-size: 14px;
-            }
-            .menu-item:hover, .menu-item.active{
-                background-color: rgba(255,255,255,0.1);
-            }
-            .menu-group-title{
-                padding: 20px 20px 10px 20px;
-                font-size: 12px;
-                color: #FFB6C1;
-                text-transform: uppercase;
-                font-weight: bold;
-                letter-spacing: 0.5px;
-            }
-            .sub-menu{
-                padding: 10px 20px 10px 40px;
-                color: #E0E0E0;
-                text-decoration: none;
-                display: block;
-                font-size: 13px;
-            }
-            .sub-menu:hover{
-                color: white;
-                background-color: rgba(255,255,255,0.05);
-            }
-            .user-section{
-                margin-top: auto;
-                padding: 20px;
-            }
-            .user-role{
-                font-size: 16px;
-                margin-bottom: 5px;
-            }
-            .btn-logout{
-                background-color: white;
-                color: black;
-                border: none;
-                padding: 5px 10px;
-                cursor: pointer;
-                font-size: 14px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="sidebar">
-            <div class="logo-container">
-                <h1 class="logo-title">Match</h1>
-                <p class="logo-subtitle">Major</p>
-            </div>
-            <a href="#" class="menu-item active">Beranda</a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin - Match Major</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bg-maroon { background-color: #800000; }
+        .text-maroon { color: #800000; }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
 
-            <div class="menu-group-title">Manajemen Pertanyaan</div>
-            <a href="#" class="sub-menu">Tambah Pertanyaan</a>
-            <a href="#" class="sub-menu">Edit Pertanyaan</a>
-            <a href="#" class="sub-menu">Hapus Pertanyaan</a>
-
-            <div class="menu-group-title">Manajemen Jurusan</div>
-            <a href="#" class="sub-menu">Tambah Jurusan</a>
-            <a href="#" class="sub-menu">Edit Jurusan</a>
-            <a href="#" class="sub-menu">Hapus Jurusan</a>
-
-            <div class="user-section">
-                <div class="user-role">Admin</div>
-                <button class="btn-logout">Keluar</button>
-            </div>
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-96 border-t-4 border-maroon">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-maroon">Match Major</h1>
+            <p class="text-gray-500 italic">Panel Admin Login</p>
         </div>
-    </body>
+
+        <form action="admin.html" method="get">
+            <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Username</label>
+                <input type="text" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-maroon" placeholder="Masukkan username" required>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                <input type="password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-maroon" placeholder="Masukkan password" required>
+            </div>
+            
+            <button type="submit" class="w-full bg-maroon text-white py-3 rounded-lg font-bold hover:bg-red-900 transition-all">
+                Masuk ke Dashboard
+            </button>
+        </form>
+
+        <div class="mt-6 text-center">
+            <a href="index.html" class="text-sm text-gray-400 hover:text-maroon transition-all underline">Kembali ke Beranda</a>
+        </div>
+    </div>
+
+</body>
 </html>
