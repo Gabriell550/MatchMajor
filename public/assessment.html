@@ -3,541 +3,445 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Progres Assessment</title>
+    <title>Eksplorasi Diri Saya</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #ffffff;}
-        .card-bg { background-color: #fdfaf3;}
+        body { font-family: 'Inter', sans-serif; background-color: #fdfaf3; scroll-behavior: smooth;}
         .text-maroon { color: #7A1315;}
         .bg-maroon { background-color: #7A1315;}
-        .hidden { display: none;}
+        .border-maroon { border-color: #7A1315;}
         input[type="radio"] { accent-color: #7A1315; width: 1.2rem; height: 1.2rem;}
+        
+        .form-locked {
+            opacity: 0.6;
+            pointer-events: none;
+            user-select: none;
+        }
+        .page-hidden {
+            display: none;
+        }
     </style>
 </head>
-<body class="p-6 md:p-10 flex justify-center items-center min-h-screen bg-white">
-    <div class="max-w-4xl w-full mx-auto">
-        <div class="flex items-center mb-10">
+<body class="p-4 md:p-10 flex flex-col items-center min-h-screen">
+    <div class="max-w-4xl w-full mx-auto space-y-8">
+        
+        <!-- Header Utama -->
+        <div class="flex items-center mb-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
             <div class="w-1.5 h-8 bg-yellow-400 mr-4 rounded-sm"></div>
-            <h1 class="text-3xl font-bold text-maroon">Progres Assessment</h1>
+            <h1 class="text-3xl font-bold text-maroon">Eksplorasi Diri Saya</h1>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-
-            <div onclick="showSection('eksplorasi')" id="card-eksplorasi" class="card-bg rounded-2xl p-8 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-all border border-yellow-50/50 hover:border-maroon/30">
-                <i class="fa-solid fa-vial text-4xl text-maroon mb-4"></i>
-                <h2 class="text-xl font-bold text-maroon mb-2">Eksplorasi Diri</h2>
-                <p class="text-gray-600 text-sm">Uji minat, Bakat, dan Kepribadian anda secara objektif.</p>
+        <!-- STATE 1: HALAMAN PENGANTAR / MULAI -->
+        <div id="welcome-container" class="bg-white border border-gray-100 rounded-2xl p-8 md:p-12 shadow-md text-center space-y-6 transition-all duration-500">
+            <div class="w-20 h-20 bg-yellow-50 rounded-full flex items-center justify-center mx-auto">
+                <i class="fa-solid fa-compass text-4xl text-maroon animate-spin-slow"></i>
             </div>
-
-            <div onclick="showSection('mapel')" id="card-mapel" class="card-bg rounded-2xl p-8 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-all border border-yellow-50/50 hover:border-maroon/30">
-                <i class="fa-solid fa-book-open text-4xl text-maroon mb-4"></i>
-                <h2 class="text-xl font-bold text-maroon mb-2">Mata Pelajaran Favorit</h2>
-                <p class="text-gray-600 text-sm">Tentukan dan urutkan mata pelajaran yang paling anda minati.</p>
-            </div>
-        </div>
-
-        <div id="section-eksplorasi" class="hidden bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mb-10">
-            <div class="flex justify-between items-center mb-8">
-                <h3 class="text-2xl font-bold text-maroon">Kuisioner Eksplorasi Diri</h3>
-                <span class="text-xs font-semibold bg-yellow-100 text-yellow-700 px-4 py-1.5 rounded-full uppercase tracking-wider">Skala 1 (Sangat Tidak Setuju) - 5 (Sangat Setuju)</span>
+            <div class="space-y-3">
+                <h2 class="text-2xl font-bold text-maroon">Selamat Datang di Eksplorasi Diri</h2>
+                <p class="text-gray-600 max-w-xl mx-auto leading-relaxed">
+                    Melalui assessment ini, kamu akan diajak untuk mengenali potensi, karakter, serta minat belajarmu secara lebih mendalam. 
+                </p>
             </div>
             
-            <form id="form-eksplorasi" class="space-y-10">
+            <div class="bg-yellow-50/70 border-l-4 border-yellow-400 p-4 rounded-r-xl max-w-xl mx-auto text-left flex items-start gap-3">
+                <i class="fa-solid fa-circle-exclamation text-yellow-600 mt-1"></i>
+                <p class="text-sm text-yellow-900 font-medium">
+                    <strong class="block text-maroon mb-0.5">Penting!</strong>
+                    Isilah seluruh pernyataan di dalam kuesioner ini dengan <span class="underline decoration-2 decoration-yellow-500 font-bold">sejujur-jujurnya</span> sesuai dengan apa yang benar-benar kamu rasakan. Tidak ada jawaban salah atau benar di sini.
+                </p>
+            </div>
+
+            <div class="pt-4">
+                <button type="button" onclick="startExploration()" class="bg-maroon text-white px-10 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg flex items-center gap-3 mx-auto">
+                    Mulai Eksplorasi Sekarang <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- MAIN APP CONTAINER -->
+        <div id="main-app-container" class="hidden space-y-8 opacity-0 transition-all duration-500">
+            
+            <!-- SECTION 1: KUESIONER EKSPLORASI DIRI -->
+            <div id="section-eksplorasi" class="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-md transition-all duration-500">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 pb-4 border-b border-gray-100">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-vial text-2xl text-maroon"></i>
+                        <h3 class="text-2xl font-bold text-maroon">Psikotest & Karakter</h3>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span id="page-indicator" class="text-sm font-bold text-maroon bg-yellow-50 px-3 py-1 rounded-md">Halaman 1 dari 4</span>
+                        <span class="text-xs font-semibold bg-yellow-100 text-yellow-700 px-4 py-1.5 rounded-full uppercase tracking-wider">Skala 1 (STS) - 5 (SS)</span>
+                    </div>
+                </div>
                 
-                <!-- <div class="space-y-4">
-                    <h4 class="font-bold text-maroon bg-yellow-50 px-4 py-2 rounded-lg inline-block">Creativity</h4>
-                    <div class="space-y-6 pl-4">
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue sering dapet ide-ide unik atau konsep visual yang muncul tiba-tiba bahkan pas lagi nggak mikirin tugas.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cr1" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cr1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cr1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cr1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cr1" value="5" class="mb-1">5</label>
+                <form id="form-eksplorasi" class="space-y-6">
+                    
+                    <!-- PAGE 1 (Pertanyaan 1 - 5) -->
+                    <div id="page-1" class="quiz-page space-y-6">
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">1.</span> Gue sering dapet ide-ide unik atau konsep visual yang muncul tiba-tiba bahkan pas lagi nggak mikirin tugas. (Creativity)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr1" value="1" class="mb-1" required>1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr1" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr1" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr1" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr1" value="5" class="mb-1">5</label>
                             </div>
                         </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue lebih suka ngerjain sesuatu yang bebas gue desain sendiri daripada cuma ngikutin template yang udah ada.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cr2" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cr2" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cr2" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cr2" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cr2" value="5" class="mb-1">5</label>
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">2.</span> Gue lebih suka ngerjain sesuatu yang bebas gue desain sendiri daripada cuma ngikutin template yang udah ada. (Creativity)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr2" value="1" class="mb-1" required>1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr2" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr2" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr2" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cr2" value="5" class="mb-1">5</label>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    <h4 class="font-bold text-maroon bg-yellow-50 px-4 py-2 rounded-lg inline-block">Curiosity</h4>
-                    <div class="space-y-6 pl-4">
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Kalau ada topik yang lagi viral, gue biasanya bakal ulik sampai ke akar-akarnya karena kepo maksimal.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu1" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu1" value="5" class="mb-1">5</label>
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">3.</span> Kalau ada topik yang lagi viral, gue biasanya bakal ulik sampai ke akar-akarnya karena kepo maksimal. (Curiosity)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu1" value="1" class="mb-1" required>1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu1" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu1" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu1" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu1" value="5" class="mb-1">5</label>
                             </div>
                         </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue sering "tersesat" di internet cuma buat cari tahu cara kerja benda-benda atau fenomena di sekitar gue.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu2" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu2" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu2" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu2" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu2" value="5" class="mb-1">5</label>
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">4.</span> Gue sering "tersesat" di internet cuma buat cari tahu cara kerja benda-benda atau fenomena di sekitar gue. (Curiosity)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu2" value="1" class="mb-1" required>1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu2" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu2" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu2" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu2" value="5" class="mb-1">5</label>
                             </div>
                         </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue selalu tertarik buat nyoba aplikasi, fitur, atau gadget baru meskipun nggak ada yang nyuruh.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu3" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu3" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu3" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu3" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="cu3" value="5" class="mb-1">5</label>
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">5.</span> Gue selalu tertarik buat nyoba aplikasi, fitur, atau gadget baru meskipun nggak ada yang nyuruh. (Curiosity)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu3" value="1" class="mb-1" required>1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu3" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu3" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu3" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="cu3" value="5" class="mb-1">5</label>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="space-y-4">
-                    <h4 class="font-bold text-maroon bg-yellow-50 px-4 py-2 rounded-lg inline-block">Logic</h4>
-                    <div class="space-y-6 pl-4">
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue selalu ngelihat masalah sebagai rangkaian sebab-akibat yang harus diselesaikan secara urut dan masuk akal.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo1" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo1" value="5" class="mb-1">5</label>
+                    <!-- PAGE 2 (Pertanyaan 6 - 10) -->
+                    <div id="page-2" class="quiz-page space-y-6 page-hidden">
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">6.</span> Gue selalu ngelihat masalah sebagai rangkaian sebab-akibat yang harus diselesaikan secara urut dan masuk akal. (Logic)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo1" value="1" class="mb-1">1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo1" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo1" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo1" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo1" value="5" class="mb-1">5</label>
                             </div>
                         </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue paling nggak suka kalau ada orang ngambil keputusan cuma pakai perasaan tanpa ada alasan kuat di baliknya.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo2" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo2" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo2" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo2" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo2" value="5" class="mb-1">5</label>
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">7.</span> Gue paling nggak suka kalau ada orang ngambil keputusan cuma pakai perasaan tanpa ada alasan kuat di baliknya. (Logic)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo2" value="1" class="mb-1">1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo2" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo2" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo2" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo2" value="5" class="mb-1">5</label>
                             </div>
                         </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue merasa jauh lebih nyaman bekerja dengan aturan atau sistem yang jelas dan terstruktur.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo3" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo3" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo3" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo3" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="lo3" value="5" class="mb-1">5</label>
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">8.</span> Gue merasa jauh lebih nyaman bekerja dengan aturan atau sistem yang jelas dan terstruktur. (Logic)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo3" value="1" class="mb-1">1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo3" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo3" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo3" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="lo3" value="5" class="mb-1">5</label>
+                            </div>
+                        </div>
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">9.</span> Sebelum mutusin sesuatu, gue biasanya bakal bandingin data, harga, atau review dulu secara detail. (Analytical)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an1" value="1" class="mb-1">1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an1" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an1" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an1" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an1" value="5" class="mb-1">5</label>
+                            </div>
+                        </div>
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">10.</span> Gue suka merhatiin pola atau tren di balik sebuah kejadian daripada cuma tahu info permukaannya aja. (Analytical)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an2" value="1" class="mb-1">1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an2" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an2" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an2" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an2" value="5" class="mb-1">5</label>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="space-y-4">
-                    <h4 class="font-bold text-maroon bg-yellow-50 px-4 py-2 rounded-lg inline-block">Analytical</h4>
-                    <div class="space-y-6 pl-4">
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Sebelum mutusin sesuatu, gue biasanya bakal bandingin data, harga, atau review dulu secara detail.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an1" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an1" value="5" class="mb-1">5</label>
+                    <!-- PAGE 3 (Pertanyaan 11 - 15) -->
+                    <div id="page-3" class="quiz-page space-y-6 page-hidden">
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">11.</span> Gue ngerasa puas banget kalau berhasil nemuin detail kecil atau kesalahan yang orang lain nggak sadar. (Analytical)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an3" value="1" class="mb-1">1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an3" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an3" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an3" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="an3" value="5" class="mb-1">5</label>
                             </div>
                         </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue suka merhatiin pola atau tren di balik sebuah kejadian daripada cuma tahu info permukaannya aja.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an2" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an2" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an2" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an2" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an2" value="5" class="mb-1">5</label>
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">12.</span> Gue ngerasa energi gue makin nambah kalau lagi nongkrong atau kolaborasi bareng banyak orang. (Social)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so1" value="1" class="mb-1">1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so1" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so1" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so1" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so1" value="5" class="mb-1">5</label>
                             </div>
                         </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue ngerasa puas banget kalau berhasil nemuin detail kecil atau kesalahan yang orang lain nggak sadar.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an3" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an3" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an3" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an3" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="an3" value="5" class="mb-1">5</label>
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">13.</span> Gue tipe orang yang gampang banget cairin suasana dan mulai obrolan seru sama orang baru. (Social)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so2" value="1" class="mb-1">1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so2" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so2" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so2" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so2" value="5" class="mb-1">5</label>
+                            </div>
+                        </div>
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">14.</span> Gue lebih suka diskusi langsung (ketemu/call) daripada harus nunggu balesan chat yang lama. (Social)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so3" value="1" class="mb-1">1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so3" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so3" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so3" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="so3" value="5" class="mb-1">5</label>
+                            </div>
+                        </div>
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">15.</span> Gue bisa langsung peka kalau mood temen lagi nggak enak, meskipun dia berusaha nutupin. (Empathy)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em1" value="1" class="mb-1">1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em1" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em1" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em1" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em1" value="5" class="mb-1">5</label>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="space-y-4">
-                    <h4 class="font-bold text-maroon bg-yellow-50 px-4 py-2 rounded-lg inline-block">Social</h4>
-                    <div class="space-y-6 pl-4">
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue ngerasa energi gue makin nambah kalau lagi nongkrong atau kolaborasi bareng banyak orang.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so1" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so1" value="5" class="mb-1">5</label>
+                    <!-- PAGE 4 (Pertanyaan 16 - 17) -->
+                    <div id="page-4" class="quiz-page space-y-6 page-hidden">
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">16.</span> Pas lagi ambil keputusan, gue selalu mempertimbangkan gimana dampaknya bagi perasaan orang lain. (Empathy)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em2" value="1" class="mb-1">1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em2" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em2" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em2" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="em2" value="5" class="mb-1">5</label>
                             </div>
                         </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue tipe orang yang gampang banget cairin suasana dan mulai obrolan seru sama orang baru.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so2" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so2" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so2" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so2" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so2" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue lebih suka diskusi langsung (ketemu/call) daripada harus nunggu balesan chat yang lama.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so3" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so3" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so3" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so3" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="so3" value="5" class="mb-1">5</label>
+                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors bg-gray-50/30 rounded-r-xl">
+                            <p class="text-gray-800 mb-4"><span class="font-bold text-maroon mr-1">17.</span> Gue refleks bakal ngambil alih komando kalau gue lihat kerja kelompok udah mulai nggak jelas arahnya. (Leadership)</p>
+                            <div class="flex justify-between max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="le1" value="1" class="mb-1">1</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="le1" value="2" class="mb-1">2</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="le1" value="3" class="mb-1">3</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="le1" value="4" class="mb-1">4</label>
+                                <label class="flex flex-col items-center text-xs font-bold cursor-pointer"><input type="radio" name="le1" value="5" class="mb-1">5</label>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="space-y-4">
-                    <h4 class="font-bold text-maroon bg-yellow-50 px-4 py-2 rounded-lg inline-block">Empathy</h4>
-                    <div class="space-y-6 pl-4">
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue bisa langsung peka kalau mood temen lagi nggak enak, meskipun dia berusaha nutupin.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="em1" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="em1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="em1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="em1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="em1" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Pas lagi ambil keputusan, gue selalu mempertimbangkan gimana dampaknya bagi perasaan orang lain.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="em2" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="em2" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="em2" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="em2" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="em2" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
+                    <!-- Tombol Navigasi Next (Satu Arah) -->
+                    <div id="nav-container" class="pt-4 flex justify-end">
+                        <button id="btn-next" type="button" onclick="nextPage()" disabled class="bg-gray-300 text-gray-500 font-bold px-8 py-3 rounded-xl cursor-not-allowed transition-all flex items-center gap-2 shadow-sm">
+                            Pertanyaan Selanjutnya <i class="fa-solid fa-arrow-right"></i>
+                        </button>
                     </div>
-                </div>
-
-                <div class="space-y-4">
-                    <h4 class="font-bold text-maroon bg-yellow-50 px-4 py-2 rounded-lg inline-block">Leadership</h4>
-                    <div class="space-y-6 pl-4">
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue refleks bakal ngambil alih komando kalau gue lihat kerja kelompok udah mulai nggak jelas arahnya.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="le1" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="le1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="le1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="le1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="le1" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue ngerasa tertantang buat nentuin target tim dan bagi-bagi tugas biar semuanya jalan efektif.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="le2" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="le2" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="le2" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="le2" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="le2" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="space-y-4 pb-6">
-                    <h4 class="font-bold text-maroon bg-yellow-50 px-4 py-2 rounded-lg inline-block">Practical</h4>
-                    <div class="space-y-6 pl-4">
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue jauh lebih cepet paham sesuatu kalau langsung nyobain prakteknya daripada cuma baca teorinya doang.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="pr1" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="pr1" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="pr1" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="pr1" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="pr1" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                        <div class="p-4 border-l-4 border-gray-100 hover:border-yellow-400 transition-colors">
-                            <p class="text-gray-800 mb-4">Gue merasa lebih puas kalau hasil kerja gue ada wujud fisiknya atau bisa langsung dipake fungsinya.</p>
-                            <div class="flex justify-between max-w-md bg-gray-50 p-3 rounded-xl">
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="pr2" value="1" class="mb-1">1</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="pr2" value="2" class="mb-1">2</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="pr2" value="3" class="mb-1">3</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="pr2" value="4" class="mb-1">4</label>
-                                <label class="flex flex-col items-center text-xs font-bold"><input type="radio" name="pr2" value="5" class="mb-1">5</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="flex gap-4 sticky bottom-4 pt-4">
-                    <button type="button" onclick="goBack()" class="w-1/3 border-2 border-maroon text-maroon px-6 py-4 rounded-xl font-bold hover:bg-maroon hover:text-white transition-all">Kembali</button>
-                    <button type="button" onclick="completeStep('eksplorasi')" class="w-2/3 bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">Simpan</button>
-
-                </div>
-            </form> -->
-        </div>
-
-        <div id="section-mapel" class="hidden bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mb-10">
-            <h3 class="text-2xl font-bold text-maroon mb-6">Pilih Mata Pelajaran Favorit</h3>
-            <p class="text-gray-600 mb-8">Pilih mata pelajaran yang paling kamu kuasai atau sukai di sekolah. (Bisa pilih lebih dari satu)</p>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-                <button onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100">Matematika</button>
-                <button onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100">Fisika</button>
-                <button onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100">Informatika</button>
-                <button onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100">Bahasa Inggris</button>
-                <button onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100">Seni Rupa</button>
-                <button onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100">Ekonomi</button>
-                <button onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100">Sosiologi</button>
-                <button onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100">Biologi</button>
+                </form>
             </div>
 
-            <div class="space-y-4">
-                <button type="button" onclick="completeStep('mapel')" class="w-full bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg">Konfirmasi Pilihan Mata Pelajaran</button>
-                <button type="button" onclick="goBack()" class="w-full border-2 border-maroon text-maroon px-6 py-4 rounded-xl font-bold hover:bg-maroon hover:text-white transition-all">Kembali</button>
-            </div>
-        </div>
+            <!-- SECTION 2: MATA PELAJARAN FAVORIT -->
+            <div id="section-mapel" class="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-md opacity-40 transition-all duration-500">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fa-solid fa-book-open text-2xl text-maroon"></i>
+                    <h3 class="text-2xl font-bold text-maroon">Mata Pelajaran Favorit</h3>
+                </div>
+                <p class="text-gray-600 mb-8">Pilih mata pelajaran yang paling kamu kuasai atau sukai di sekolah. (Bisa pilih lebih dari satu)</p>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Matematika</button>
+                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Fisika</button>
+                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Informatika</button>
+                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Bahasa Inggris</button>
+                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Seni Rupa</button>
+                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Ekonomi</button>
+                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Sosiologi</button>
+                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Biologi</button>
+                </div>
 
-        <div class="w-full max-w-lg mx-auto pb-20">
-            <div class="relative px-2">
-                <div class="absolute top-1/2 left-0 right-0 h-2 -translate-y-1/2 bg-gray-200 z-0"></div>
-                <div id="progress-bar" class="absolute top-1/2 left-0 w-0 h-2 -translate-y-1/2 bg-maroon z-0 transition-all duration-700 ease-in-out"></div>
-
-                <div class="relative z-10 flex justify-between items-center w-full">
-                    <div id="step-1-dot" class="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-white ring-8 ring-white shadow-md transition-all duration-500">
-                        <i class="fa-solid fa-check text-lg"></i>
-                    </div>
-                    <div id="step-2-dot" class="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-white ring-8 ring-white shadow-md transition-all duration-500">
-                        <i class="fa-solid fa-check text-lg"></i>
-                    </div>
+                <div class="space-y-4">
+                    <button id="btn-submit-all" type="button" onclick="submitAssessment()" class="w-full bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg hidden">Konfirmasi & Selesai</button>
                 </div>
             </div>
-
-            <div class="flex justify-between items-start w-full mt-6 text-sm font-bold">
-                <div class="text-center w-32 -ml-11 text-gray-400 transition-colors duration-500" id="label-step-1">
-                    Eksplorasi Diri <br><span class="text-xs font-normal" id="status-1">Belum Dimulai</span>
-                </div>
-                <div class="text-center w-40 -mr-16 text-gray-400 transition-colors duration-500" id="label-step-2">
-                    Mata Pelajaran Favorit <br><span class="text-xs font-normal" id="status-2">Belum Dimulai</span>
-                </div>
-            </div>
-
-            <div id="hasil-btn-container" class="hidden mt-10 text-center">
-                <button onclick="lihatHasil()" class="bg-yellow-400 text-maroon px-10 py-4 rounded-xl font-bold hover:bg-yellow-300 transition-all shadow-lg">Lihat Hasil</button></div>
 
         </div>
     </div>
 
     <script>
+        let currentPage = 1;
+        const totalPages = 4;
+        let isEksplorasiComplete = false;
 
-        async function loadQuestions() {
-            try {
-                const response = await fetch('http://localhost:3000/questions');
-                const result = await response.json();
-                renderQuestions(result.data);
-            } catch (error) {
-                console.error('Error loading questions:', error);
-            }
-        }
+        const welcomeContainer = document.getElementById('welcome-container');
+        const mainAppContainer = document.getElementById('main-app-container');
+        const formEksplorasi = document.getElementById('form-eksplorasi');
+        const sectionEksplorasi = document.getElementById('section-eksplorasi');
+        const sectionMapel = document.getElementById('section-mapel');
+        const btnNext = document.getElementById('btn-next');
+        const btnSubmitAll = document.getElementById('btn-submit-all');
+        const pageIndicator = document.getElementById('page-indicator');
+        const navContainer = document.getElementById('nav-container');
 
-        function renderQuestions(questions) {
-            const form = document.getElementById('eksplorasi-form');
-            form.innerHTML = '';
+        // Daftar input names per page untuk mengecek validitas lokal
+        const pageInputs = {
+            1: ['cr1', 'cr2', 'cu1', 'cu2', 'cu3'],
+            2: ['lo1', 'lo2', 'lo3', 'an1', 'an2'],
+            3: ['an3', 'so1', 'so2', 'so3', 'em1'],
+            4: ['em2', 'le1']
+        };
 
-            questions.forEach((q, index) => {
-                form.innerHTML += `
-                    <div class="p-4 border rounded-xl">
-                <p class="mb-4 font-medium">
-                    ${q.question}
-                </p>
-
-                <div class="flex gap-4">
-
-                    ${[1,2,3,4,5].map(score => `
-                        <label>
-                            <input
-                                type="radio"
-                                name="${q._id}"
-                                value="${score}"
-                                data-trait="${q.trait}"
-                            >
-                            ${score}
-                        </label>
-                    `).join("")}
-
-                </div>
-            </div>
-        `;
-    });
-}
-
-        function showSection(section) {
-            document.getElementById('section-eksplorasi').classList.add('hidden');
-            document.getElementById('section-mapel').classList.add('hidden');
-            
-            const target = document.getElementById('section-' + section);
-            target.classList.remove('hidden');
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        function toggleMapel(btn) {
-            btn.classList.toggle('bg-yellow-400');
-            btn.classList.toggle('border-yellow-400');
-            btn.classList.toggle('text-maroon');
-            btn.classList.toggle('scale-105');
-        }
-
-        function completeStep(step) {
-            if (step === 'eksplorasi') {
-                document.getElementById('step-1-dot').classList.replace('bg-gray-300', 'bg-maroon');
-                document.getElementById('label-step-1').classList.replace('text-gray-400', 'text-maroon');
-                document.getElementById('status-1').innerText = 'Selesai diisi';
-                document.getElementById('progress-bar').style.width = '50%';
-                document.getElementById('section-eksplorasi').classList.add('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-            
-            else if (step === 'mapel') {
-                document.getElementById('step-2-dot').classList.replace('bg-gray-300', 'bg-maroon');
-                document.getElementById('label-step-2').classList.replace('text-gray-400', 'text-maroon');
-                document.getElementById('status-2').innerText = 'Selesai diisi';
-                document.getElementById('progress-bar').style.width = '100%';
-                document.getElementById('section-mapel').classList.add('hidden');
-                document.getElementById('hasil-btn-container').classList.remove('hidden');
-                
+        function startExploration() {
+            welcomeContainer.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                welcomeContainer.classList.add('hidden');
+                mainAppContainer.classList.remove('hidden');
                 setTimeout(() => {
-                    alert('Selamat! Assessment selesai. Menuju halaman hasil...');
-                }, 800);
-            }
-        }
-        function goBack() {
-            document.getElementById('section-eksplorasi').classList.add('hidden');
-            document.getElementById('section-mapel').classList.add('hidden');
-            window.scrollTo({top: 0,behavior: 'smooth'});
+                    mainAppContainer.classList.remove('opacity-0');
+                }, 50);
+            }, 400);
         }
 
-        function getAverage(prefix, count) {
-            let total = 0;
+        // Listener validasi real-time per halaman
+        formEksplorasi.addEventListener('change', () => {
+            if (isEksplorasiComplete) return;
+            checkPageValidity();
+        });
 
-            for(let i = 1; i <= count; i++) {
-                const checked = document.querySelector(
-                    `input[name="${prefix}${i}"]:checked`
-                );
-
-                total += checked ? Number(checked.value) : 0;
-            }
-
-            return Math.round(total / count);
-        }
-
-        function getUserScore() {
-
-            const scores = {
-                logic: 0,
-                creativity: 0,
-                social: 0,
-                analytical: 0,
-                leadership: 0,
-                practical: 0,
-                empathy: 0,
-                curiosity: 0
-            };
-
-            const counts = {
-                logic: 0,
-                creativity: 0,
-                social: 0,
-                analytical: 0,
-                leadership: 0,
-                practical: 0,
-                empathy: 0,
-                curiosity: 0
-            };
-
-            const checked =
-                document.querySelectorAll(
-                    'input[type="radio"]:checked'
-                );
-
-            checked.forEach(input => {
-
-                const trait =
-                    input.dataset.trait;
-
-                scores[trait] +=
-                    Number(input.value);
-
-                counts[trait]++;
+        function checkPageValidity() {
+            const currentInputs = pageInputs[currentPage];
+            const allChecked = currentInputs.every(name => {
+                return document.querySelector(`input[name="${name}"]:checked`) !== null;
             });
 
-            for (let trait in scores) {
-
-                if (counts[trait] > 0) {
-                    scores[trait] =
-                        Math.round(
-                            scores[trait] /
-                            counts[trait]
-                        );
+            if (allChecked) {
+                // Aktifkan tombol next jika di page 1-3
+                if (currentPage < totalPages) {
+                    btnNext.disabled = false;
+                    btnNext.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                    btnNext.classList.add('bg-maroon', 'text-white', 'hover:bg-red-900');
+                } else {
+                    // Jika di page terakhir (Page 4) sudah diisi lengkap, langsung AUTO-ROUTE
+                    isEksplorasiComplete = true;
+                    activateMapelSection();
                 }
+            } else {
+                btnNext.disabled = true;
+                btnNext.classList.add('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                btnNext.classList.remove('bg-maroon', 'text-white', 'hover:bg-red-900');
             }
-
-            return scores;
         }
 
-        async function lihatHasil() {
-            const scores = getUserScore();
+        function nextPage() {
+            // Sembunyikan halaman sekarang
+            document.getElementById(`page-${currentPage}`).classList.add('page-hidden');
+            
+            // Naikkan index page
+            currentPage++;
+            
+            // Tampilkan halaman berikutnya
+            document.getElementById(`page-${currentPage}`).classList.remove('page-hidden');
+            
+            // Update teks indikator halaman
+            pageIndicator.innerText = `Halaman ${currentPage} dari ${totalPages}`;
+            
+            // Reset state tombol 'Next' untuk halaman baru
+            checkPageValidity();
 
-            console.log("User Scores:", scores);
-
-            try {
-                const response = await fetch("http://localhost:3000/match", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(scores)
-                });
-
-                const data = await response.json();
-                console.log("Response from server:", data);
-
-                localStorage.setItem("assessmentResult", JSON.stringify(data));
-                window.location.href = "hasil.html";
-
-            } catch (error) {
-                console.error(error);
-                alert("Maaf, terjadi kesalahan saat memproses hasil. Silakan coba lagi.");
+            // Sembunyikan tombol next secara permanen jika sudah menginjak halaman terakhir
+            if (currentPage === totalPages) {
+                navContainer.classList.add('hidden');
             }
 
-        }    
-        loadQuestions();
+            // Scroll otomatis kembali ke atas form kuesioner biar rapi
+            sectionEksplorasi.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
+        function activateMapelSection() {
+            // Kunci semua kuesioner
+            sectionEksplorasi.classList.add('form-locked');
+            navContainer.classList.add('hidden');
+            
+            // Aktifkan formulir mapel favorit
+            sectionMapel.classList.remove('opacity-40');
+            btnSubmitAll.classList.remove('hidden');
+            
+            // Auto smooth scroll langsung meluncur ke section mapel
+            setTimeout(() => {
+                sectionMapel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+
+        function toggleMapel(button) {
+            if (!isEksplorasiComplete) {
+                alert('Silahkan selesaikan semua pengisian kuisioner di atas terlebih dahulu.');
+                return;
+            }
+            
+            if (button.classList.contains('border-maroon')) {
+                button.classList.remove('border-maroon', 'text-maroon', 'bg-yellow-50/50');
+                button.classList.add('border-gray-100', 'text-gray-700', 'bg-white');
+            } else {
+                button.classList.remove('border-gray-100', 'text-gray-700', 'bg-white');
+                button.classList.add('border-maroon', 'text-maroon', 'bg-yellow-50/50');
+            }
+        }
+
+        function submitAssessment() {
+            const selectedMapel = [];
+            document.querySelectorAll('#section-mapel button.border-maroon').forEach(btn => {
+                selectedMapel.push(btn.innerText);
+            });
+
+            if (selectedMapel.length === 0) {
+                alert('Pilih minimal satu mata pelajaran favorit kamu.');
+                return;
+            }
+
+            alert('Terima kasih! Seluruh data assessment berhasil disimpan secara valid.');
+        }
     </script>
+    
+    <style>
+        .animate-spin-slow {
+            animation: spin 8s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </body>
 </html>
