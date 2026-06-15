@@ -23,7 +23,7 @@
             display: none;
         }
 
-        /* Custom Scrollbar untuk list rekomendasi agar tetap estetik */
+        /* Custom Scrollbar untuk list rekomendasi */
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
         }
@@ -50,7 +50,13 @@
 </head>
 <body class="p-4 md:p-8 flex items-center justify-center min-h-screen">
 
-    <div class="max-w-4xl w-full mx-auto space-y-6">
+    <div class="max-w-4xl w-full mx-auto space-y-4">
+        
+        <div id="back-to-home-wrapper" class="flex items-center">
+            <a href="index.html" class="inline-flex items-center gap-2 text-xs font-bold text-maroon hover:text-red-900 bg-white border border-gray-100 px-4 py-2.5 rounded-xl shadow-sm transition-all">
+                <i class="fa-solid fa-house text-[10px]"></i> Kembali ke Beranda
+            </a>
+        </div>
         
         <header id="main-nav" class="bg-white border border-gray-100 rounded-2xl px-6 py-4 shadow-sm flex items-center justify-between transition-all duration-500">
             <div class="flex items-center gap-2">
@@ -58,7 +64,7 @@
                 <span class="font-extrabold text-gray-800 text-base tracking-tight">Eksplorasi Diri</span>
             </div>
             <nav class="flex items-center gap-6 text-sm font-semibold">
-                <a href="#" class="text-maroon border-b-2 border-maroon pb-0.5">Beranda</a>
+                <a href="index.html" class="text-maroon border-b-2 border-maroon pb-0.5">Beranda</a>
                 <a href="#" class="text-gray-400 hover:text-gray-600 transition-colors">Asesmen</a>
                 <a href="#" class="text-gray-400 hover:text-gray-600 transition-colors">Rekomendasi</a>
             </nav>
@@ -103,7 +109,7 @@
             </div>
         </div>
 
-        <div id="main-app-container" class="hidden opacity-0 space-y-8 transition-all duration-500">
+        <div id="main-app-container" class="hidden opacity-0 space-y-6 pt-2">
             
             <div id="section-eksplorasi" class="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-md space-y-6 transition-all duration-300">
                 <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-4 border-b border-gray-100">
@@ -208,10 +214,12 @@
                     </div>
                 </form>
 
-                <div id="nav-container" class="pt-4 border-t border-gray-100 flex justify-end">
-                    <button id="btn-next" type="button" onclick="nextPage()" disabled class="bg-gray-300 text-gray-500 cursor-not-allowed px-6 py-3 rounded-xl font-bold transition-all inline-flex items-center gap-2">
-                        Lanjut <i class="fa-solid fa-arrow-right"></i>
-                    </button>
+                <div id="nav-container" class="pt-4 border-t border-gray-100 flex justify-end items-center">
+                    <div>
+                        <button id="btn-next" type="button" onclick="nextPage()" disabled class="bg-gray-300 text-gray-500 cursor-not-allowed px-6 py-3 rounded-xl font-bold transition-all inline-flex items-center gap-2">
+                            Lanjut <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -238,58 +246,59 @@
                 </div>
             </div>
 
-            <div id="final-action-wrapper" class="hidden space-y-4 text-center transition-all duration-500">
-                </div>
+            <div id="final-action-wrapper" class="hidden space-y-4 text-center transition-all duration-500"></div>
         </div>
 
         <div id="hasil-container" class="hidden opacity-0 bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-md space-y-6 transition-all duration-500">
             <div class="flex items-center gap-3 pb-4 border-b border-gray-100">
                 <i class="fa-solid fa-chart-pie text-2xl text-maroon"></i>
-                <h3 class="text-2xl font-bold text-maroon">Hasil Asesmen Karaktermu</h3>
+                <h3 class="text-2xl font-bold text-maroon">Hasil Asesmen Character-mu</h3>
             </div>
             
             <p class="text-gray-600">Berdasarkan jawaban kuesioner dan mata pelajaran pilihanmu, berikut ringkasan snapshot kekuatan karaktermu:</p>
             
-            <div id="karakter-skor-wrapper" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                </div>
+            <div id="karakter-skor-wrapper" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
 
             <div class="bg-yellow-50/50 border border-yellow-200 p-4 rounded-xl">
                 <h4 class="font-bold text-maroon mb-2"><i class="fa-solid fa-book-bookmark mr-1"></i> Mata Pelajaran Fokusmu:</h4>
-                <div id="mapel-hasil-wrapper" class="flex flex-wrap gap-2">
-                    </div>
+                <div id="mapel-hasil-wrapper" class="flex flex-wrap gap-2"></div>
             </div>
 
             <div class="pt-4 flex flex-col sm:flex-row justify-center items-center gap-4">
-                <button type="button" onclick="window.location.reload()" class="w-full sm:w-auto border-2 border-maroon text-maroon hover:bg-yellow-50 px-6 py-3 rounded-xl font-bold transition-all inline-flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-rotate-left"></i> Ulangi Kuesioner
+                <button type="button" onclick="kembaliKeKuesionerDariHasil()" class="w-full sm:w-auto border-2 border-maroon text-maroon hover:bg-yellow-50 px-6 py-3 rounded-xl font-bold transition-all inline-flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-rotate-left text-xs"></i> Ulangi Dari Awal
                 </button>
                 <button type="button" onclick="bukaHasilDetail()" class="w-full sm:w-auto bg-maroon text-white hover:bg-red-900 px-6 py-3 rounded-xl font-bold transition-all inline-flex items-center justify-center gap-2 shadow-md">
-                    Detail Analisis Rekomendasi <i class="fa-solid fa-arrow-right"></i>
+                    Detail Analisis Rekomendasi <i class="fa-solid fa-arrow-right text-xs"></i>
                 </button>
             </div>
         </div>
 
         <div id="detail-container" class="hidden opacity-0 space-y-6 transition-all duration-500">
-            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-                <div class="text-xs text-gray-400 flex items-center gap-2 mb-2 font-medium">
-                    <span>Asesmen Selesai</span> &bull; <span>Analisis Selesai</span> &bull; <span class="text-maroon font-bold">Hasil Rekomendasi</span>
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+                    <button type="button" onclick="kembaliKeRingkasanDariDetail()" class="text-xs font-bold text-maroon hover:text-red-900 inline-flex items-center gap-1.5 transition-colors">
+                        <i class="fa-solid fa-arrow-left text-[10px]"></i> Kembali ke Ringkasan
+                    </button>
+                    <div class="text-xs text-gray-400 flex items-center gap-2 font-medium">
+                        <span>Asesmen Selesai</span> &bull; <span>Analisis Selesai</span> &bull; <span class="text-maroon font-bold">Hasil Rekomendasi</span>
+                    </div>
                 </div>
-                <div class="flex justify-between items-baseline flex-wrap gap-2">
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-maroon">Pilihan Karakter Masa Depanmu</h2>
-                    <span class="text-xs font-bold text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">Data Akurat 99%</span>
+                <div>
+                    <div class="flex justify-between items-baseline flex-wrap gap-2">
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-maroon">Pilihan Karakter Masa Depanmu</h2>
+                        <span class="text-xs font-bold text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">Data Akurat 99%</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Berdasarkan minat, kemampuan, kepribadian, dan mata pelajaran favoritmu, berikut adalah rekomendasi terbaik yang kami analisis untukmu.</p>
                 </div>
-                <p class="text-sm text-gray-500 mt-2">Berdasarkan minat, kemampuan, kepribadian, dan mata pelajaran favoritmu, berikut adalah rekomendasi terbaik yang kami analisis untukmu.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                
                 <div class="lg:col-span-5 space-y-4">
                     <div class="flex justify-between items-center px-1">
                         <span class="text-sm font-bold text-maroon inline-flex items-center gap-1.5"><i class="fa-regular fa-star text-yellow-500"></i> Top 3 Rekomendasi</span>
                     </div>
-
                     <div class="max-h-[500px] overflow-y-auto pr-2 space-y-4 custom-scrollbar">
-                        
                         <div class="bg-white border-2 border-maroon rounded-2xl p-5 relative shadow-sm">
                             <span class="absolute top-0 left-5 -translate-y-1/2 bg-maroon text-[9px] font-bold text-white uppercase tracking-wider px-2 py-0.5 rounded">Rekomendasi Terbaik</span>
                             <div class="flex justify-between items-start mb-2 mt-1">
@@ -298,34 +307,28 @@
                             </div>
                             <h4 class="font-bold text-gray-800 text-lg mb-1">Data Scientist</h4>
                             <p class="text-xs text-gray-500 leading-relaxed mb-3">Profesional yang mengekstrak pola bernilai dari tumpukan data besar.</p>
-                            <div class="flex gap-2">
-                                <button class="flex-1 bg-maroon text-white text-xs font-bold py-2 px-3 rounded-lg hover:bg-red-900 transition-all"><i class="fa-solid fa-eye text-[10px] mr-1"></i> Terpilih</button>
-                            </div>
+                            <button class="w-full bg-maroon text-white text-xs font-bold py-2 px-3 rounded-lg hover:bg-red-900 transition-all"><i class="fa-solid fa-eye text-[10px] mr-1"></i> Terpilih</button>
                         </div>
-
                         <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:border-gray-300 transition-all cursor-pointer">
                             <div class="flex justify-between items-start mb-2">
                                 <span class="text-[10px] font-bold text-gray-600 bg-gray-100 px-2 py-0.5 rounded">Teknik &amp; Dirgantara</span>
                                 <div class="text-right"><span class="text-xl font-extrabold text-gray-700 block">88%</span></div>
                             </div>
                             <h4 class="font-bold text-gray-800 text-lg mb-1">Aerospace Engineer</h4>
-                            <p class="text-xs text-gray-500 leading-relaxed">Bertanggung jawab atas perancangan sistem mekanis dan struktural pesawat terbang.</p>
+                            <p class="text-xs text-gray-500 leading-relaxed">Bertanggung jawab atas perancangan sistem mekanis struktural pesawat.</p>
                         </div>
-
                         <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:border-gray-300 transition-all cursor-pointer">
                             <div class="flex justify-between items-start mb-2">
                                 <span class="text-[10px] font-bold text-gray-600 bg-gray-100 px-2 py-0.5 rounded">Desain &amp; Kreatif</span>
                                 <div class="text-right"><span class="text-xl font-extrabold text-gray-700 block">85%</span></div>
                             </div>
                             <h4 class="font-bold text-gray-800 text-lg mb-1">UI/UX Designer</h4>
-                            <p class="text-xs text-gray-500 leading-relaxed">Merancang antarmuka produk digital agar memiliki estetika tinggi dan ramah pengguna.</p>
+                            <p class="text-xs text-gray-500 leading-relaxed">Merancang antarmuka produk digital agar estetis dan ramah pengguna.</p>
                         </div>
-
                     </div>
                 </div>
 
                 <div class="lg:col-span-7 space-y-6">
-                    
                     <div class="bg-gradient-to-br from-red-50/50 to-amber-50/30 border border-red-100 rounded-2xl p-6 shadow-sm">
                         <h4 class="font-bold text-maroon text-base mb-3"><i class="fa-solid fa-chart-simple mr-1"></i> Analisis Kecocokan: Data Scientist</h4>
                         <div class="grid grid-cols-4 gap-2 text-center">
@@ -339,31 +342,38 @@
                     <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm space-y-4">
                         <div class="flex items-center gap-2 pb-2 border-b border-gray-100">
                             <i class="fa-solid fa-route text-maroon text-lg"></i>
-                            <h4 class="font-bold text-gray-800 text-base">Langkah Selanjutnya / Action Plan</h4>
+                            <h4 class="font-bold text-gray-800 text-base">Langkah Selanjutnya / Action Plan Resmi</h4>
                         </div>
-                        
-                        <ul class="space-y-3 text-xs md:text-sm text-gray-600 leading-relaxed">
+                        <ul class="space-y-4 text-xs md:text-sm text-gray-600 leading-relaxed">
                             <li class="flex items-start gap-3">
                                 <span class="flex items-center justify-center w-5 h-5 rounded-full bg-red-100 text-maroon font-bold text-[11px] shrink-0 mt-0.5">1</span>
                                 <div>
-                                    <strong class="text-gray-800">Pelajari Pemrograman Dasar:</strong> Mulailah mengeksplorasi bahasa pemrograman populer seperti Python atau R, serta dasar pengolahan logika data statistika.
+                                    <strong class="text-gray-800 block text-sm">Pelajari Pemrograman Dasar &amp; Tools Utama</strong>
+                                    <p class="mt-0.5 text-gray-500">Mulai kuasai bahasa pemrograman Python atau R melalui platform gratis seperti Python.org, Kaggle Learn, atau Coursera. Fokus pada manipulasi data menggunakan library dasar.</p>
                                 </div>
                             </li>
                             <li class="flex items-start gap-3">
                                 <span class="flex items-center justify-center w-5 h-5 rounded-full bg-red-100 text-maroon font-bold text-[11px] shrink-0 mt-0.5">2</span>
                                 <div>
-                                    <strong class="text-gray-800">Perkuat Kemampuan Matematika:</strong> Fokus pada materi sekolah yang berkaitan dengan statistika, peluang, aljabar linear, dan kalkulus dasar.
+                                    <strong class="text-gray-800 block text-sm">Perkuat Fondasi Matematika &amp; Statistika Sekolah</strong>
+                                    <p class="mt-0.5 text-gray-500">Berikan perhatian lebih pada materi sekolah yang membahas statistika deskriptif, peluang (probabilitas), matriks, aljabar linear, dan kalkulus dasar.</p>
                                 </div>
                             </li>
                             <li class="flex items-start gap-3">
                                 <span class="flex items-center justify-center w-5 h-5 rounded-full bg-red-100 text-maroon font-bold text-[11px] shrink-0 mt-0.5">3</span>
                                 <div>
-                                    <strong class="text-gray-800">Ikuti Kursus / Bootcamp Mini:</strong> Cari sertifikasi gratis atau proyek mandiri di platform pembelajaran online terpercaya untuk mengasah portofolio awalmu.
+                                    <strong class="text-gray-800 block text-sm">Eksplorasi Sertifikasi &amp; Mini-Project Mandiri</strong>
+                                    <p class="mt-0.5 text-gray-500">Kerjakan analisis data sederhana menggunakan dataset publik gratis dari Kaggle, lalu simpan portofolio koding Anda di GitHub untuk membangun bukti kompetensi sejak dini.</p>
                                 </div>
                             </li>
                         </ul>
                     </div>
 
+                    <div class="pt-2 text-center">
+                        <a href="index.html" class="w-full inline-flex items-center justify-center gap-2 bg-maroon text-white hover:bg-red-900 px-6 py-4 rounded-xl font-bold transition-all shadow-md">
+                            <i class="fa-solid fa-house text-xs"></i> Selesai &amp; Kembali ke Beranda
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -461,18 +471,23 @@
                 sectionMapel.classList.remove('opacity-40');
                 sectionMapel.scrollIntoView({ behavior: 'smooth' });
                 
+                // Navigasi final setelah kuesioner habis (Tidak ada tombol kembali)
                 document.getElementById('nav-container').innerHTML = `
                     <span class="text-green-700 font-bold bg-green-50 px-4 py-2 rounded-xl border border-green-200 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-check"></i> Data Kuesioner Terisi
+                        <i class="fa-solid fa-circle-check"></i> Data Kuesioner Terisi Sempurna
                     </span>
                 `;
             }
         }
 
         function toggleMapel(button) {
-            if (document.getElementById('nav-container').querySelector('span') === null) {
-                alert("Selesaikan pengisian kuesioner terlebih dahulu!");
-                return;
+            // Cek apakah halaman kuesioner sudah tuntas dilewati sampai halaman ke-4
+            if (currentPage < totalPages || !document.getElementById('form-eksplorasi').parentElement.classList.contains('space-y-6')) {
+                const checkedCount = document.querySelectorAll('input[type="radio"]:checked').length;
+                if(checkedCount < 6) { // Pengaman sederhana total soal kuesioner
+                    alert("Selesaikan seluruh pengisian kuesioner halaman 1-4 terlebih dahulu!");
+                    return;
+                }
             }
 
             const mapelName = button.innerText.trim();
@@ -496,6 +511,7 @@
             document.getElementById('section-eksplorasi').classList.add('form-locked');
             document.getElementById('section-mapel').classList.add('form-locked');
             document.getElementById('submit-action-container').classList.add('hidden');
+            document.getElementById('back-to-home-wrapper').classList.add('hidden'); // Sembunyikan top home button saat transisi hasil
 
             const wrapper = document.getElementById('final-action-wrapper');
             wrapper.classList.remove('hidden');
@@ -568,6 +584,11 @@
             }, 500);
         }
 
+        function kembaliKeKuesionerDariHasil() {
+            // Fungsi reset untuk mengulang dari awal secara bersih
+            window.location.reload();
+        }
+
         function bukaHasilDetail() {
             const hasilContainer = document.getElementById('hasil-container');
             const detailContainer = document.getElementById('detail-container');
@@ -579,6 +600,22 @@
                 setTimeout(() => {
                     detailContainer.classList.remove('opacity-0');
                     updateNavBar('rekomendasi');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 50);
+            }, 500);
+        }
+
+        function kembaliKeRingkasanDariDetail() {
+            const detailContainer = document.getElementById('detail-container');
+            const hasilContainer = document.getElementById('hasil-container');
+
+            detailContainer.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                detailContainer.classList.add('hidden');
+                hasilContainer.classList.remove('hidden');
+                setTimeout(() => {
+                    hasilContainer.classList.remove('opacity-0');
+                    updateNavBar('asesmen');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }, 50);
             }, 500);
