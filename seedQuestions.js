@@ -10,10 +10,6 @@ async function seedQuestions() {
 
     console.log("MongoDB Connected!");
 
-    await Question.deleteMany();
-
-    console.log("Old questions deleted");
-
     await Question.insertMany(questions);
 
     console.log(`${questions.length} questions inserted`);

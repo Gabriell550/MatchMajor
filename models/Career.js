@@ -12,14 +12,12 @@ const careerSchema = new mongoose.Schema({
     },
 
     traits: {
-        logic: Number,
-        creativity: Number,
-        social: Number,
-        analytical: Number,
-        leadership: Number,
-        practical: Number,
-        empathy: Number,
-        curiosity: Number
+        R: Number,
+        I: Number,
+        A: Number,
+        S: Number,
+        E: Number,
+        C: Number
     }
 });
 

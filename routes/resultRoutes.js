@@ -3,6 +3,8 @@ console.log("MATCH ROUTE LOADED");
 const express = require("express");
 const router = express.Router();
 
+const subjectToRIASEC = require("../data/subjects");
+
 const Career = require("../models/Career");
 
 async function matchCareer(userScore) {
@@ -20,7 +22,7 @@ async function matchCareer(userScore) {
         );
       }
 
-      const maxScore = 32;
+      const maxScore = 3;
 
       const percentage = Math.max(
         0,
@@ -42,9 +44,40 @@ async function matchCareer(userScore) {
     .sort((a, b) => b.percentage - a.percentage);
 }
 
+function tambahNilaiMapel(userScore, favSubject) { 
+  const finalScores = { ...userScore };
+
+  const weights = [1.5, 1.2, 1.0]
+
+  favSubject.forEach((subject) => {
+    const bonus = subjectToRIASEC[subject];
+
+    if (!bonus) return;
+
+    const weight = weights.shift() || 1.0;
+
+    Object.entries(bonus).forEach(([trait, value]) => {
+      finalScores[trait] = (finalScores[trait] || 0) + value * weight;
+    });
+  });
+
+  return finalScore;
+}
+
 router.post("/", async (req, res) => {
   try {
-    const result = await matchCareer(req.body);
+    const { scores, favSubjects } = req.body;
+
+    const finalScores = applySubjectBonus(
+      scores,
+      favSubjects || []
+    );
+
+    console.log("Skor awal:", scores);
+    console.log("Mapel:", favSubjects);
+    console.log("Skor akhir:", finalScores);
+
+    const result = await matchCareer(finalScores);
 
     if (result.length === 0) {
       return res.status(404).json({
@@ -53,14 +86,13 @@ router.post("/", async (req, res) => {
       });
     }
 
-    console.log(result);
-    console.log(result[0]);
-
     res.json({
       success: true,
       topMatch: result[0],
       alternatives: result.slice(1, 3),
+      scores: finalScores
     });
+
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -68,5 +100,8 @@ router.post("/", async (req, res) => {
     });
   }
 });
+
+
+f
 
 module.exports = router;

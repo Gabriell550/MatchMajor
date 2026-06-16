@@ -1,82 +1,152 @@
 module.exports = [
   {
-    question: "Gue sering dapet ide-ide unik atau konsep visual yang muncul tiba-tiba bahkan pas lagi nggak mikirin tugas.",
-    trait: "creativity"
-  },
-  {
-    question: "Gue lebih suka ngerjain sesuatu yang bebas gue desain sendiri daripada cuma ngikutin template yang udah ada.",
-    trait: "creativity"
-  },
-  {
-    question: "Kalau ada topik yang lagi viral, gue biasanya bakal ulik sampai ke akar-akarnya karena kepo maksimal.",
-    trait: "curiosity"
-  },
-  {
-    question: "Gue sering \"tersesat\" di internet cuma buat cari tahu cara kerja benda-benda atau fenomena di sekitar gue.",
-    trait: "curiosity"
-  },
-  {
-    question: "Gue selalu tertarik buat nyoba aplikasi, fitur, atau gadget baru meskipun nggak ada yang nyuruh.",
-    trait: "curiosity"
-  },
-  {
-    question: "Gue selalu ngelihat masalah sebagai rangkaian sebab-akibat yang harus diselesaikan secara urut dan masuk akal.",
-    trait: "logic"
-  },
-  {
-    question: "Gue paling nggak suka kalau ada orang ngambil keputusan cuma pakai perasaan tanpa ada alasan kuat di baliknya.",
-    trait: "logic"
-  },
-  {
-    question: "Gue merasa jauh lebih nyaman bekerja dengan aturan atau sistem yang jelas dan terstruktur.",
-    trait: "practical"
-  },
-  {
-    question: "Sebelum mutusin sesuatu, gue biasanya bakal bandingin data, harga, atau review dulu secara detail.",
-    trait: "analytical"
-  },
-  {
-    question: "Gue suka merhatiin pola atau tren di balik sebuah kejadian daripada cuma tahu info permukaannya aja.",
-    trait: "analytical"
-  },
-  {
-    question: "Gue ngerasa puas banget kalau berhasil nemuin detail kecil atau kesalahan yang orang lain nggak sadar.",
-    trait: "analytical"
-  },
-  {
-    question: "Gue ngerasa energi gue makin nambah kalau lagi nongkrong atau kolaborasi bareng banyak orang.",
-    trait: "social"
-  },
-  {
-    question: "Gue tipe orang yang gampang banget cairin suasana dan mulai obrolan seru sama orang baru.",
-    trait: "social"
-  },
-  {
-    question: "Gue lebih suka diskusi langsung (ketemu/call) daripada harus nunggu balesan chat yang lama.",
-    trait: "social"
-  },
-  {
-    question: "Gue bisa langsung peka kalau mood temen lagi nggak enak, meskipun dia berusaha nutupin.",
-    trait: "empathy"
-  },
-  {
-    question: "Pas lagi ambil keputusan, gue selalu mempertimbangkan gimana dampaknya bagi perasaan orang lain.",
-    trait: "empathy"
-  },
-  {
-    question: "Gue refleks bakal ngambil alih komando kalau gue lihat kerja kelompok udah mulai nggak jelas arahnya.",
-    trait: "leadership"
-  },
-  {
-    question: "Gue ngerasa tertantang buat nentuin target tim dan bagi-bagi tugas biar semuanya jalan efektif.",
-    trait: "leadership"
-  },
-  {
-    question: "Gue jauh lebih cepet paham sesuatu kalau langsung nyobain prakteknya daripada cuma baca teorinya doang.",
-    trait: "practical"
-  },
-  {
-    question: "Gue merasa lebih puas kalau hasil kerja gue ada wujud fisiknya atau bisa langsung dipake fungsinya.",
-    trait: "practical"
-  }
+  question: "Saya lebih suka belajar melalui praktik langsung daripada hanya membaca teori.",
+  trait: "R",
+  category: "Realistic"
+},
+{
+  question: "Saya tertarik menggunakan alat, mesin, atau perangkat teknologi.",
+  trait: "R",
+  category: "Realistic"
+},
+{
+  question: "Saya menikmati kegiatan yang menghasilkan sesuatu secara nyata atau fisik.",
+  trait: "R",
+  category: "Realistic"
+},
+{
+  question: "Saya senang memecahkan masalah teknis pada perangkat atau sistem.",
+  trait: "R",
+  category: "Realistic"
+},
+{
+  question: "Saya merasa puas ketika melihat hasil kerja yang dapat langsung digunakan.",
+  trait: "R",
+  category: "Realistic"
+},
+{
+  question: "Saya senang mencari tahu penyebab suatu masalah secara mendalam.",
+  trait: "I",
+  category: "Investigative"
+},
+{
+  question: "Saya tertarik mempelajari bagaimana suatu sistem atau teknologi bekerja.",
+  trait: "I",
+  category: "Investigative"
+},
+{
+  question: "Saya suka menganalisis data sebelum mengambil keputusan.",
+  trait: "I",
+  category: "Investigative"
+},
+{
+  question: "Saya menikmati memecahkan masalah yang membutuhkan logika dan analisis.",
+  trait: "I",
+  category: "Investigative"
+},
+{
+  question: "Ketika menemukan topik menarik, saya terdorong untuk mempelajarinya lebih lanjut.",
+  trait: "I",
+  category: "Investigative"
+},
+{
+  question: "Saya sering memiliki ide-ide baru untuk membuat atau memperbaiki sesuatu.",
+  trait: "A",
+  category: "Artistic"
+},
+{
+  question: "Saya suka mengekspresikan diri melalui desain, tulisan, atau karya kreatif.",
+  trait: "A",
+  category: "Artistic"
+},
+{
+  question: "Saya lebih menyukai pekerjaan yang memberi kebebasan berkreasi.",
+  trait: "A",
+  category: "Artistic"
+},
+{
+  question: "Saya menikmati membuat sesuatu dengan gaya atau cara yang unik.",
+  trait: "A",
+  category: "Artistic"
+},
+{
+  question: "Saya tertarik pada kegiatan yang melibatkan imajinasi dan kreativitas.",
+  trait: "A",
+  category: "Artistic"
+},
+{
+  question: "Saya senang membantu orang lain menyelesaikan masalah mereka.",
+  trait: "S",
+  category: "Social"
+},
+{
+  question: "Saya mudah memahami perasaan orang lain.",
+  trait: "S",
+  category: "Social"
+},
+{
+  question: "Saya menikmati bekerja sama dalam tim.",
+  trait: "S",
+  category: "Social"
+},
+{
+  question: "Saya merasa nyaman berinteraksi dengan banyak orang.",
+  trait: "S",
+  category: "Social"
+},
+{
+  question: "Saya mempertimbangkan dampak keputusan terhadap orang lain.",
+  trait: "S",
+  category: "Social"
+},
+{
+  question: "Saya sering mengambil inisiatif ketika bekerja dalam kelompok.",
+  trait: "E",
+  category: "Enterprising"
+},
+{
+  question: "Saya tertarik memimpin dan mengarahkan orang lain.",
+  trait: "E",
+  category: "Enterprising"
+},
+{
+  question: "Saya senang menetapkan target dan berusaha mencapainya.",
+  trait: "E",
+  category: "Enterprising"
+},
+{
+  question: "Saya percaya diri menyampaikan ide di depan banyak orang.",
+  trait: "E",
+  category: "Enterprising"
+},
+{
+  question: "Saya menikmati kegiatan yang melibatkan negosiasi atau persuasi.",
+  trait: "E",
+  category: "Enterprising"
+},
+{
+  question: "Saya merasa nyaman bekerja dengan aturan dan prosedur yang jelas.",
+  trait: "C",
+  category: "Conventional"
+},
+{
+  question: "Saya terbiasa merencanakan pekerjaan secara teratur dan sistematis.",
+  trait: "C",
+  category: "Conventional"
+},
+{
+  question: "Saya teliti dalam memeriksa detail suatu pekerjaan.",
+  trait: "C",
+  category: "Conventional"
+},
+{
+  question: "Saya lebih suka data dan informasi yang tersusun rapi.",
+  trait: "C",
+  category: "Conventional"
+},
+{
+  question: "Saya senang mengatur dan mengelola informasi secara terstruktur.",
+  trait: "C",
+  category: "Conventional"
+}
 ];

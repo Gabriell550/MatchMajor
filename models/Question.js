@@ -8,7 +8,11 @@ const questionSchema = new mongoose.Schema({
     trait: {
         type: String,
         required: true
-    }   
+    },
+    category: {
+        type: String,
+        required: true
+    }
 })
 
 module.exports = mongoose.model('Question', questionSchema);
