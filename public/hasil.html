@@ -102,8 +102,8 @@
             AC
           </div>
           <div>
-            <p class="text-sm font-bold">Alex Chandra</p>
-            <p class="text-xs text-gray-400">Siswa Kelas XII</p>
+            <p class="text-sm font-bold">User</p>
+            <p class="text-xs text-gray-400">Kelas</p>
           </div>
         </div>
         <button
@@ -171,7 +171,7 @@
                 </div>
                 <div class="text-right">
                   <div class="text-4xl font-black text-yellow-400">
-                    <span id="persentase">0</span><span class="text-lg">%</span>
+                    <span id="persentase">0</span><span class="text-lg"></span>
                   </div>
                   <div class="text-[10px] uppercase opacity-60">Skor Akhir</div>
                 </div>
@@ -260,25 +260,25 @@
 
               <div class="grid grid-cols-4 gap-4 mb-8">
                 <div class="text-center p-4 bg-gray-50 rounded-2xl">
-                  <div class="text-xl font-bold text-maroon">90%</div>
+                  <div class="text-xl font-bold text-maroon">Loading...</div>
                   <div class="text-[9px] font-bold text-gray-400 uppercase">
                     Minat
                   </div>
                 </div>
                 <div class="text-center p-4 bg-gray-50 rounded-2xl">
-                  <div class="text-xl font-bold text-maroon">95%</div>
+                  <div class="text-xl font-bold text-maroon">Loading...</div>
                   <div class="text-[9px] font-bold text-gray-400 uppercase">
                     Skill
                   </div>
                 </div>
                 <div class="text-center p-4 bg-gray-50 rounded-2xl">
-                  <div class="text-xl font-bold text-maroon">85%</div>
+                  <div class="text-xl font-bold text-maroon">Loading...</div>
                   <div class="text-[9px] font-bold text-gray-400 uppercase">
                     Psikologi
                   </div>
                 </div>
                 <div class="text-center p-4 bg-gray-50 rounded-2xl">
-                  <div class="text-xl font-bold text-maroon">98%</div>
+                  <div class="text-xl font-bold text-maroon">Loading...</div>
                   <div class="text-[9px] font-bold text-gray-400 uppercase">
                     Akademik
                   </div>
@@ -293,7 +293,7 @@
                 </h4>
                 <div>
                   <div class="flex justify-between text-xs font-bold mb-2">
-                    <span>Matematika</span><span class="text-maroon">95%</span>
+                    <span>Matematika</span><span class="text-maroon">Loading...</span>
                   </div>
                   <div
                     class="w-full bg-gray-100 h-2 rounded-full overflow-hidden"
@@ -303,8 +303,7 @@
                 </div>
                 <div>
                   <div class="flex justify-between text-xs font-bold mb-2">
-                    <span>Bahasa Inggris</span
-                    ><span class="text-maroon">88%</span>
+                    <span>Bahasa Inggris</span><span class="text-maroon">Loading...</span>
                   </div>
                   <div
                     class="w-full bg-gray-100 h-2 rounded-full overflow-hidden"
@@ -371,7 +370,7 @@
         result.topMatch.description;
 
       document.getElementById("persentase").innerText =
-        result.topMatch.percentage;
+        result.topMatch.percentage + "%";
 
       // Alternatif 1
       if (result.alternatives[0]) {
