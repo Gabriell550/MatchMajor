@@ -10,28 +10,36 @@ const Career = require("../models/Career");
 async function matchCareer(userScore) {
   const careers = await Career.find();
 
+  const normalizedUser = {
+    R: userScore.R / 5,
+    I: userScore.I / 5,
+    A: userScore.A / 5,
+    S: userScore.S / 5,
+    E: userScore.E / 5,
+    C: userScore.C / 5,
+  };
+
   return careers
     .map((career) => {
       let score = 0;
 
-      const traits = career.traits.toObject();
+      const traits = career.traits;
 
       for (const key of Object.keys(traits)) {
         score += Math.abs(
-          Number(traits[key] || 0) - Number(userScore[key] || 0),
+          Number(traits[key] || 0) -
+          Number(normalizedUser[key] || 0)
         );
       }
 
-      const maxScore = 3;
+      const maxDifference = 24;
 
       const percentage = Math.max(
         0,
-        Math.round(((maxScore - score) / maxScore) * 100),
+        Math.round(
+          (1 - score / maxDifference) * 100
+        )
       );
-
-      console.log("CAREER:", career.name);
-      console.log("SCORE:", score);
-      console.log("PERCENTAGE:", percentage);
 
       return {
         id: career._id,
@@ -44,38 +52,42 @@ async function matchCareer(userScore) {
     .sort((a, b) => b.percentage - a.percentage);
 }
 
-function tambahNilaiMapel(userScore, favSubject) { 
+function tambahNilaiMapel(userScore, favSubjects = []) {
   const finalScores = { ...userScore };
 
-  const weights = [1.5, 1.2, 1.0]
+  const weights = [1.5, 1.2, 1.0];
 
-  favSubject.forEach((subject) => {
+  favSubjects.forEach((subject, index) => {
     const bonus = subjectToRIASEC[subject];
 
     if (!bonus) return;
 
-    const weight = weights.shift() || 1.0;
+    const weight = weights[index] || 1;
 
     Object.entries(bonus).forEach(([trait, value]) => {
-      finalScores[trait] = (finalScores[trait] || 0) + value * weight;
+      finalScores[trait] =
+        (finalScores[trait] || 0) + value * weight;
     });
   });
 
-  return finalScore;
+  return finalScores;
 }
 
 router.post("/", async (req, res) => {
   try {
     const { scores, favSubjects } = req.body;
 
-    const finalScores = applySubjectBonus(
+    if (!scores) {
+      return res.status(400).json({
+        success: false,
+        message: "Scores tidak ditemukan",
+      });
+    }
+
+    const finalScores = tambahNilaiMapel(
       scores,
       favSubjects || []
     );
-
-    console.log("Skor awal:", scores);
-    console.log("Mapel:", favSubjects);
-    console.log("Skor akhir:", finalScores);
 
     const result = await matchCareer(finalScores);
 
@@ -90,7 +102,7 @@ router.post("/", async (req, res) => {
       success: true,
       topMatch: result[0],
       alternatives: result.slice(1, 3),
-      scores: finalScores
+      scores: finalScores,
     });
 
   } catch (error) {

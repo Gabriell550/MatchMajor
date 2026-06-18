@@ -311,33 +311,80 @@
         }
 
         function renderQuestions() {
-            const container = document.getElementById("questions-container");
+            const container =
+                document.getElementById("questions-container");
 
             container.innerHTML = "";
 
-            questions.forEach((q, index) => {
+            const start = (currentPage - 1) * questionsPerPage;
+            const end = start + questionsPerPage;
+            const pageQuestions = questions.slice(start, end);
+
+            pageQuestions.forEach((q, index) => {
+
                 container.innerHTML += `
-                <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 mb-4">
-                    <p class="font-semibold mb-4">
-                        ${index + 1}. ${q.question}
+                <div class="space-y-3">
+
+                    <p class="text-gray-800 font-semibold text-base">
+                        ${start + index + 1}. ${q.question}
                     </p>
 
-                    <div class="flex gap-4">
+                    <div class="grid grid-cols-5 gap-2 text-center text-xs font-bold text-gray-500">
                         ${[1,2,3,4,5].map(score => `
-                            <label class="flex items-center gap-2">
+                            <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50">
+
                                 <input
                                     type="radio"
-                                    name="q${q._id}"
+                                    name="${q._id}"
                                     value="${score}"
-                                    onchange="saveAnswer('${q._id}', ${score}, '${q.trait}')"
+
+                                    ${answers[q._id] == score ? "checked" : ""}
+                                    onchange="
+                                        answers['${q._id}'] = ${score};
+                                    "
                                 >
-                                ${score}
+                                <span>
+                                    ${
+                                        score == 1 ? "STS" :
+                                        score == 2 ? "TS" :
+                                        score == 3 ? "N" :
+                                        score == 4 ? "S" :
+                                        "SS"
+                                    }
+                                </span>
+
                             </label>
                         `).join("")}
+
                     </div>
+
                 </div>
                 `;
             });
+            document.getElementById(
+                "page-indicator"
+            ).innerText =
+                `Halaman ${currentPage} dari ${Math.ceil(questions.length / questionsPerPage)}`;
+        }
+
+        function nextPage() {
+            const totalPages =
+                Math.ceil(
+                    questions.length /
+                    questionsPerPage
+                );
+
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderQuestions();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderQuestions();
+            }
         }
 
         function saveAnswer(id, value, trait) {
@@ -348,7 +395,6 @@
         }
 
         async function bukaHalamanHasil() {
-
             const scores = {
                 R: 0,
                 I: 0,
@@ -369,7 +415,10 @@
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(scores)
+                body: JSON.stringify({
+                    scores,
+                    favSubjects: selectedSubjects
+                    })
             });
 
             const result = await res.json();
