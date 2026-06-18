@@ -177,5 +177,47 @@
         </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+    const historyCtx = document.getElementById('historyChart');
+
+    new Chart(historyCtx, {
+        type: 'line',
+        data: {
+            labels: [
+                '14 Apr 2026',
+                '22 Mei 2026',
+                '16 Jun 2026'
+            ],
+            datasets: [{
+                label: 'Skor Kecocokan Karir',
+                data: [72, 85, 93],
+                tension: 0.4,
+                fill: true,
+                borderColor: '#7A1315',
+                backgroundColor: 'rgba(122,19,21,0.1)',
+                borderWidth: 3,
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+    </script>
+
 </body>
 </html>
