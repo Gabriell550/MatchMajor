@@ -124,6 +124,64 @@
 
                 <div id="questions-container" class="space-y-6"></div>
 
+                <div id="subjects-container" class="hidden">
+
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold text-maroon">
+                            Mata Pelajaran Favorit
+                        </h3>
+
+                        <p class="text-gray-600">
+                            Pilih mata pelajaran yang paling kamu sukai atau kuasai.
+                        </p>
+
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+                            <button type="button" onclick="toggleMapel(this)"
+                                class="subject-btn p-4 border-2 rounded-xl">
+                                Matematika
+                            </button>
+
+                            <button type="button" onclick="toggleMapel(this)"
+                                class="subject-btn p-4 border-2 rounded-xl">
+                                Fisika
+                            </button>
+
+                            <button type="button" onclick="toggleMapel(this)"
+                                class="subject-btn p-4 border-2 rounded-xl">
+                                Informatika
+                            </button>
+
+                            <button type="button" onclick="toggleMapel(this)"
+                                class="subject-btn p-4 border-2 rounded-xl">
+                                Biologi
+                            </button>
+
+                            <button type="button" onclick="toggleMapel(this)"
+                                class="subject-btn p-4 border-2 rounded-xl">
+                                Ekonomi
+                            </button>
+
+                            <button type="button" onclick="toggleMapel(this)"
+                                class="subject-btn p-4 border-2 rounded-xl">
+                                Sosiologi
+                            </button>
+
+                            <button type="button" onclick="toggleMapel(this)"
+                                class="subject-btn p-4 border-2 rounded-xl">
+                                Bahasa Inggris
+                            </button>
+
+                            <button type="button" onclick="toggleMapel(this)"
+                                class="subject-btn p-4 border-2 rounded-xl">
+                                Seni Budaya
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+
                 <!-- Navigasi halaman -->
                 <div class="flex justify-between pt-6 border-t border-gray-100">
 
@@ -148,161 +206,33 @@
             </form>
 
 
-            <div id="section-mapel" class="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-md opacity-40 transition-all duration-500">
-                <div class="flex items-center gap-3 mb-6">
-                    <i class="fa-solid fa-book-open text-2xl text-maroon"></i>
-                    <h3 class="text-2xl font-bold text-maroon">Mata Pelajaran Favorit</h3>
-                </div>
-                <p class="text-gray-600 mb-8">Pilih mata pelajaran yang paling kamu kuasai atau sukai di sekolah. (Bisa pilih lebih dari satu)</p>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Matematika</button>
-                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Fisika</button>
-                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Informatika</button>
-                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Bahasa Inggris</button>
-                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Seni Rupa</button>
-                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Ekonomi</button>
-                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Sosiologi</button>
-                    <button type="button" onclick="toggleMapel(this)" class="p-4 border-2 rounded-xl hover:border-yellow-400 transition-all font-bold text-gray-700 border-gray-100 bg-white">Biologi</button>
-                </div>
-
-                <div id="submit-action-container" class="text-center">
-                    <button id="btn-submit-all" type="button" onclick="kunciSeluruhAsesmen()" class="w-full bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg">Konfirmasi &amp; Selesai</button>
-                </div>
-            </div>
-
-            <div id="final-action-wrapper" class="hidden space-y-4 text-center transition-all duration-500"></div>
-        </div>
-
-        <div id="hasil-container" class="hidden opacity-0 bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-md space-y-6 transition-all duration-500">
-            <div class="flex items-center gap-3 pb-4 border-b border-gray-100">
-                <i class="fa-solid fa-chart-pie text-2xl text-maroon"></i>
-                <h3 class="text-2xl font-bold text-maroon">Hasil Asesmen Character-mu</h3>
-            </div>
             
-            <p class="text-gray-600">Berdasarkan jawaban kuesioner dan mata pelajaran pilihanmu, berikut ringkasan snapshot kekuatan karaktermu:</p>
-            
-            <div id="karakter-skor-wrapper" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-
-            <div class="bg-yellow-50/50 border border-yellow-200 p-4 rounded-xl">
-                <h4 class="font-bold text-maroon mb-2"><i class="fa-solid fa-book-bookmark mr-1"></i> Mata Pelajaran Fokusmu:</h4>
-                <div id="mapel-hasil-wrapper" class="flex flex-wrap gap-2"></div>
-            </div>
-
-            <div class="pt-4 flex flex-col sm:flex-row justify-center items-center gap-4">
-                <button type="button" onclick="kembaliKeKuesionerDariHasil()" class="w-full sm:w-auto border-2 border-maroon text-maroon hover:bg-yellow-50 px-6 py-3 rounded-xl font-bold transition-all inline-flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-arrow-rotate-left text-xs"></i> Ulangi Dari Awal
-                </button>
-                <button type="button" onclick="bukaHasilDetail()" class="w-full sm:w-auto bg-maroon text-white hover:bg-red-900 px-6 py-3 rounded-xl font-bold transition-all inline-flex items-center justify-center gap-2 shadow-md">
-                    Detail Analisis Rekomendasi <i class="fa-solid fa-arrow-right text-xs"></i>
-                </button>
-            </div>
-        </div>
-
-        <div id="detail-container" class="hidden opacity-0 space-y-6 transition-all duration-500">
-            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm space-y-4">
-                <div class="flex items-center justify-between border-b border-gray-100 pb-3">
-                    <button type="button" onclick="kembaliKeRingkasanDariDetail()" class="text-xs font-bold text-maroon hover:text-red-900 inline-flex items-center gap-1.5 transition-colors">
-                        <i class="fa-solid fa-arrow-left text-[10px]"></i> Kembali ke Ringkasan
-                    </button>
-                    <div class="text-xs text-gray-400 flex items-center gap-2 font-medium">
-                        <span>Asesmen Selesai</span> &bull; <span>Analisis Selesai</span> &bull; <span class="text-maroon font-bold">Hasil Rekomendasi</span>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between items-baseline flex-wrap gap-2">
-                        <h2 class="text-2xl md:text-3xl font-extrabold text-maroon">Pilihan Karakter Masa Depanmu</h2>
-                        <span class="text-xs font-bold text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">Data Akurat 99%</span>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-2">Berdasarkan minat, kemampuan, kepribadian, dan mata pelajaran favoritmu, berikut adalah rekomendasi terbaik yang kami analisis untukmu.</p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                <div class="lg:col-span-5 space-y-4">
-                    <div class="flex justify-between items-center px-1">
-                        <span class="text-sm font-bold text-maroon inline-flex items-center gap-1.5"><i class="fa-regular fa-star text-yellow-500"></i> Top 3 Rekomendasi</span>
-                    </div>
-                    <div 
-                        id="top3-container"
-                        class="max-h-[500px] overflow-y-auto pr-2 space-y-4 custom-scrollbar">
-                        
-                        
-                        
-                    </div>
-                </div>
-
-                <div class="lg:col-span-7 space-y-6">
-                    <div class="bg-gradient-to-br from-red-50/50 to-amber-50/30 border border-red-100 rounded-2xl p-6 shadow-sm">
-                        <h4 class="font-bold text-maroon text-base mb-3"><i class="fa-solid fa-chart-simple mr-1"></i> Analisis Kecocokan: ${career.name}</h4>
-                        <div class="grid grid-cols-4 gap-2 text-center">
-                            <div class="bg-white border border-red-50 p-2 rounded-xl"><span class="text-[10px] text-gray-400 block mb-1">Minat</span><span class="text-sm font-extrabold text-gray-800">Loading%</span></div>
-                            <div class="bg-white border border-red-50 p-2 rounded-xl"><span class="text-[10px] text-gray-400 block mb-1">Mampu</span><span class="text-sm font-extrabold text-gray-800">Loading%</span></div>
-                            <div class="bg-white border border-red-50 p-2 rounded-xl"><span class="text-[10px] text-gray-400 block mb-1">Fisik</span><span class="text-sm font-extrabold text-gray-800">Loading%</span></div>
-                            <div class="bg-white border border-red-50 p-2 rounded-xl border-l-2 border-l-amber-400"><span class="text-[10px] text-gray-400 block mb-1">Mapel</span><span class="text-sm font-extrabold text-maroon">Loading%</span></div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm space-y-4">
-                        <div class="flex items-center gap-2 pb-2 border-b border-gray-100">
-                            <i class="fa-solid fa-route text-maroon text-lg"></i>
-                            <h4 class="font-bold text-gray-800 text-base">Langkah Selanjutnya / Action Plan Resmi</h4>
-                        </div>
-                        <ul class="space-y-4 text-xs md:text-sm text-gray-600 leading-relaxed">
-                            <li class="flex items-start gap-3">
-                                <span class="flex items-center justify-center w-5 h-5 rounded-full bg-red-100 text-maroon font-bold text-[11px] shrink-0 mt-0.5">1</span>
-                                <div>
-                                    <strong class="text-gray-800 block text-sm">Pelajari Pemrograman Dasar &amp; Tools Utama</strong>
-                                    <p class="mt-0.5 text-gray-500">Mulai kuasai bahasa pemrograman Python atau R melalui platform gratis seperti Python.org, Kaggle Learn, atau Coursera. Fokus pada manipulasi data menggunakan library dasar.</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="flex items-center justify-center w-5 h-5 rounded-full bg-red-100 text-maroon font-bold text-[11px] shrink-0 mt-0.5">2</span>
-                                <div>
-                                    <strong class="text-gray-800 block text-sm">Perkuat Fondasi Matematika &amp; Statistika Sekolah</strong>
-                                    <p class="mt-0.5 text-gray-500">Berikan perhatian lebih pada materi sekolah yang membahas statistika deskriptif, peluang (probabilitas), matriks, aljabar linear, dan kalkulus dasar.</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="flex items-center justify-center w-5 h-5 rounded-full bg-red-100 text-maroon font-bold text-[11px] shrink-0 mt-0.5">3</span>
-                                <div>
-                                    <strong class="text-gray-800 block text-sm">Eksplorasi Sertifikasi &amp; Mini-Project Mandiri</strong>
-                                    <p class="mt-0.5 text-gray-500">Kerjakan analisis data sederhana menggunakan dataset publik gratis dari Kaggle, lalu simpan portofolio koding Anda di GitHub untuk membangun bukti kompetensi sejak dini.</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="pt-2 text-center">
-                        <a href="index.html" class="w-full inline-flex items-center justify-center gap-2 bg-maroon text-white hover:bg-red-900 px-6 py-4 rounded-xl font-bold transition-all shadow-md">
-                            <i class="fa-solid fa-house text-xs"></i> Selesai &amp; Kembali ke Beranda
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
     </div>
 
     <script>
         let currentPage = 1;
+        const questionsPerPage = 5;
         const totalPages = 4;
         let selectedMapel = [];
 
-        const API_URL = "http://localhost:5000";
+        const API_URL = "http://localhost:3000";
         let questions = [];
         let answers = {};
 
         async function loadQuestions() {
-            console.log("LOAD QUESTIONS DIPANGGIL");
-
             try {
-                const res = await fetch("http://localhost:3000/questions");
+                const res = await fetch(`${API_URL}/questions`);
+
+                console.log("STATUS:", res.status);
+
                 const data = await res.json();
 
-                console.log(data);
+                console.log("DATA:", data);
 
                 questions = data.data || data;
+
+                console.log("JUMLAH SOAL:", questions.length);
 
                 renderQuestions();
             } catch (err) {
@@ -340,7 +270,10 @@
 
                                     ${answers[q._id] == score ? "checked" : ""}
                                     onchange="
-                                        answers['${q._id}'] = ${score};
+                                    answers['${q._id}'] = {
+                                        value: ${score},
+                                        trait: '${q.trait}'
+                                    };
                                     "
                                 >
                                 <span>
@@ -375,8 +308,28 @@
                 );
 
             if (currentPage < totalPages) {
+
                 currentPage++;
                 renderQuestions();
+
+            } else if (currentPage === totalPages) {
+                currentPage++;
+
+                document
+                    .getElementById("questions-container")
+                    .classList.add("hidden");
+
+                document
+                    .getElementById("subjects-container")
+                    .classList.remove("hidden");
+
+                document
+                    .getElementById("btn-next")
+                    .innerText =
+                    "Lihat Hasil";
+
+            } else {
+                bukaHalamanHasil();
             }
         }
 
@@ -417,7 +370,7 @@
                 },
                 body: JSON.stringify({
                     scores,
-                    favSubjects: selectedSubjects
+                    favSubjects: selectedMapel
                     })
             });
 
@@ -428,7 +381,7 @@
                 JSON.stringify(result)
             );
 
-            window.location.href = "result.html";
+            window.location.href = "hasil.html";
         }
 
         function startExploration() {
@@ -441,7 +394,6 @@
                 mainApp.classList.remove('hidden');
                 setTimeout(() => {
                     mainApp.classList.remove('opacity-0');
-                    checkPageValidity();
                     updateNavBar('asesmen');
                 }, 50);
             }, 500);
@@ -466,55 +418,33 @@
             }
         }
 
-        document.getElementById('form-eksplorasi').addEventListener('change', checkPageValidity);
 
-        function checkPageValidity() {
-            const currentPageEl = document.getElementById(`page-${currentPage}`);
-            const radios = currentPageEl.querySelectorAll('input[type="radio"]');
+        // function checkPageValidity() {
+        //     const currentPageEl = document.getElementById(`page-${currentPage}`);
+        //     const radios = currentPageEl.querySelectorAll('input[type="radio"]');
             
-            const names = new Set();
-            radios.forEach(r => names.add(r.name));
+        //     const names = new Set();
+        //     radios.forEach(r => names.add(r.name));
             
-            let allChecked = true;
-            names.forEach(name => {
-                if (!currentPageEl.querySelector(`input[name="${name}"]:checked`)) {
-                    allChecked = false;
-                }
-            });
+        //     let allChecked = true;
+        //     names.forEach(name => {
+        //         if (!currentPageEl.querySelector(`input[name="${name}"]:checked`)) {
+        //             allChecked = false;
+        //         }
+        //     });
 
-            const btnNext = document.getElementById('btn-next');
-            if (allChecked) {
-                btnNext.disabled = false;
-                btnNext.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
-                btnNext.classList.add('bg-maroon', 'text-white', 'hover:bg-red-900', 'shadow-md');
-            } else {
-                btnNext.disabled = true;
-                btnNext.classList.remove('bg-maroon', 'text-white', 'hover:bg-red-900', 'shadow-md');
-                btnNext.classList.add('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
-            }
-        }
+        //     const btnNext = document.getElementById('btn-next');
+        //     if (allChecked) {
+        //         btnNext.disabled = false;
+        //         btnNext.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+        //         btnNext.classList.add('bg-maroon', 'text-white', 'hover:bg-red-900', 'shadow-md');
+        //     } else {
+        //         btnNext.disabled = true;
+        //         btnNext.classList.remove('bg-maroon', 'text-white', 'hover:bg-red-900', 'shadow-md');
+        //         btnNext.classList.add('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+        //     }
+        // }
 
-        function nextPage() {
-            if (currentPage < totalPages) {
-                document.getElementById(`page-${currentPage}`).classList.add('page-hidden');
-                currentPage++;
-                document.getElementById(`page-${currentPage}`).classList.remove('page-hidden');
-                document.getElementById('page-indicator').innerText = `Halaman ${currentPage} dari ${totalPages}`;
-                checkPageValidity();
-                document.getElementById('section-eksplorasi').scrollIntoView({ behavior: 'smooth' });
-            } else {
-                const sectionMapel = document.getElementById('section-mapel');
-                sectionMapel.classList.remove('opacity-40');
-                sectionMapel.scrollIntoView({ behavior: 'smooth' });
-                
-                // Navigasi final setelah kuesioner habis (Tidak ada tombol kembali)
-                document.getElementById('nav-container').innerHTML = `
-                    <span class="text-green-700 font-bold bg-green-50 px-4 py-2 rounded-xl border border-green-200 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-check"></i> Data Kuesioner Terisi Sempurna
-                    </span>
-                `;
-            }
-        }
 
         function toggleMapel(button) {
             // Cek apakah halaman kuesioner sudah tuntas dilewati sampai halaman ke-4
@@ -540,7 +470,7 @@
 
         function kunciSeluruhAsesmen() {
             if (selectedMapel.length === 0) {
-                alert("Silakan pilih minimal 1 mata pelajaran favorit kamu terlebih dahulu!");
+                alert("Silakan pilih 3 mata pelajaran favorit kamu terlebih dahulu!");
                 return;
             }
 
@@ -562,62 +492,6 @@
                 </div>
             `;
             wrapper.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function bukaHalamanHasil() {
-            const formData = new FormData(document.getElementById('form-eksplorasi'));
-            let skorKategori = { "Creativity": 0, "Curiosity": 0, "Logic": 0, "Analytical": 0, "Social": 0, "Empathy": 0, "Leadership": 0 };
-
-            for (let [name, value] of formData.entries()) {
-                const prefix = name.substring(0, 2);
-                const kategori = kategoriMap[prefix];
-                if (kategori) skorKategori[kategori] += parseInt(value);
-            }
-
-            const wrapperKarakter = document.getElementById('karakter-skor-wrapper');
-            if (wrapperKarakter) {
-                wrapperKarakter.innerHTML = '';
-                for (const [key, val] of Object.entries(skorKategori)) {
-                    const persen = Math.min((val / 10) * 100, 100).toFixed(0); 
-                    wrapperKarakter.innerHTML += `
-                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="font-bold text-gray-700 text-sm">${key}</span>
-                                <span class="text-xs font-bold text-maroon bg-yellow-100 px-2 py-0.5 rounded">${val} Poin</span>
-                            </div>
-                            <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
-                                <div class="bg-maroon h-full transition-all duration-1000" style="width: ${persen}%"></div>
-                            </div>
-                        </div>
-                    `;
-                }
-            }
-
-            const wrapperMapel = document.getElementById('mapel-hasil-wrapper');
-            if (wrapperMapel) {
-                wrapperMapel.innerHTML = '';
-                selectedMapel.forEach(mapel => {
-                    wrapperMapel.innerHTML += `
-                        <span class="bg-white border border-maroon text-maroon px-3 py-1 rounded-lg text-sm font-semibold shadow-sm">
-                            ${mapel}
-                        </span>
-                    `;
-                });
-            }
-
-            const mainApp = document.getElementById('main-app-container');
-            const hasilContainer = document.getElementById('hasil-container');
-
-            mainApp.classList.add('opacity-0', 'scale-95');
-            setTimeout(() => {
-                mainApp.classList.add('hidden');
-                hasilContainer.classList.remove('hidden');
-                setTimeout(() => {
-                    hasilContainer.classList.remove('opacity-0');
-                    updateNavBar('asesmen');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 50);
-            }, 500);
         }
 
         function kembaliKeKuesionerDariHasil() {
@@ -668,8 +542,6 @@
                 window.location.href = 'login.html';
             }
         });
-</script>
-
     </script>
 </body>
 </html>
