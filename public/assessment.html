@@ -135,11 +135,26 @@
                             Pilih mata pelajaran yang paling kamu sukai atau kuasai.
                         </p>
 
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <p  id="subject-counter"
+                            class="text-sm font-semibold text-maroon">
+                            Dipilih 0/3
+                        </p>
+
+                        <div class="grid grid-cols-3 md:grid-cols-4 gap-4">
 
                             <button type="button" onclick="toggleMapel(this)"
                                 class="subject-btn p-4 border-2 rounded-xl">
                                 Matematika
+                            </button>
+
+                            <button type="button" onclick="toggleMapel(this)"
+                                class="subject-btn p-4 border-2 rounded-xl">
+                                Biologi
+                            </button>
+
+                            <button type="button" onclick="toggleMapel(this)"
+                                class="subject-btn p-4 border-2 rounded-xl">
+                                Bahasa Indonesia
                             </button>
 
                             <button type="button" onclick="toggleMapel(this)"
@@ -175,6 +190,16 @@
                             <button type="button" onclick="toggleMapel(this)"
                                 class="subject-btn p-4 border-2 rounded-xl">
                                 Seni Budaya
+                            </button>
+
+                            <button type="button" onclick="toggleMapel(this)"
+                                class="subject-btn p-4 border-2 rounded-xl">
+                                PKWU
+                            </button>
+
+                            <button type="button" onclick="toggleMapel(this)"
+                                class="subject-btn p-4 border-2 rounded-xl">
+                                Pendidikan Jasmani
                             </button>
 
                         </div>
@@ -300,18 +325,28 @@
                 `Halaman ${currentPage} dari ${Math.ceil(questions.length / questionsPerPage)}`;
         }
 
+        function isCurrentPageAnswered() {
+            const start = (currentPage - 1) * questionsPerPage;
+            const end = start + questionsPerPage;
+
+            const pageQuestions = questions.slice(start, end);
+
+            return pageQuestions.every(q => answers[q._id]);
+        }
+
         function nextPage() {
+
+            if(!isCurrentPageAnswered){
+                alert("Silahkan isi semua kuisioner terlebih dahulu!")
+                return;
+            }
+
             const totalPages =
-                Math.ceil(
-                    questions.length /
-                    questionsPerPage
-                );
+                Math.ceil(questions.length / questionsPerPage);
 
             if (currentPage < totalPages) {
-
                 currentPage++;
                 renderQuestions();
-
             } else if (currentPage === totalPages) {
                 currentPage++;
 
@@ -348,6 +383,12 @@
         }
 
         async function bukaHalamanHasil() {
+
+            if(selectedMapel.length !== 3){
+                alert("Silahkan pilih tepat 3 mata pelajaran!");
+                return;
+            }
+
             const scores = {
                 R: 0,
                 I: 0,
@@ -447,6 +488,8 @@
 
 
         function toggleMapel(button) {
+
+            const mapelName = button.innerText.trim();
             // Cek apakah halaman kuesioner sudah tuntas dilewati sampai halaman ke-4
             if (currentPage < totalPages || !document.getElementById('form-eksplorasi').parentElement.classList.contains('space-y-6')) {
                 const checkedCount = document.querySelectorAll('input[type="radio"]:checked').length;
@@ -456,7 +499,7 @@
                 }
             }
 
-            const mapelName = button.innerText.trim();
+            
             if (selectedMapel.includes(mapelName)) {
                 selectedMapel = selectedMapel.filter(item => item !== mapelName);
                 button.classList.remove('border-yellow-400', 'bg-yellow-50/50', 'text-maroon');
@@ -466,6 +509,29 @@
                 button.classList.remove('border-gray-100', 'bg-white', 'text-gray-700');
                 button.classList.add('border-yellow-400', 'bg-yellow-50/50', 'text-maroon');
             }
+
+            if(selectedMapel.length < 3){
+                alert("Hanya bisa memilih 3 mata pelajaran")
+                return;
+            }
+
+            selectedMapel.push(mapelName)
+
+            button.classList.remove(
+                "border-gray-100",
+                "bg-white",
+                "text-gray-700"
+            );
+
+            button.classList.add(
+                "border-yellow-400",
+                "bg-yellow-50/50",
+                "text-maroon"
+            );
+
+            document.getElementById(
+                "subject-counter").innerText = `Dipilih: ${selectedMapel.length} / 3`;
+
         }
 
         function kunciSeluruhAsesmen() {
