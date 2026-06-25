@@ -335,18 +335,21 @@
         }
 
         function nextPage() {
-
-            if(!isCurrentPageAnswered){
-                alert("Silahkan isi semua kuisioner terlebih dahulu!")
-                return;
-            }
-
             const totalPages =
                 Math.ceil(questions.length / questionsPerPage);
 
+            if (currentPage <= totalPages &&
+                !isCurrentPageAnswered()) {
+
+                alert("Silahkan isi semua kuisioner terlebih dahulu!");
+                return;
+            }
+
             if (currentPage < totalPages) {
+
                 currentPage++;
                 renderQuestions();
+
             } else if (currentPage === totalPages) {
                 currentPage++;
 
@@ -360,10 +363,15 @@
 
                 document
                     .getElementById("btn-next")
-                    .innerText =
-                    "Lihat Hasil";
+                    .innerText = "Lihat Hasil";
 
             } else {
+
+                if (selectedMapel.length !== 3) {
+                    alert("Pilih tepat 3 mata pelajaran favorit.");
+                    return;
+                }
+
                 bukaHalamanHasil();
             }
         }
@@ -380,6 +388,121 @@
                 value: Number(value),
                 trait: trait
             };
+        }
+
+        
+
+        function startExploration() {
+            const welcome = document.getElementById('welcome-container');
+            const mainApp = document.getElementById('main-app-container');
+            
+            welcome.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                welcome.classList.add('hidden');
+                mainApp.classList.remove('hidden');
+                setTimeout(() => {
+                    mainApp.classList.remove('opacity-0');
+                    updateNavBar('asesmen');
+                }, 50);
+            }, 500);
+        }
+
+        function updateNavBar(state) {
+            const navLinks = document.querySelectorAll('#main-nav nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('text-maroon', 'border-b-2', 'border-maroon');
+                link.classList.add('text-gray-400');
+            });
+
+            if (state === 'beranda') {
+                navLinks[0].classList.add('text-maroon', 'border-b-2', 'border-maroon');
+                navLinks[0].classList.remove('text-gray-400');
+            } else if (state === 'asesmen') {
+                navLinks[1].classList.add('text-maroon', 'border-b-2', 'border-maroon');
+                navLinks[1].classList.remove('text-gray-400');
+            } else if (state === 'rekomendasi') {
+                navLinks[2].classList.add('text-maroon', 'border-b-2', 'border-maroon');
+                navLinks[2].classList.remove('text-gray-400');
+            }
+        }
+
+
+
+        function toggleMapel(button) {
+
+            const mapelName = button.innerText.trim();
+
+            if (selectedMapel.includes(mapelName)) {
+
+                selectedMapel =
+                    selectedMapel.filter(
+                        item => item !== mapelName
+                    );
+
+                button.classList.remove(
+                    "border-yellow-400",
+                    "bg-yellow-50/50",
+                    "text-maroon"
+                );
+
+                button.classList.add(
+                    "border-gray-100",
+                    "bg-white",
+                    "text-gray-700"
+                );
+
+            } else {
+
+                if (selectedMapel.length >= 3) {
+                    alert("Maksimal memilih 3 mata pelajaran");
+                    return;
+                }
+
+                selectedMapel.push(mapelName);
+
+                button.classList.remove(
+                    "border-gray-100",
+                    "bg-white",
+                    "text-gray-700"
+                );
+
+                button.classList.add(
+                    "border-yellow-400",
+                    "bg-yellow-50/50",
+                    "text-maroon"
+                );
+            }
+
+            document.getElementById(
+                "subject-counter"
+            ).innerText =
+                `Dipilih: ${selectedMapel.length} / 3`;
+        }
+
+        function kunciSeluruhAsesmen() {
+            if (selectedMapel.length === 0) {
+                alert("Silakan pilih 3 mata pelajaran favorit kamu terlebih dahulu!");
+                return;
+            }
+
+            document.getElementById('section-eksplorasi').classList.add('form-locked');
+            document.getElementById('section-mapel').classList.add('form-locked');
+            document.getElementById('submit-action-container').classList.add('hidden');
+            document.getElementById('back-to-home-wrapper').classList.add('hidden'); // Sembunyikan top home button saat transisi hasil
+
+            const wrapper = document.getElementById('final-action-wrapper');
+            wrapper.classList.remove('hidden');
+            wrapper.innerHTML = `
+                <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-md flex flex-col items-center gap-4">
+                    <span class="text-green-700 font-bold bg-green-50 px-5 py-3 rounded-xl border border-green-200 flex items-center gap-2 shadow-sm text-base">
+                        <i class="fa-solid fa-circle-check text-xl"></i> Seluruh Rangkaian Asesmen Selesai!
+                    </span>
+                    <button id="btn-lihat-hasil-final" type="button" onclick="bukaHalamanHasil()" class="w-full bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-xl flex items-center justify-center gap-2">
+                        Lihat Hasil Eksplorasi <i class="fa-solid fa-square-poll-vertical text-lg"></i>
+                    </button>
+                </div>
+            `;
+            wrapper.scrollIntoView({ behavior: 'smooth' });
         }
 
         async function bukaHalamanHasil() {
@@ -423,141 +546,6 @@
             );
 
             window.location.href = "hasil.html";
-        }
-
-        function startExploration() {
-            const welcome = document.getElementById('welcome-container');
-            const mainApp = document.getElementById('main-app-container');
-            
-            welcome.classList.add('opacity-0', 'scale-95');
-            setTimeout(() => {
-                welcome.classList.add('hidden');
-                mainApp.classList.remove('hidden');
-                setTimeout(() => {
-                    mainApp.classList.remove('opacity-0');
-                    updateNavBar('asesmen');
-                }, 50);
-            }, 500);
-        }
-
-        function updateNavBar(state) {
-            const navLinks = document.querySelectorAll('#main-nav nav a');
-            navLinks.forEach(link => {
-                link.classList.remove('text-maroon', 'border-b-2', 'border-maroon');
-                link.classList.add('text-gray-400');
-            });
-
-            if (state === 'beranda') {
-                navLinks[0].classList.add('text-maroon', 'border-b-2', 'border-maroon');
-                navLinks[0].classList.remove('text-gray-400');
-            } else if (state === 'asesmen') {
-                navLinks[1].classList.add('text-maroon', 'border-b-2', 'border-maroon');
-                navLinks[1].classList.remove('text-gray-400');
-            } else if (state === 'rekomendasi') {
-                navLinks[2].classList.add('text-maroon', 'border-b-2', 'border-maroon');
-                navLinks[2].classList.remove('text-gray-400');
-            }
-        }
-
-
-        // function checkPageValidity() {
-        //     const currentPageEl = document.getElementById(`page-${currentPage}`);
-        //     const radios = currentPageEl.querySelectorAll('input[type="radio"]');
-            
-        //     const names = new Set();
-        //     radios.forEach(r => names.add(r.name));
-            
-        //     let allChecked = true;
-        //     names.forEach(name => {
-        //         if (!currentPageEl.querySelector(`input[name="${name}"]:checked`)) {
-        //             allChecked = false;
-        //         }
-        //     });
-
-        //     const btnNext = document.getElementById('btn-next');
-        //     if (allChecked) {
-        //         btnNext.disabled = false;
-        //         btnNext.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
-        //         btnNext.classList.add('bg-maroon', 'text-white', 'hover:bg-red-900', 'shadow-md');
-        //     } else {
-        //         btnNext.disabled = true;
-        //         btnNext.classList.remove('bg-maroon', 'text-white', 'hover:bg-red-900', 'shadow-md');
-        //         btnNext.classList.add('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
-        //     }
-        // }
-
-
-        function toggleMapel(button) {
-
-            const mapelName = button.innerText.trim();
-            // Cek apakah halaman kuesioner sudah tuntas dilewati sampai halaman ke-4
-            if (currentPage < totalPages || !document.getElementById('form-eksplorasi').parentElement.classList.contains('space-y-6')) {
-                const checkedCount = document.querySelectorAll('input[type="radio"]:checked').length;
-                if(checkedCount < 6) { // Pengaman sederhana total soal kuesioner
-                    alert("Selesaikan seluruh pengisian kuesioner halaman 1-4 terlebih dahulu!");
-                    return;
-                }
-            }
-
-            
-            if (selectedMapel.includes(mapelName)) {
-                selectedMapel = selectedMapel.filter(item => item !== mapelName);
-                button.classList.remove('border-yellow-400', 'bg-yellow-50/50', 'text-maroon');
-                button.classList.add('border-gray-100', 'bg-white', 'text-gray-700');
-            } else {
-                selectedMapel.push(mapelName);
-                button.classList.remove('border-gray-100', 'bg-white', 'text-gray-700');
-                button.classList.add('border-yellow-400', 'bg-yellow-50/50', 'text-maroon');
-            }
-
-            if(selectedMapel.length < 3){
-                alert("Hanya bisa memilih 3 mata pelajaran")
-                return;
-            }
-
-            selectedMapel.push(mapelName)
-
-            button.classList.remove(
-                "border-gray-100",
-                "bg-white",
-                "text-gray-700"
-            );
-
-            button.classList.add(
-                "border-yellow-400",
-                "bg-yellow-50/50",
-                "text-maroon"
-            );
-
-            document.getElementById(
-                "subject-counter").innerText = `Dipilih: ${selectedMapel.length} / 3`;
-
-        }
-
-        function kunciSeluruhAsesmen() {
-            if (selectedMapel.length === 0) {
-                alert("Silakan pilih 3 mata pelajaran favorit kamu terlebih dahulu!");
-                return;
-            }
-
-            document.getElementById('section-eksplorasi').classList.add('form-locked');
-            document.getElementById('section-mapel').classList.add('form-locked');
-            document.getElementById('submit-action-container').classList.add('hidden');
-            document.getElementById('back-to-home-wrapper').classList.add('hidden'); // Sembunyikan top home button saat transisi hasil
-
-            const wrapper = document.getElementById('final-action-wrapper');
-            wrapper.classList.remove('hidden');
-            wrapper.innerHTML = `
-                <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-md flex flex-col items-center gap-4">
-                    <span class="text-green-700 font-bold bg-green-50 px-5 py-3 rounded-xl border border-green-200 flex items-center gap-2 shadow-sm text-base">
-                        <i class="fa-solid fa-circle-check text-xl"></i> Seluruh Rangkaian Asesmen Selesai!
-                    </span>
-                    <button id="btn-lihat-hasil-final" type="button" onclick="bukaHalamanHasil()" class="w-full bg-maroon text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-xl flex items-center justify-center gap-2">
-                        Lihat Hasil Eksplorasi <i class="fa-solid fa-square-poll-vertical text-lg"></i>
-                    </button>
-                </div>
-            `;
-            wrapper.scrollIntoView({ behavior: 'smooth' });
         }
 
         function kembaliKeKuesionerDariHasil() {
