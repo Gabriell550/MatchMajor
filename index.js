@@ -8,6 +8,7 @@ const Career = require("./models/Career");
 const careerRoutes = require("./routes/careerRoutes");
 const resultRoutes = require("./routes/resultRoutes");
 const questionRoutes = require("./routes/questionRoutes");
+const adminRoutes = require('./routes/adminRoutes');
 const app = express();
 
 app.use(cors());
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use("/careers", careerRoutes);
 app.use("/questions", questionRoutes);
 app.use("/match", resultRoutes);
+app.use('/api/admin', adminRoutes);
 
 app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => {

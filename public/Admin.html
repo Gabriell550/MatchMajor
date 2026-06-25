@@ -202,23 +202,23 @@ td{
 
         <div class="card">
             <h3>Total Pertanyaan</h3>
-            <span>30</span>
+            <span id="total-pertanyaan">0</span>
         </div>
 
         <div class="card">
             <h3>Total Jurusan</h3>
-            <span>19</span>
+            <span id="total-jurusan">0</span>
         </div>
 
-        <div class="card">
+        <!-- <div class="card">
             <h3>Total User</h3>
-            <span>0</span>
+            <span id="total-user">0</span>
         </div>
 
         <div class="card">
             <h3>Total Tes</h3>
-            <span>0</span>
-        </div>
+            <span id="total-tes">0</span>
+        </div> -->
 
     </div>
 
@@ -283,6 +283,30 @@ td{
     </div>
 
 </div>
+<script>
+    async function fetchDashboardStats() {
+        try{
+
+
+            const response = await fetch('http://localhost:3000/api/admin/dashboard-stats');
+            if (!response.ok) {
+                throw new Error('Gagal mengambil data dari server');
+            }
+
+            const data = await response.json();
+
+            document.getElementById('total-pertanyaan').textContent = data.totalPertanyaan;
+            document.getElementById('total-jurusan').textContent = data.totalJurusan;
+            // document.getElementById('total-user').textContent = data.totalUser;
+            // document.getElementById('total-tes').textContent = data.totalTes;
+
+        }catch (error) {
+            console.error('Error:', error)
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchDashboardStats);
+</script>
 
 </body>
 </html>
