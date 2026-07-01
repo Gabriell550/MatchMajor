@@ -217,6 +217,18 @@
             }
         }
     });
+
+    // Tambahkan ini di bagian atas script di halaman assessment & riwayat sesi
+firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+        // Jika tidak ada user yang login, arahkan kembali ke login.html
+        alert("Anda harus login terlebih dahulu untuk mengakses halaman ini!");
+        window.location.href = 'login.html';
+    } else {
+        // Jika user ada, biarkan halaman terbuka
+        console.log("Akses diizinkan untuk:", user.email);
+    }
+});
     </script>
 
 </body>

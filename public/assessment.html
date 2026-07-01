@@ -335,54 +335,55 @@
         }
 
         function nextPage() {
-            const totalPages =
-                Math.ceil(questions.length / questionsPerPage);
+            const totalPages = Math.ceil(questions.length / questionsPerPage);
 
-            if (currentPage <= totalPages &&
-                !isCurrentPageAnswered()) {
-
-                alert("Silahkan isi semua kuisioner terlebih dahulu!");
+            // Cek apakah halaman saat ini sudah diisi semua
+            if (!isCurrentPageAnswered()) {
+                alert("Silahkan isi semua pertanyaan di halaman ini terlebih dahulu!");
                 return;
             }
 
             if (currentPage < totalPages) {
-
+                // Pindah ke halaman soal berikutnya
                 currentPage++;
                 renderQuestions();
-
             } else if (currentPage === totalPages) {
-                currentPage++;
-
-                document
-                    .getElementById("questions-container")
-                    .classList.add("hidden");
-
-                document
-                    .getElementById("subjects-container")
-                    .classList.remove("hidden");
-
-                document
-                    .getElementById("btn-next")
-                    .innerText = "Lihat Hasil";
-
+                // Jika sudah di halaman soal terakhir, tampilkan pemilihan mata pelajaran
+                currentPage++; // Increment agar state berpindah
+                
+                document.getElementById("questions-container").classList.add("hidden");
+                document.getElementById("btn-prev").classList.add("hidden"); // Sembunyikan tombol prev
+                document.getElementById("btn-next").innerText = "Lihat Hasil";
+                
+                // Pastikan container mata pelajaran muncul
+                const mapelContainer = document.getElementById("subjects-container");
+                if (mapelContainer) mapelContainer.classList.remove("hidden");
             } else {
-
+                // Jika tombol "Lihat Hasil" diklik
                 if (selectedMapel.length !== 3) {
                     alert("Pilih tepat 3 mata pelajaran favorit.");
                     return;
                 }
-
                 bukaHalamanHasil();
             }
         }
 
+        // Pastikan juga fungsi prevPage menangani tombol agar muncul kembali
         function prevPage() {
             if (currentPage > 1) {
-                currentPage--;
-                renderQuestions();
+                if (currentPage > Math.ceil(questions.length / questionsPerPage)) {
+                    // Jika dari halaman mapel kembali ke soal
+                    document.getElementById("questions-container").classList.remove("hidden");
+                    document.getElementById("subjects-container").classList.add("hidden");
+                    document.getElementById("btn-next").innerText = "Selanjutnya";
+                    document.getElementById("btn-prev").classList.remove("hidden");
+                    currentPage--;
+                } else {
+                    currentPage--;
+                    renderQuestions();
+                }
             }
         }
-
         function saveAnswer(id, value, trait) {
             answers[id] = {
                 value: Number(value),
@@ -589,13 +590,20 @@
             loadQuestions();
         };
 
-      
-        firebase.auth().onAuthStateChanged((user) => {
-            if (!user) {
-                // Jika tidak ada user, tendang ke halaman login
-                window.location.href = 'login.html';
-            }
-        });
+
+    // Tambahkan ini di bagian atas script di halaman assessment & riwayat sesi
+firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+        // Jika tidak ada user yang login, arahkan kembali ke login.html
+        alert("Anda harus login terlebih dahulu untuk mengakses halaman ini!");
+        window.location.href = 'login.html';
+    } else {
+        // Jika user ada, biarkan halaman terbuka
+        console.log("Akses diizinkan untuk:", user.email);
+    }
+});
+
+    
     </script>
 </body>
 </html>
