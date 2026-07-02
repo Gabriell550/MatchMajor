@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MATCH MAJOR</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    
+
     <style>
-        .btn-admin-login{
+        .btn-admin-login {
             background-color: transparent;
             color: #FFD700;
             border: 1px solid #FFD700;
@@ -23,35 +26,82 @@
             transition: all 0.3s ease;
             text-align: center;
         }
-        .btn-admin-login:hover{
+
+        .btn-admin-login:hover {
             background-color: #FFD700;
             color: #800000;
+
+
+        }
+
+        .nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.75rem 0;
+            transition: all 0.3s;
+        }
+
+        .nav-menu a i {
+            width: 20px;
+            /* Lebar tetap untuk ikon agar teks sejajar */
         }
     </style>
 </head>
+
 <body>
     <div class="app-container">
-        <aside class="sidebar">
-            <div class="logo-section">
-                <span class="logo-text">MATCH</span>
-                <span class="logo-subtext">Major</span>
+        <aside class="sidebar p-8 flex flex-col text-white">
+
+            <!-- Logo section -->
+            <div class="mb-12">
+                <h1 class="text-2xl font-extrabold tracking-tight">
+                    MATCH<br /><span class="text-yellow-400 italic font-bold text-xl">Major</span>
+                </h1>
             </div>
-            <nav class="nav-menu">
-    <a href="index.html" class="nav-item active">Beranda</a>
-    <a href="#" onclick="cekAkses('assessment.html')" class="nav-item">Assessment</a>
-    <a href="#" onclick="cekAkses('riwayatsesi.html')" class="nav-item">Riwayat Sesi</a>
-</nav>
-           <div class="user-card">
-    <button id="auth-toggle-btn" class="btn-admin-login" onclick="handleAuth()">Login User</button>
-    <button class="btn-admin-login" onclick="window.location.href='loginadmin.html'">Login Admin</button>
-</div>
+
+            <!-- Navigasi dengan space-y-6 untuk jarak vertikal antar link -->
+            <nav class="flex-grow space-y-6">
+                <a href="index.html"
+                    class="flex items-center space-x-3 text-white font-bold border-r-4 border-yellow-400 -mr-8 pr-4">
+                    <i class="fa-solid fa-house w-5"></i>
+                    <span>Beranda</span>
+                </a>
+                <a href="#" onclick="cekAkses('assessment.html')"
+                    class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all">
+                    <i class="fa-solid fa-vial w-5"></i>
+                    <span>Assessment</span>
+                </a>
+                <a href="#" onclick="cekAkses('riwayatsesi.html')"
+                    class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all">
+                    <i class="fa-solid fa-clock-rotate-left w-5"></i>
+                    <span>Riwayat Sesi</span>
+                </a>
+            </nav>
+            <!-- Ganti bagian user-card lama dengan ini -->
+            <div class="mt-auto pt-8 border-t border-maroon-light/30">
+                <!-- Tombol Logout/Login User -->
+                <button id="auth-toggle-btn" onclick="handleAuth()"
+                    class="flex items-center space-x-2 text-sm text-red-300 hover:text-white transition-all w-full mb-4">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span id="auth-text">Logout</span>
+                </button>
+
+                <!-- Tombol Login Admin -->
+                <button onclick="window.location.href='loginadmin.html'"
+                    class="flex items-center space-x-2 text-sm text-yellow-400 hover:text-white transition-all w-full">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span>Login Admin</span>
+                </button>
+            </div>
         </aside>
 
         <main class="content-area">
             <section id="home" class="page-section">
                 <header class="welcome-header">
-                    <h1>Selamat Datang di Match Major</h1>
+                    <b><h1>Selamat Datang di Match Major</h1>
                     <p>Temukan jalur pendidikan dan karir yang paling sesuai dengan kepribadian dan kemampuanmu.</p>
+                    </b>
                 </header>
 
                 <div class="home-grid">
@@ -69,12 +119,12 @@
 
                 <div class="hero-action-card">
                     <div class="hero-text">
-    <h2>Siap Menentukan Masa Depan?</h2>
-    <p>Mulai asesmen baru untuk mendapatkan rekomendasi jurusan terbaru...</p>
-    <button class="btn-primary-large" onclick="cekAkses('assessment.html')">
-        Mulai Assessment Sekarang
-    </button>
-</div>
+                        <b><h2>Siap Menentukan Masa Depan?</h2>
+                        <p>Mulai asesmen baru untuk mendapatkan rekomendasi jurusan terbaru...</p></b>
+                        <button class="btn-primary-large" onclick="cekAkses('assessment.html')">
+                            Mulai Assessment Sekarang
+                        </button>
+                    </div>
                     <div class="hero-image-placeholder">
                         <div class="icon-circle">🚀</div>
                     </div>
@@ -84,66 +134,67 @@
     </div>
 
     <script>
-    // 1. Inisialisasi Firebase
-    const firebaseConfig = {
-        apiKey: "AIzaSyA0TKujQ_u9GU9eFJelMuo_ykXA1T0063c",
-        authDomain: "matchmajor-78a97.firebaseapp.com",
-        projectId: "matchmajor-78a97",
-        storageBucket: "matchmajor-78a97.firebasestorage.app",
-        messagingSenderId: "113944926778",
-        appId: "1:113944926778:web:0d4fc483d51fc5640e7303"
-    };
-    
-    // Pastikan tidak inisialisasi dua kali
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
+        // 1. Inisialisasi Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyA0TKujQ_u9GU9eFJelMuo_ykXA1T0063c",
+            authDomain: "matchmajor-78a97.firebaseapp.com",
+            projectId: "matchmajor-78a97",
+            storageBucket: "matchmajor-78a97.firebasestorage.app",
+            messagingSenderId: "113944926778",
+            appId: "1:113944926778:web:0d4fc483d51fc5640e7303"
+        };
 
-    const authToggleBtn = document.getElementById('auth-toggle-btn');
-
-    // 2. Satu-satunya listener untuk status login
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            authToggleBtn.textContent = "Logout User";
-        } else {
-            authToggleBtn.textContent = "Login User";
+        // Pastikan tidak inisialisasi dua kali
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
         }
-    });
 
-    // 3. Fungsi handleAuth (untuk tombol sidebar)
-    function handleAuth() {
-        const user = firebase.auth().currentUser;
-        if (user) {
-            firebase.auth().signOut().then(() => {
-                location.reload(); 
-            });
-        } else {
-            window.location.href = 'login.html';
+        const authToggleBtn = document.getElementById('auth-toggle-btn');
+        const authText = document.getElementById('auth-text'); // Pastikan ID ini ada di span tombol
+
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                authText.textContent = "Keluar"; // Atau "Logout"
+            } else {
+                authText.textContent = "Login User";
+            }
+        });
+
+        // 3. Fungsi handleAuth (untuk tombol sidebar)
+        function handleAuth() {
+            const user = firebase.auth().currentUser;
+            if (user) {
+                firebase.auth().signOut().then(() => {
+                    location.reload();
+                });
+            } else {
+                window.location.href = 'login.html';
+            }
         }
-    }
 
-    // 4. Fungsi cekAkses (untuk navigasi & tombol mulai)
-    function cekAkses(targetUrl) {
-    const user = firebase.auth().currentUser;
-    if (user) {
-        // Jika sudah login, izinkan masuk
-        window.location.href = targetUrl;
-    } else {
-        // Jika belum login, cegah dan arahkan ke login
-        alert("Silakan login dengan Google terlebih dahulu untuk melanjutkan!");
-        window.location.href = 'login.html';
-    }
-}
+        // 4. Fungsi cekAkses (untuk navigasi & tombol mulai)
+        function cekAkses(targetUrl) {
+            const user = firebase.auth().currentUser;
+            if (user) {
+                // Jika sudah login, izinkan masuk
+                window.location.href = targetUrl;
+            } else {
+                // Jika belum login, cegah dan arahkan ke login
+                alert("Silakan login dengan Google terlebih dahulu untuk melanjutkan!");
+                window.location.href = 'login.html';
+            }
+        }
 
-    // 5. Fungsi jam
-    function updateClock(){
-        const now = new Date();
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-        const timeString = now.toLocaleDateString('id-ID', options).replace('pukul','-');
-        document.getElementById('realtime-clock').textContent = timeString;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-</script>
+        // 5. Fungsi jam
+        function updateClock() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            const timeString = now.toLocaleDateString('id-ID', options).replace('pukul', '-');
+            document.getElementById('realtime-clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
 </body>
+
 </html>
