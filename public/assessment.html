@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,17 +9,37 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #fdfaf3; scroll-behavior: smooth;}
-        .text-maroon { color: #7A1315;}
-        .bg-maroon { background-color: #7A1315;}
-        .border-maroon { border-color: #7A1315;}
-        input[type="radio"] { accent-color: #7A1315; width: 1.2rem; height: 1.2rem;}
-        
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfaf3;
+            scroll-behavior: smooth;
+        }
+
+        .text-maroon {
+            color: #7A1315;
+        }
+
+        .bg-maroon {
+            background-color: #7A1315;
+        }
+
+        .border-maroon {
+            border-color: #7A1315;
+        }
+
+        input[type="radio"] {
+            accent-color: #7A1315;
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+
         .form-locked {
             opacity: 0.5;
             pointer-events: none;
             user-select: none;
         }
+
         .page-hidden {
             display: none;
         }
@@ -27,14 +48,17 @@
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 10px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 10px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
@@ -42,23 +66,32 @@
         .animate-spin-slow {
             animation: spin 12s linear infinite;
         }
+
         @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
+
 <body class="p-4 md:p-8 flex items-center justify-center min-h-screen">
 
     <div class="max-w-4xl w-full mx-auto space-y-4">
-        
+
         <div id="back-to-home-wrapper" class="flex items-center">
-            <a href="index.html" class="inline-flex items-center gap-2 text-xs font-bold text-maroon hover:text-red-900 bg-white border border-gray-100 px-4 py-2.5 rounded-xl shadow-sm transition-all">
+            <a href="index.html"
+                class="inline-flex items-center gap-2 text-xs font-bold text-maroon hover:text-red-900 bg-white border border-gray-100 px-4 py-2.5 rounded-xl shadow-sm transition-all">
                 <i class="fa-solid fa-house text-[10px]"></i> Kembali ke Beranda
             </a>
         </div>
-        
-        <header id="main-nav" class="bg-white border border-gray-100 rounded-2xl px-6 py-4 shadow-sm flex items-center justify-between transition-all duration-500">
+
+        <header id="main-nav"
+            class="bg-white border border-gray-100 rounded-2xl px-6 py-4 shadow-sm flex items-center justify-between transition-all duration-500">
             <div class="flex items-center gap-2">
                 <i class="fa-solid fa-compass text-maroon text-xl"></i>
                 <span class="font-extrabold text-gray-800 text-base tracking-tight">Eksplorasi Diri</span>
@@ -66,22 +99,25 @@
             <nav class="flex items-center gap-6 text-sm font-semibold">
                 <a href="index.html" class="text-maroon border-b-2 border-maroon pb-0.5">Beranda</a>
                 <a href="#" class="text-gray-400 hover:text-gray-600 transition-colors">Asesmen</a>
-                <a href="#" class="text-gray-400 hover:text-gray-600 transition-colors">Rekomendasi</a>
             </nav>
         </header>
-        
-        <div id="welcome-container" class="bg-white border border-gray-100 rounded-3xl p-8 md:p-12 shadow-sm transition-all duration-500 relative overflow-hidden">
+
+        <div id="welcome-container"
+            class="bg-white border border-gray-100 rounded-3xl p-8 md:p-12 shadow-sm transition-all duration-500 relative overflow-hidden">
             <div class="absolute -top-12 -right-12 w-48 h-48 bg-amber-50 rounded-full opacity-60"></div>
             <div class="absolute -bottom-16 -left-16 w-64 h-64 bg-red-50/40 rounded-full opacity-60"></div>
-            
+
             <div class="relative grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                 <div class="md:col-span-7 space-y-6 text-left z-10">
-                    <div class="inline-flex items-center gap-2 bg-red-50 border border-red-100 px-3 py-1.5 rounded-full text-xs font-bold text-maroon">
+                    <div
+                        class="inline-flex items-center gap-2 bg-red-50 border border-red-100 px-3 py-1.5 rounded-full text-xs font-bold text-maroon">
                         <i class="fa-solid fa-sparkles"></i> Pengembangan Diri Siswa
                     </div>
                     <div class="space-y-3">
-                        <h2 class="text-3xl md:text-5xl font-extrabold text-maroon leading-tight">Eksplorasi<br>Diri Saya</h2>
-                        <p class="text-gray-500 text-sm md:text-base leading-relaxed max-w-sm">Temukan potensi terbaik, kekuatan karakter, dan minat mata pelajaranmu untuk merancang masa depan yang gemilang.</p>
+                        <h2 class="text-3xl md:text-5xl font-extrabold text-maroon leading-tight">Eksplorasi<br>Diri
+                            Saya</h2>
+                        <p class="text-gray-500 text-sm md:text-base leading-relaxed max-w-sm">Temukan potensi terbaik,
+                            kekuatan karakter, dan minat mata pelajaranmu untuk merancang masa depan yang gemilang.</p>
                     </div>
 
                     <div class="bg-red-50 border-l-4 border-maroon p-4 rounded-r-xl max-w-md shadow-sm">
@@ -89,20 +125,25 @@
                             <i class="fa-solid fa-circle-exclamation text-maroon text-lg mt-0.5"></i>
                             <div>
                                 <h4 class="font-bold text-maroon text-sm">Penting Sebelum Memulai!</h4>
-                                <p class="text-xs text-red-900/80 mt-1 leading-relaxed">Isilah seluruh kuesioner dengan jujur dan apa adanya sesuai dengan dirimu. Tidak ada jawaban salah atau benar dalam asesmen eksplorasi ini.</p>
+                                <p class="text-xs text-red-900/80 mt-1 leading-relaxed">Isilah seluruh kuesioner dengan
+                                    jujur dan apa adanya sesuai dengan dirimu. Tidak ada jawaban salah atau benar dalam
+                                    asesmen eksplorasi ini.</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="pt-2">
-                        <button type="button" onclick="startExploration()" class="bg-maroon text-white hover:bg-red-900 px-8 py-4 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-3 group">
-                            Mulai Asesmen Sekarang <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        <button type="button" onclick="startExploration()"
+                            class="bg-maroon text-white hover:bg-red-900 px-8 py-4 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-3 group">
+                            Mulai Asesmen Sekarang <i
+                                class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                         </button>
                     </div>
                 </div>
 
                 <div class="md:col-span-5 flex justify-center items-center relative py-6 md:py-0">
-                    <div class="w-40 h-40 md:w-48 md:h-48 bg-gradient-to-br from-amber-50 to-red-50 rounded-full flex items-center justify-center border border-amber-100 shadow-inner relative animate-spin-slow">
+                    <div
+                        class="w-40 h-40 md:w-48 md:h-48 bg-gradient-to-br from-amber-50 to-red-50 rounded-full flex items-center justify-center border border-amber-100 shadow-inner relative animate-spin-slow">
                         <i class="fa-solid fa-compass text-6xl md:text-7xl text-maroon opacity-80"></i>
                     </div>
                 </div>
@@ -110,174 +151,171 @@
         </div>
 
         <div id="main-app-container" class="hidden opacity-0 space-y-6 pt-2">
-            
-            <div id="section-eksplorasi" class="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-md space-y-6 transition-all duration-300">
-                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-4 border-b border-gray-100">
+
+            <div id="section-eksplorasi"
+                class="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-md space-y-6 transition-all duration-300">
+                <div
+                    class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-4 border-b border-gray-100">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-clipboard-question text-2xl text-maroon"></i>
                         <h3 class="text-2xl font-bold text-maroon">Psikotest &amp; Karakter</h3>
                     </div>
-                    <span id="page-indicator" class="text-xs font-bold text-maroon bg-yellow-100 px-3 py-1.5 rounded-xl self-start sm:self-auto">Halaman 1 dari 7</span>
+                    <span id="page-indicator"
+                        class="text-xs font-bold text-maroon bg-yellow-100 px-3 py-1.5 rounded-xl self-start sm:self-auto">Halaman
+                        1 dari 7</span>
                 </div>
 
                 <form id="form-eksplorasi" class="space-y-6">
 
-                <div id="questions-container" class="space-y-6"></div>
+                    <div id="questions-container" class="space-y-6"></div>
 
-                <div id="subjects-container" class="hidden">
+                    <div id="subjects-container" class="hidden">
 
-                    <div class="space-y-4">
-                        <h3 class="text-2xl font-bold text-maroon">
-                            Mata Pelajaran Favorit
-                        </h3>
+                        <div class="space-y-4">
+                            <h3 class="text-2xl font-bold text-maroon">
+                                Mata Pelajaran Favorit
+                            </h3>
 
-                        <p class="text-gray-600">
-                            Pilih mata pelajaran yang paling kamu sukai atau kuasai.
-                        </p>
+                            <p class="text-gray-600">
+                                Pilih mata pelajaran yang paling kamu sukai atau kuasai.
+                            </p>
 
-                        <p  id="subject-counter"
-                            class="text-sm font-semibold text-maroon">
-                            Dipilih 0/3
-                        </p>
+                            <p id="subject-counter" class="text-sm font-semibold text-maroon">
+                                Dipilih 0/3
+                            </p>
 
-                        <div class="grid grid-cols-3 md:grid-cols-4 gap-4">
+                            <div class="grid grid-cols-3 md:grid-cols-4 gap-4">
 
-                            <button type="button" onclick="toggleMapel(this)"
-                                class="subject-btn p-4 border-2 rounded-xl">
-                                Matematika
-                            </button>
+                                <button type="button" onclick="toggleMapel(this)"
+                                    class="subject-btn p-4 border-2 rounded-xl">
+                                    Matematika
+                                </button>
 
-                            <button type="button" onclick="toggleMapel(this)"
-                                class="subject-btn p-4 border-2 rounded-xl">
-                                Biologi
-                            </button>
+                                <button type="button" onclick="toggleMapel(this)"
+                                    class="subject-btn p-4 border-2 rounded-xl">
+                                    Biologi
+                                </button>
 
-                            <button type="button" onclick="toggleMapel(this)"
-                                class="subject-btn p-4 border-2 rounded-xl">
-                                Bahasa Indonesia
-                            </button>
+                                <button type="button" onclick="toggleMapel(this)"
+                                    class="subject-btn p-4 border-2 rounded-xl">
+                                    Bahasa Indonesia
+                                </button>
 
-                            <button type="button" onclick="toggleMapel(this)"
-                                class="subject-btn p-4 border-2 rounded-xl">
-                                Fisika
-                            </button>
+                                <button type="button" onclick="toggleMapel(this)"
+                                    class="subject-btn p-4 border-2 rounded-xl">
+                                    Fisika
+                                </button>
 
-                            <button type="button" onclick="toggleMapel(this)"
-                                class="subject-btn p-4 border-2 rounded-xl">
-                                Informatika
-                            </button>
+                                <button type="button" onclick="toggleMapel(this)"
+                                    class="subject-btn p-4 border-2 rounded-xl">
+                                    Informatika
+                                </button>
 
-                            <button type="button" onclick="toggleMapel(this)"
-                                class="subject-btn p-4 border-2 rounded-xl">
-                                Biologi
-                            </button>
+                                <button type="button" onclick="toggleMapel(this)"
+                                    class="subject-btn p-4 border-2 rounded-xl">
+                                    Biologi
+                                </button>
 
-                            <button type="button" onclick="toggleMapel(this)"
-                                class="subject-btn p-4 border-2 rounded-xl">
-                                Ekonomi
-                            </button>
+                                <button type="button" onclick="toggleMapel(this)"
+                                    class="subject-btn p-4 border-2 rounded-xl">
+                                    Ekonomi
+                                </button>
 
-                            <button type="button" onclick="toggleMapel(this)"
-                                class="subject-btn p-4 border-2 rounded-xl">
-                                Sosiologi
-                            </button>
+                                <button type="button" onclick="toggleMapel(this)"
+                                    class="subject-btn p-4 border-2 rounded-xl">
+                                    Sosiologi
+                                </button>
 
-                            <button type="button" onclick="toggleMapel(this)"
-                                class="subject-btn p-4 border-2 rounded-xl">
-                                Bahasa Inggris
-                            </button>
+                                <button type="button" onclick="toggleMapel(this)"
+                                    class="subject-btn p-4 border-2 rounded-xl">
+                                    Bahasa Inggris
+                                </button>
 
-                            <button type="button" onclick="toggleMapel(this)"
-                                class="subject-btn p-4 border-2 rounded-xl">
-                                Seni Budaya
-                            </button>
+                                <button type="button" onclick="toggleMapel(this)"
+                                    class="subject-btn p-4 border-2 rounded-xl">
+                                    Seni Budaya
+                                </button>
 
-                            <button type="button" onclick="toggleMapel(this)"
-                                class="subject-btn p-4 border-2 rounded-xl">
-                                PKWU
-                            </button>
+                                <button type="button" onclick="toggleMapel(this)"
+                                    class="subject-btn p-4 border-2 rounded-xl">
+                                    PKWU
+                                </button>
 
-                            <button type="button" onclick="toggleMapel(this)"
-                                class="subject-btn p-4 border-2 rounded-xl">
-                                Pendidikan Jasmani
-                            </button>
+                                <button type="button" onclick="toggleMapel(this)"
+                                    class="subject-btn p-4 border-2 rounded-xl">
+                                    Pendidikan Jasmani
+                                </button>
 
+                            </div>
                         </div>
+
                     </div>
 
-                </div>
+                    <!-- Navigasi halaman -->
+                    <div class="flex justify-between pt-6 border-t border-gray-100">
 
-                <!-- Navigasi halaman -->
-                <div class="flex justify-between pt-6 border-t border-gray-100">
+                        <button id="btn-prev" type="button" onclick="prevPage()"
+                            class="px-5 py-3 rounded-xl border border-gray-200 font-bold">
+                            Sebelumnya
+                        </button>
 
-                    <button
-                        id="btn-prev"
-                        type="button"
-                        onclick="prevPage()"
-                        class="px-5 py-3 rounded-xl border border-gray-200 font-bold">
-                        Sebelumnya
-                    </button>
+                        <button id="btn-next" type="button" onclick="nextPage()"
+                            class="bg-maroon text-white px-5 py-3 rounded-xl font-bold">
+                            Selanjutnya
+                        </button>
 
-                    <button
-                        id="btn-next"
-                        type="button"
-                        onclick="nextPage()"
-                        class="bg-maroon text-white px-5 py-3 rounded-xl font-bold">
-                        Selanjutnya
-                    </button>
+                    </div>
 
-                </div>
-
-            </form>
+                </form>
 
 
-            
 
-    </div>
 
-    <script>
-        let currentPage = 1;
-        const questionsPerPage = 5;
-        const totalPages = 4;
-        let selectedMapel = [];
+            </div>
 
-        const API_URL = "http://localhost:3000";
-        let questions = [];
-        let answers = {};
+            <script>
+                let currentPage = 1;
+                const questionsPerPage = 5;
+                const totalPages = 4;
+                let selectedMapel = [];
 
-        async function loadQuestions() {
-            try {
-                const res = await fetch(`${API_URL}/questions`);
+                const API_URL = "http://localhost:3000";
+                let questions = [];
+                let answers = {};
 
-                console.log("STATUS:", res.status);
+                async function loadQuestions() {
+                    try {
+                        const res = await fetch(`${API_URL}/questions`);
 
-                const data = await res.json();
+                        console.log("STATUS:", res.status);
 
-                console.log("DATA:", data);
+                        const data = await res.json();
 
-                questions = data.data || data;
+                        console.log("DATA:", data);
 
-                console.log("JUMLAH SOAL:", questions.length);
+                        questions = data.data || data;
 
-                renderQuestions();
-            } catch (err) {
-                console.error(err);
-            }
-        }
+                        console.log("JUMLAH SOAL:", questions.length);
 
-        function renderQuestions() {
-            const container =
-                document.getElementById("questions-container");
+                        renderQuestions();
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }
 
-            container.innerHTML = "";
+                function renderQuestions() {
+                    const container =
+                        document.getElementById("questions-container");
 
-            const start = (currentPage - 1) * questionsPerPage;
-            const end = start + questionsPerPage;
-            const pageQuestions = questions.slice(start, end);
+                    container.innerHTML = "";
 
-            pageQuestions.forEach((q, index) => {
+                    const start = (currentPage - 1) * questionsPerPage;
+                    const end = start + questionsPerPage;
+                    const pageQuestions = questions.slice(start, end);
 
-                container.innerHTML += `
+                    pageQuestions.forEach((q, index) => {
+
+                        container.innerHTML += `
                 <div class="space-y-3">
 
                     <p class="text-gray-800 font-semibold text-base">
@@ -285,7 +323,7 @@
                     </p>
 
                     <div class="grid grid-cols-5 gap-2 text-center text-xs font-bold text-gray-500">
-                        ${[1,2,3,4,5].map(score => `
+                        ${[1, 2, 3, 4, 5].map(score => `
                             <label class="flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-yellow-50/50">
 
                                 <input
@@ -302,13 +340,12 @@
                                     "
                                 >
                                 <span>
-                                    ${
-                                        score == 1 ? "STS" :
-                                        score == 2 ? "TS" :
-                                        score == 3 ? "N" :
-                                        score == 4 ? "S" :
-                                        "SS"
-                                    }
+                                    ${score == 1 ? "Sangat Tidak Setuju" :
+                                score == 2 ? "Tidak Setuju" :
+                                    score == 3 ? "Netral" :
+                                        score == 4 ? "Setuju" :
+                                            "Sangat Setuju"
+                            }
                                 </span>
 
                             </label>
@@ -318,181 +355,182 @@
 
                 </div>
                 `;
-            });
-            document.getElementById(
-                "page-indicator"
-            ).innerText =
-                `Halaman ${currentPage} dari ${Math.ceil(questions.length / questionsPerPage)}`;
-        }
-
-        function isCurrentPageAnswered() {
-            const start = (currentPage - 1) * questionsPerPage;
-            const end = start + questionsPerPage;
-
-            const pageQuestions = questions.slice(start, end);
-
-            return pageQuestions.every(q => answers[q._id]);
-        }
-
-        function nextPage() {
-            const totalPages =
-                Math.ceil(questions.length / questionsPerPage);
-
-            if (currentPage <= totalPages &&
-                !isCurrentPageAnswered()) {
-
-                alert("Silahkan isi semua kuisioner terlebih dahulu!");
-                return;
-            }
-
-            if (currentPage < totalPages) {
-
-                currentPage++;
-                renderQuestions();
-
-            } else if (currentPage === totalPages) {
-                currentPage++;
-
-                document
-                    .getElementById("questions-container")
-                    .classList.add("hidden");
-
-                document
-                    .getElementById("subjects-container")
-                    .classList.remove("hidden");
-
-                document
-                    .getElementById("btn-next")
-                    .innerText = "Lihat Hasil";
-
-            } else {
-
-                if (selectedMapel.length !== 3) {
-                    alert("Pilih tepat 3 mata pelajaran favorit.");
-                    return;
+                    });
+                    document.getElementById(
+                        "page-indicator"
+                    ).innerText =
+                        `Halaman ${currentPage} dari ${Math.ceil(questions.length / questionsPerPage)}`;
                 }
 
-                bukaHalamanHasil();
-            }
-        }
+                function isCurrentPageAnswered() {
+                    const start = (currentPage - 1) * questionsPerPage;
+                    const end = start + questionsPerPage;
 
-        function prevPage() {
-            if (currentPage > 1) {
-                currentPage--;
-                renderQuestions();
-            }
-        }
+                    const pageQuestions = questions.slice(start, end);
 
-        function saveAnswer(id, value, trait) {
-            answers[id] = {
-                value: Number(value),
-                trait: trait
-            };
-        }
-
-        
-
-        function startExploration() {
-            const welcome = document.getElementById('welcome-container');
-            const mainApp = document.getElementById('main-app-container');
-            
-            welcome.classList.add('opacity-0', 'scale-95');
-            setTimeout(() => {
-                welcome.classList.add('hidden');
-                mainApp.classList.remove('hidden');
-                setTimeout(() => {
-                    mainApp.classList.remove('opacity-0');
-                    updateNavBar('asesmen');
-                }, 50);
-            }, 500);
-        }
-
-        function updateNavBar(state) {
-            const navLinks = document.querySelectorAll('#main-nav nav a');
-            navLinks.forEach(link => {
-                link.classList.remove('text-maroon', 'border-b-2', 'border-maroon');
-                link.classList.add('text-gray-400');
-            });
-
-            if (state === 'beranda') {
-                navLinks[0].classList.add('text-maroon', 'border-b-2', 'border-maroon');
-                navLinks[0].classList.remove('text-gray-400');
-            } else if (state === 'asesmen') {
-                navLinks[1].classList.add('text-maroon', 'border-b-2', 'border-maroon');
-                navLinks[1].classList.remove('text-gray-400');
-            } else if (state === 'rekomendasi') {
-                navLinks[2].classList.add('text-maroon', 'border-b-2', 'border-maroon');
-                navLinks[2].classList.remove('text-gray-400');
-            }
-        }
-
-
-
-        function toggleMapel(button) {
-
-            const mapelName = button.innerText.trim();
-
-            if (selectedMapel.includes(mapelName)) {
-
-                selectedMapel =
-                    selectedMapel.filter(
-                        item => item !== mapelName
-                    );
-
-                button.classList.remove(
-                    "border-yellow-400",
-                    "bg-yellow-50/50",
-                    "text-maroon"
-                );
-
-                button.classList.add(
-                    "border-gray-100",
-                    "bg-white",
-                    "text-gray-700"
-                );
-
-            } else {
-
-                if (selectedMapel.length >= 3) {
-                    alert("Maksimal memilih 3 mata pelajaran");
-                    return;
+                    return pageQuestions.every(q => answers[q._id]);
                 }
 
-                selectedMapel.push(mapelName);
+                function nextPage() {
+                    const totalPages = Math.ceil(questions.length / questionsPerPage);
 
-                button.classList.remove(
-                    "border-gray-100",
-                    "bg-white",
-                    "text-gray-700"
-                );
+                    // Cek apakah halaman saat ini sudah diisi semua
+                    if (!isCurrentPageAnswered()) {
+                        alert("Silahkan isi semua pertanyaan di halaman ini terlebih dahulu!");
+                        return;
+                    }
 
-                button.classList.add(
-                    "border-yellow-400",
-                    "bg-yellow-50/50",
-                    "text-maroon"
-                );
-            }
+                    if (currentPage < totalPages) {
+                        // Pindah ke halaman soal berikutnya
+                        currentPage++;
+                        renderQuestions();
+                    } else if (currentPage === totalPages) {
+                        // Jika sudah di halaman soal terakhir, tampilkan pemilihan mata pelajaran
+                        currentPage++; // Increment agar state berpindah
 
-            document.getElementById(
-                "subject-counter"
-            ).innerText =
-                `Dipilih: ${selectedMapel.length} / 3`;
-        }
+                        document.getElementById("questions-container").classList.add("hidden");
+                        document.getElementById("btn-prev").classList.add("hidden"); // Sembunyikan tombol prev
+                        document.getElementById("btn-next").innerText = "Lihat Hasil";
 
-        function kunciSeluruhAsesmen() {
-            if (selectedMapel.length === 0) {
-                alert("Silakan pilih 3 mata pelajaran favorit kamu terlebih dahulu!");
-                return;
-            }
+                        // Pastikan container mata pelajaran muncul
+                        const mapelContainer = document.getElementById("subjects-container");
+                        if (mapelContainer) mapelContainer.classList.remove("hidden");
+                    } else {
+                        // Jika tombol "Lihat Hasil" diklik
+                        if (selectedMapel.length !== 3) {
+                            alert("Pilih tepat 3 mata pelajaran favorit.");
+                            return;
+                        }
+                        bukaHalamanHasil();
+                    }
+                }
 
-            document.getElementById('section-eksplorasi').classList.add('form-locked');
-            document.getElementById('section-mapel').classList.add('form-locked');
-            document.getElementById('submit-action-container').classList.add('hidden');
-            document.getElementById('back-to-home-wrapper').classList.add('hidden'); // Sembunyikan top home button saat transisi hasil
+                // Pastikan juga fungsi prevPage menangani tombol agar muncul kembali
+                function prevPage() {
+                    if (currentPage > 1) {
+                        if (currentPage > Math.ceil(questions.length / questionsPerPage)) {
+                            // Jika dari halaman mapel kembali ke soal
+                            document.getElementById("questions-container").classList.remove("hidden");
+                            document.getElementById("subjects-container").classList.add("hidden");
+                            document.getElementById("btn-next").innerText = "Selanjutnya";
+                            document.getElementById("btn-prev").classList.remove("hidden");
+                            currentPage--;
+                        } else {
+                            currentPage--;
+                            renderQuestions();
+                        }
+                    }
+                }
+                function saveAnswer(id, value, trait) {
+                    answers[id] = {
+                        value: Number(value),
+                        trait: trait
+                    };
+                }
 
-            const wrapper = document.getElementById('final-action-wrapper');
-            wrapper.classList.remove('hidden');
-            wrapper.innerHTML = `
+
+
+                function startExploration() {
+                    const welcome = document.getElementById('welcome-container');
+                    const mainApp = document.getElementById('main-app-container');
+
+                    welcome.classList.add('opacity-0', 'scale-95');
+                    setTimeout(() => {
+                        welcome.classList.add('hidden');
+                        mainApp.classList.remove('hidden');
+                        setTimeout(() => {
+                            mainApp.classList.remove('opacity-0');
+                            updateNavBar('asesmen');
+                        }, 50);
+                    }, 500);
+                }
+
+                function updateNavBar(state) {
+                    const navLinks = document.querySelectorAll('#main-nav nav a');
+                    navLinks.forEach(link => {
+                        link.classList.remove('text-maroon', 'border-b-2', 'border-maroon');
+                        link.classList.add('text-gray-400');
+                    });
+
+                    if (state === 'beranda') {
+                        navLinks[0].classList.add('text-maroon', 'border-b-2', 'border-maroon');
+                        navLinks[0].classList.remove('text-gray-400');
+                    } else if (state === 'asesmen') {
+                        navLinks[1].classList.add('text-maroon', 'border-b-2', 'border-maroon');
+                        navLinks[1].classList.remove('text-gray-400');
+                    } else if (state === 'rekomendasi') {
+                        navLinks[2].classList.add('text-maroon', 'border-b-2', 'border-maroon');
+                        navLinks[2].classList.remove('text-gray-400');
+                    }
+                }
+
+
+
+                function toggleMapel(button) {
+
+                    const mapelName = button.innerText.trim();
+
+                    if (selectedMapel.includes(mapelName)) {
+
+                        selectedMapel =
+                            selectedMapel.filter(
+                                item => item !== mapelName
+                            );
+
+                        button.classList.remove(
+                            "border-yellow-400",
+                            "bg-yellow-50/50",
+                            "text-maroon"
+                        );
+
+                        button.classList.add(
+                            "border-gray-100",
+                            "bg-white",
+                            "text-gray-700"
+                        );
+
+                    } else {
+
+                        if (selectedMapel.length >= 3) {
+                            alert("Maksimal memilih 3 mata pelajaran");
+                            return;
+                        }
+
+                        selectedMapel.push(mapelName);
+
+                        button.classList.remove(
+                            "border-gray-100",
+                            "bg-white",
+                            "text-gray-700"
+                        );
+
+                        button.classList.add(
+                            "border-yellow-400",
+                            "bg-yellow-50/50",
+                            "text-maroon"
+                        );
+                    }
+
+                    document.getElementById(
+                        "subject-counter"
+                    ).innerText =
+                        `Dipilih: ${selectedMapel.length} / 3`;
+                }
+
+                function kunciSeluruhAsesmen() {
+                    if (selectedMapel.length === 0) {
+                        alert("Silakan pilih 3 mata pelajaran favorit kamu terlebih dahulu!");
+                        return;
+                    }
+
+                    document.getElementById('section-eksplorasi').classList.add('form-locked');
+                    document.getElementById('section-mapel').classList.add('form-locked');
+                    document.getElementById('submit-action-container').classList.add('hidden');
+                    document.getElementById('back-to-home-wrapper').classList.add('hidden'); // Sembunyikan top home button saat transisi hasil
+
+                    const wrapper = document.getElementById('final-action-wrapper');
+                    wrapper.classList.remove('hidden');
+                    wrapper.innerHTML = `
                 <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-md flex flex-col items-center gap-4">
                     <span class="text-green-700 font-bold bg-green-50 px-5 py-3 rounded-xl border border-green-200 flex items-center gap-2 shadow-sm text-base">
                         <i class="fa-solid fa-circle-check text-xl"></i> Seluruh Rangkaian Asesmen Selesai!
@@ -502,100 +540,108 @@
                     </button>
                 </div>
             `;
-            wrapper.scrollIntoView({ behavior: 'smooth' });
-        }
+                    wrapper.scrollIntoView({ behavior: 'smooth' });
+                }
 
-        async function bukaHalamanHasil() {
+                async function bukaHalamanHasil() {
 
-            if(selectedMapel.length !== 3){
-                alert("Silahkan pilih tepat 3 mata pelajaran!");
-                return;
-            }
+                    if (selectedMapel.length !== 3) {
+                        alert("Silahkan pilih tepat 3 mata pelajaran!");
+                        return;
+                    }
 
-            const scores = {
-                R: 0,
-                I: 0,
-                A: 0,
-                S: 0,
-                E: 0,
-                C: 0
-            };
+                    const scores = {
+                        R: 0,
+                        I: 0,
+                        A: 0,
+                        S: 0,
+                        E: 0,
+                        C: 0
+                    };
 
-            Object.values(answers).forEach(ans => {
-                scores[ans.trait] += ans.value;
-            });
+                    Object.values(answers).forEach(ans => {
+                        scores[ans.trait] += ans.value;
+                    });
 
-            console.log(scores);
+                    console.log(scores);
 
-            const res = await fetch(`${API_URL}/match`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    scores,
-                    favSubjects: selectedMapel
-                    })
-            });
+                    const res = await fetch(`${API_URL}/match`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            scores,
+                            favSubjects: selectedMapel
+                        })
+                    });
 
-            const result = await res.json();
+                    const result = await res.json();
 
-            localStorage.setItem(
-                "assessmentResult",
-                JSON.stringify(result)
-            );
+                    localStorage.setItem(
+                        "assessmentResult",
+                        JSON.stringify(result)
+                    );
 
-            window.location.href = "hasil.html";
-        }
+                    window.location.href = "hasil.html";
+                }
 
-        function kembaliKeKuesionerDariHasil() {
-            // Fungsi reset untuk mengulang dari awal secara bersih
-            window.location.reload();
-        }
+                function kembaliKeKuesionerDariHasil() {
+                    // Fungsi reset untuk mengulang dari awal secara bersih
+                    window.location.reload();
+                }
 
-        function bukaHasilDetail() {
-            const hasilContainer = document.getElementById('hasil-container');
-            const detailContainer = document.getElementById('detail-container');
+                function bukaHasilDetail() {
+                    const hasilContainer = document.getElementById('hasil-container');
+                    const detailContainer = document.getElementById('detail-container');
 
-            hasilContainer.classList.add('opacity-0', 'scale-95');
-            setTimeout(() => {
-                hasilContainer.classList.add('hidden');
-                detailContainer.classList.remove('hidden');
-                setTimeout(() => {
-                    detailContainer.classList.remove('opacity-0');
-                    updateNavBar('rekomendasi');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 50);
-            }, 500);
-        }
+                    hasilContainer.classList.add('opacity-0', 'scale-95');
+                    setTimeout(() => {
+                        hasilContainer.classList.add('hidden');
+                        detailContainer.classList.remove('hidden');
+                        setTimeout(() => {
+                            detailContainer.classList.remove('opacity-0');
+                            updateNavBar('rekomendasi');
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }, 50);
+                    }, 500);
+                }
 
-        function kembaliKeRingkasanDariDetail() {
-            const detailContainer = document.getElementById('detail-container');
-            const hasilContainer = document.getElementById('hasil-container');
+                function kembaliKeRingkasanDariDetail() {
+                    const detailContainer = document.getElementById('detail-container');
+                    const hasilContainer = document.getElementById('hasil-container');
 
-            detailContainer.classList.add('opacity-0', 'scale-95');
-            setTimeout(() => {
-                detailContainer.classList.add('hidden');
-                hasilContainer.classList.remove('hidden');
-                setTimeout(() => {
-                    hasilContainer.classList.remove('opacity-0');
-                    updateNavBar('asesmen');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 50);
-            }, 500);
-        }
+                    detailContainer.classList.add('opacity-0', 'scale-95');
+                    setTimeout(() => {
+                        detailContainer.classList.add('hidden');
+                        hasilContainer.classList.remove('hidden');
+                        setTimeout(() => {
+                            hasilContainer.classList.remove('opacity-0');
+                            updateNavBar('asesmen');
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }, 50);
+                    }, 500);
+                }
 
-        window.onload = () => {
-            loadQuestions();
-        };
+                window.onload = () => {
+                    loadQuestions();
+                };
 
-      
-        firebase.auth().onAuthStateChanged((user) => {
-            if (!user) {
-                // Jika tidak ada user, tendang ke halaman login
-                window.location.href = 'login.html';
-            }
-        });
-    </script>
+
+                // Tambahkan ini di bagian atas script di halaman assessment & riwayat sesi
+                firebase.auth().onAuthStateChanged((user) => {
+                    if (!user) {
+                        // Jika tidak ada user yang login, arahkan kembali ke login.html
+                        alert("Anda harus login terlebih dahulu untuk mengakses halaman ini!");
+                        window.location.href = 'login.html';
+                    } else {
+                        // Jika user ada, biarkan halaman terbuka
+                        console.log("Akses diizinkan untuk:", user.email);
+                    }
+                });
+
+
+            </script>
 </body>
+
 </html>
