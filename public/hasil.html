@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hasil Rekomendasi - Match Major</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
@@ -57,6 +59,8 @@
       .card-shadow {
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
       }
+
+      
     </style>
   </head>
 
@@ -94,25 +98,24 @@
         </a>
       </nav>
 
-      <div class="mt-auto pt-8 border-t border-maroon-light/30">
-        <div class="flex items-center space-x-3 mb-6">
-          <div
-            class="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center text-maroon font-bold"
-          >
-            AC
-          </div>
-          <div>
-            <p class="text-sm font-bold">User</p>
-            <p class="text-xs text-gray-400">Kelas</p>
-          </div>
-        </div>
-        <button
-          class="flex items-center space-x-2 text-sm text-red-300 hover:text-white"
-        >
-          <i class="fa-solid fa-right-from-bracket"></i>
-          <span>Keluar</span>
+      <!-- Ganti bagian tombol lama di sidebar dengan ini -->
+<div class="mt-auto pt-8 border-t border-maroon-light/30">
+    <div class="flex items-center space-x-3 mb-6">
+        <!-- ... (Profil User tetap sama) ... -->
+    </div>
+    
+    <!-- Tombol Baru -->
+    <div class="space-y-2">
+        <button id="auth-toggle-btn" onclick="handleAuth()" class="w-full text-left text-sm text-red-300 hover:text-white transition-all flex items-center space-x-2">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span id="auth-text">Logout</span>
         </button>
-      </div>
+        <button onclick="window.location.href='loginadmin.html'" class="w-full text-left text-sm text-yellow-400 hover:text-white transition-all flex items-center space-x-2">
+            <i class="fa-solid fa-user-shield"></i>
+            <span>Login Admin</span>
+        </button>
+    </div>
+</div>
     </aside>
 
     <main class="main-content">
@@ -392,6 +395,41 @@
         document.getElementById("alt2_score").innerText =
           result.alternatives[1].percentage + "%";
       }
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyA0TKujQ_u9GU9eFJelMuo_ykXA1T0063c",
+        authDomain: "matchmajor-78a97.firebaseapp.com",
+        projectId: "matchmajor-78a97",
+        storageBucket: "matchmajor-78a97.firebasestorage.app",
+        messagingSenderId: "113944926778",
+        appId: "1:113944926778:web:0d4fc483d51fc5640e7303"
+    };
+
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+
+    const authToggleBtn = document.getElementById('auth-toggle-btn');
+    const authText = document.getElementById('auth-text');
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            authText.textContent = "Keluar";
+        } else {
+            authText.textContent = "Login User";
+        }
+    });
+
+    function handleAuth() {
+        const user = firebase.auth().currentUser;
+        if (user) {
+            firebase.auth().signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        } else {
+            window.location.href = 'login.html';
+        }
+    }
 
       
     </script>

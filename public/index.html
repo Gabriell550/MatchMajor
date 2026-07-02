@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MATCH MAJOR</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     
@@ -26,24 +28,64 @@
         .btn-admin-login:hover{
             background-color: #FFD700;
             color: #800000;
+
+        
         }
+
+        .nav-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.75rem 0;
+    transition: all 0.3s;
+}
+
+.nav-menu a i {
+    width: 20px; /* Lebar tetap untuk ikon agar teks sejajar */
+}
     </style>
 </head>
 <body>
     <div class="app-container">
-        <aside class="sidebar">
-            <div class="logo-section">
-                <span class="logo-text">MATCH</span>
-                <span class="logo-subtext">Major</span>
-            </div>
-            <nav class="nav-menu">
-    <a href="index.html" class="nav-item active">Beranda</a>
-    <a href="#" onclick="cekAkses('assessment.html')" class="nav-item">Assessment</a>
-    <a href="#" onclick="cekAkses('riwayatsesi.html')" class="nav-item">Riwayat Sesi</a>
+       <aside class="sidebar p-8 flex flex-col text-white">
+  
+  <!-- Logo section -->
+  <div class="mb-12">
+    <h1 class="text-2xl font-extrabold tracking-tight">
+      MATCH<br /><span class="text-yellow-400 italic font-bold text-xl">Major</span>
+    </h1>
+  </div>
+
+  <!-- Navigasi dengan space-y-6 untuk jarak vertikal antar link -->
+  <nav class="flex-grow space-y-6">
+    <a href="index.html" class="flex items-center space-x-3 text-white font-bold border-r-4 border-yellow-400 -mr-8 pr-4">
+      <i class="fa-solid fa-house w-5"></i>
+      <span>Beranda</span>
+    </a>
+    <a href="#" onclick="cekAkses('assessment.html')" class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all">
+      <i class="fa-solid fa-vial w-5"></i>
+      <span>Assessment</span>
+    </a>
+    <a href="#" onclick="cekAkses('riwayatsesi.html')" class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all">
+      <i class="fa-solid fa-clock-rotate-left w-5"></i>
+      <span>Riwayat Sesi</span>
+    </a>
 </nav>
-           <div class="user-card">
-    <button id="auth-toggle-btn" class="btn-admin-login" onclick="handleAuth()">Login User</button>
-    <button class="btn-admin-login" onclick="window.location.href='loginadmin.html'">Login Admin</button>
+          <!-- Ganti bagian user-card lama dengan ini -->
+<div class="mt-auto pt-8 border-t border-maroon-light/30">
+    <!-- Tombol Logout/Login User -->
+    <button id="auth-toggle-btn" onclick="handleAuth()" 
+        class="flex items-center space-x-2 text-sm text-red-300 hover:text-white transition-all w-full mb-4">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span id="auth-text">Logout</span>
+    </button>
+    
+    <!-- Tombol Login Admin -->
+    <button onclick="window.location.href='loginadmin.html'" 
+        class="flex items-center space-x-2 text-sm text-yellow-400 hover:text-white transition-all w-full">
+        <i class="fa-solid fa-user-shield"></i>
+        <span>Login Admin</span>
+    </button>
 </div>
         </aside>
 
@@ -100,15 +142,15 @@
     }
 
     const authToggleBtn = document.getElementById('auth-toggle-btn');
+const authText = document.getElementById('auth-text'); // Pastikan ID ini ada di span tombol
 
-    // 2. Satu-satunya listener untuk status login
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            authToggleBtn.textContent = "Logout User";
-        } else {
-            authToggleBtn.textContent = "Login User";
-        }
-    });
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        authText.textContent = "Keluar"; // Atau "Logout"
+    } else {
+        authText.textContent = "Login User";
+    }
+});
 
     // 3. Fungsi handleAuth (untuk tombol sidebar)
     function handleAuth() {
