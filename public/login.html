@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +9,13 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <style>
-        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
     </style>
 </head>
+
 <body class="bg-gradient-to-br from-[#800000] to-[#FFD700] flex items-center justify-center h-screen">
 
     <div class="glass-card p-10 rounded-3xl shadow-2xl w-96 text-center border border-white/20">
@@ -19,12 +24,15 @@
             <p class="text-gray-500 mt-2 font-medium">Silakan masuk untuk memulai asesmen</p>
         </div>
 
-        <button id="google-login" class="w-full bg-white border-2 border-gray-100 text-gray-700 font-bold py-3 rounded-2xl flex items-center justify-center gap-3 hover:border-[#FFD700] hover:shadow-lg transition-all duration-300">
+        <button id="google-login"
+            class="w-full bg-white border-2 border-gray-100 text-gray-700 font-bold py-3 rounded-2xl flex items-center justify-center gap-3 hover:border-[#FFD700] hover:shadow-lg transition-all duration-300">
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-5 h-5">
             Masuk dengan Google
         </button>
 
-        <a href="index.html" class="text-sm text-gray-400 mt-6 block hover:text-[#800000] transition font-semibold">Kembali ke Beranda</a>
+        <a href="index.html"
+            class="text-sm text-gray-400 mt-6 block hover:text-[#800000] transition font-semibold">Kembali ke
+            Beranda</a>
     </div>
 
     <script>
@@ -45,7 +53,7 @@
         btnLogin.addEventListener('click', () => {
             btnLogin.disabled = true;
             btnLogin.innerHTML = "Memproses...";
-            
+
             auth.signInWithPopup(provider)
                 .then(() => {
                     // Berhasil login, arahkan ke index.html
@@ -59,4 +67,5 @@
         });
     </script>
 </body>
+
 </html>
