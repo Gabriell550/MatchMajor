@@ -1,347 +1,314 @@
 <!doctype html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hasil Rekomendasi - Match Major</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700&display=swap");
 
-      body {
-        font-family: "Inter", sans-serif;
-        background-color: #f9fafb;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hasil Rekomendasi - Match Major</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700&display=swap");
 
-      .text-maroon {
-        color: #7a1315;
-      }
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: #f9fafb;
+    }
 
-      .bg-maroon {
-        background-color: #7a1315;
-      }
+    .text-maroon {
+      color: #7a1315;
+    }
 
-      /* Sidebar Fix */
-      .sidebar {
-        width: 260px;
-        height: 100vh;
-        position: fixed;
-        left: 0;
-        top: 0;
-        background-color: #7a1315;
-        z-index: 50;
-      }
+    .bg-maroon {
+      background-color: #7a1315;
+    }
 
-      /* Container Alignment Fix */
-      .main-content {
-        margin-left: 260px;
-        /* Lebar Sidebar */
-        width: calc(100% - 260px);
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        /* Mengetengahkan secara horizontal */
-        padding: 40px;
-      }
+    /* Sidebar Fix */
+    .sidebar {
+      width: 260px;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      background-color: #7a1315;
+      z-index: 50;
+    }
 
-      .content-wrapper {
-        width: 100%;
-        max-width: 1000px;
-        /* Batas lebar konten agar tetap rapi */
-      }
+    /* Container Alignment Fix */
+    .main-content {
+      margin-left: 260px;
+      /* Lebar Sidebar */
+      width: calc(100% - 260px);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      /* Mengetengahkan secara horizontal */
+      padding: 40px;
+    }
 
-      .card-shadow {
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      }
-    </style>
-  </head>
+    .content-wrapper {
+      width: 100%;
+      max-width: 1000px;
+      /* Batas lebar konten agar tetap rapi */
+    }
 
-  <body class="flex">
-    <aside class="sidebar p-8 flex flex-col text-white">
-      <div class="mb-12">
-        <h1 class="text-2xl font-extrabold tracking-tight">
-          MATCH<br /><span class="text-yellow-400 italic font-bold text-xl"
-            >Major</span
-          >
-        </h1>
+    .card-shadow {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+
+<body class="flex">
+  <aside class="sidebar p-8 flex flex-col text-white">
+    <div class="mb-12">
+      <h1 class="text-2xl font-extrabold tracking-tight">
+        MATCH<br /><span class="text-yellow-400 italic font-bold text-xl">Major</span>
+      </h1>
+    </div>
+
+    <nav class="flex-grow space-y-6">
+      <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all">
+        <i class="fa-solid fa-house w-5"></i>
+        <span>Beranda</span>
+      </a>
+      <a href="#" class="flex items-center space-x-3 text-white font-bold border-r-4 border-yellow-400 -mr-8 pr-4">
+        <i class="fa-solid fa-vial w-5"></i>
+        <span>Assessment</span>
+      </a>
+      <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all">
+        <i class="fa-solid fa-clock-rotate-left w-5"></i>
+        <span>Riwayat Sesi</span>
+      </a>
+    </nav>
+
+    <!-- Ganti bagian tombol lama di sidebar dengan ini -->
+    <div class="mt-auto pt-8 border-t border-maroon-light/30">
+      <div class="flex items-center space-x-3 mb-6">
+        <!-- ... (Profil User tetap sama) ... -->
       </div>
 
-      <nav class="flex-grow space-y-6">
-        <a
-          href="#"
-          class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all"
-        >
-          <i class="fa-solid fa-house w-5"></i>
-          <span>Beranda</span>
-        </a>
-        <a
-          href="#"
-          class="flex items-center space-x-3 text-white font-bold border-r-4 border-yellow-400 -mr-8 pr-4"
-        >
-          <i class="fa-solid fa-vial w-5"></i>
-          <span>Assessment</span>
-        </a>
-        <a
-          href="#"
-          class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all"
-        >
-          <i class="fa-solid fa-clock-rotate-left w-5"></i>
-          <span>Riwayat Sesi</span>
-        </a>
-      </nav>
-
-      <div class="mt-auto pt-8 border-t border-maroon-light/30">
-        <div class="flex items-center space-x-3 mb-6">
-          <div
-            class="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center text-maroon font-bold"
-          >
-            AC
-          </div>
-          <div>
-            <p class="text-sm font-bold">User</p>
-            <p class="text-xs text-gray-400">Kelas</p>
-          </div>
-        </div>
-        <button
-          class="flex items-center space-x-2 text-sm text-red-300 hover:text-white"
-        >
+      <!-- Tombol Baru -->
+      <div class="space-y-2">
+        <button id="auth-toggle-btn" onclick="handleAuth()"
+          class="w-full text-left text-sm text-red-300 hover:text-white transition-all flex items-center space-x-2">
           <i class="fa-solid fa-right-from-bracket"></i>
-          <span>Keluar</span>
+          <span id="auth-text">Logout</span>
+        </button>
+        <button onclick="window.location.href='loginadmin.html'"
+          class="w-full text-left text-sm text-yellow-400 hover:text-white transition-all flex items-center space-x-2">
+          <i class="fa-solid fa-user-shield"></i>
+          <span>Login Admin</span>
         </button>
       </div>
-    </aside>
-
-    <main class="main-content">
-      <div class="content-wrapper">
-        <header class="flex justify-between items-end mb-10">
-  <div>
-    <a href="index.html" class="flex items-center text-maroon hover:text-red-800 mb-4 font-bold text-sm transition-all">
-        <i class="fa-solid fa-arrow-left mr-2"></i> Kembali ke Beranda
-    </a>
-    
-    <div class="flex items-center space-x-2 text-xs text-gray-400 mb-2 uppercase tracking-widest font-bold">
-      <span>Asesmen</span>
-      <i class="fa-solid fa-chevron-right text-[8px]"></i>
-      <span class="text-maroon">Hasil Rekomendasi</span>
     </div>
-    <h2 class="text-3xl font-black text-gray-900 font-[Poppins]">
-      Pilihan Karir Terbaikmu
-    </h2>
-  </div>
-  
-  <div class="bg-white px-4 py-2 rounded-xl border border-gray-200 flex items-center space-x-3 card-shadow">
-    <div class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></div>
-    <span class="text-[10px] font-bold text-gray-500">SPK ENGINE: AHP-TOPSIS</span>
-  </div>
-</header>
+  </aside>
+
+  <main class="main-content">
+    <div class="content-wrapper">
+      <!-- HEADER -->
+    <header class="flex justify-between items-end mb-10">
+      <div>
+        <a href="index.html"
+          class="flex items-center text-maroon hover:text-red-800 mb-4 font-bold text-sm">
+          <i class="fa-solid fa-arrow-left mr-2"></i>
+          Kembali ke Beranda
+        </a>
+
+        <div class="flex items-center space-x-2 text-xs text-gray-400 mb-2 uppercase tracking-widest font-bold">
+          <span>Asesmen</span>
+          <i class="fa-solid fa-chevron-right text-[8px]"></i>
+          <span class="text-maroon">Hasil Rekomendasi</span>
+        </div>
+
+        <h2 class="text-3xl font-black text-gray-900">
+          Pilihan Karir Terbaikmu
+        </h2>
+      </div>
+    </header>
 
         <div class="grid grid-cols-12 gap-8">
-          <div class="col-span-12 lg:col-span-5 space-y-6">
-            <h3
-              class="font-bold text-gray-400 uppercase tracking-widest text-xs px-2"
-            >
-              Top 3 Rekomendasi
+          <!-- LEFT -->
+          <div class="col-span-12 lg:col-span-5 space-y-5">
+
+            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">
+              TOP 3 REKOMENDASI
             </h3>
 
-            <div
-              class="bg-maroon rounded-[32px] p-8 text-white card-shadow relative overflow-hidden"
-            >
-              <div class="flex justify-between items-start mb-6">
+            <!-- TOP 1 -->
+            <div class="bg-maroon rounded-3xl p-7 text-white shadow-lg">
+
+              <div class="flex justify-between">
+
                 <div>
-                  <span
-                    class="text-[10px] font-bold bg-yellow-400 text-maroon px-3 py-1 rounded-full uppercase"
-                    >Paling Cocok</span
-                  >
-                  <h3
-                    id="jurusan"
-                    class="text-2xl font-bold font-[Poppins] mt-3"
-                  >
+
+                  <span class="bg-yellow-400 text-maroon text-[10px] font-bold px-3 py-1 rounded-full uppercase">
+
+                    Paling Cocok
+
+                  </span>
+
+                  <h2 id="jurusan" class="text-3xl font-black mt-4">
+
                     Loading...
-                  </h3>
-                  <p id="deskripsi" class="text-xs opacity-70 mt-1">
+
+                  </h2>
+
+                  <p id="deskripsi" class="text-sm opacity-80 mt-3">
+
                     Loading...
+
                   </p>
-                </div>
-                <div class="text-right">
-                  <div class="text-4xl font-black text-yellow-400">
-                    <span id="persentase">0</span><span class="text-lg"></span>
-                  </div>
-                  <div class="text-[10px] uppercase opacity-60">Skor Akhir</div>
-                </div>
-              </div>
-              <button
-                class="w-full bg-white/10 hover:bg-white/20 py-3 rounded-2xl text-xs font-bold transition-all border border-white/10"
-              >
-                Detail Analisis Jurusan
-                <i class="fa-solid fa-arrow-right ml-2"></i>
-              </button>
-            </div>
 
-            <div class="space-y-4">
-              <div
-                class="bg-white rounded-2xl p-5 border border-gray-100 card-shadow flex justify-between items-center group cursor-pointer hover:border-maroon/20 transition-all"
-              >
-                <div class="flex items-center space-x-4">
-                  <div
-                    class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-maroon font-bold border border-gray-100"
-                  >
-                    2
-                  </div>
-                  <div>
-                    <h4
-                      id="alt1_name"
-                      class="text-sm font-bold text-gray-800 leading-none"
-                    >
-                      Loading...
-                    </h4>
-                    <span
-                      id="alt1_description"
-                      class="text-[10px] text-gray-400"
-                      >Loading...</span
-                    >
-                  </div>
                 </div>
+
                 <div class="text-right">
-                  <span id="alt1_score" class="text-sm font-bold text-maroon"
-                    >0%</span
-                  >
+
+                  <div id="persentase" class="text-5xl font-black text-yellow-400">
+
+                    0%
+
+                  </div>
+
+                  <small class="uppercase opacity-60">
+
+                    Skor
+
+                  </small>
+
                 </div>
+
               </div>
 
-              <div
-                class="bg-white rounded-2xl p-5 border border-gray-100 card-shadow flex justify-between items-center group cursor-pointer hover:border-maroon/20 transition-all"
-              >
-                <div class="flex items-center space-x-4">
-                  <div
-                    class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-maroon font-bold border border-gray-100"
-                  >
-                    3
-                  </div>
-                  <div>
-                    <h4
-                      id="alt2_name"
-                      class="text-sm font-bold text-gray-800 leading-none"
-                    >
-                      Loading...
-                    </h4>
-                    <span
-                      id="alt2_description"
-                      class="text-[10px] text-gray-400"
-                      >Loading...</span
-                    >
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span id="alt2_score" class="text-sm font-bold text-maroon"
-                    >0%</span
-                  >
-                </div>
-              </div>
             </div>
+
+            <!-- TOP 2 -->
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border flex justify-between">
+
+              <div>
+
+                <div class="text-xs text-gray-400 mb-1">
+
+                  Peringkat 2
+
+                </div>
+
+                <h3 id="alt1_name" class="font-bold">
+
+                  Loading...
+
+                </h3>
+
+                <p id="alt1_description" class="text-xs text-gray-500 mt-1">
+
+                  Loading...
+
+                </p>
+
+              </div>
+
+              <div id="alt1_score" class="font-black text-xl text-maroon">
+
+                0%
+
+              </div>
+
+            </div>
+
+            <!-- TOP 3 -->
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border flex justify-between">
+
+              <div>
+
+                <div class="text-xs text-gray-400 mb-1">
+
+                  Peringkat 3
+
+                </div>
+
+                <h3 id="alt2_name" class="font-bold">
+
+                  Loading...
+
+                </h3>
+
+                <p id="alt2_description" class="text-xs text-gray-500 mt-1">
+
+                  Loading...
+
+                </p>
+
+              </div>
+
+              <div id="alt2_score" class="font-black text-xl text-maroon">
+
+                0%
+
+              </div>
+
+            </div>
+
           </div>
 
-          <div class="col-span-12 lg:col-span-7 space-y-6">
-            <div
-              class="bg-white rounded-[32px] p-8 card-shadow border border-gray-50"
-            >
-              <h3
-                class="text-lg font-bold text-gray-800 mb-8 flex items-center"
-              >
-                <i class="fa-solid fa-chart-pie text-maroon mr-3"></i>Breakdown
-                Kecocokan
+          <!-- RIGHT -->
+          <div class="col-span-12 lg:col-span-7 space-y-5">
+
+            <!-- Insight -->
+
+            <div class="bg-white rounded-3xl p-6 shadow-sm border">
+
+              <h3 class="font-bold text-xl mb-4">
+
+                💡 Insight Tentang Kamu
+
               </h3>
 
-              <div class="grid grid-cols-4 gap-4 mb-8">
-                <div class="text-center p-4 bg-gray-50 rounded-2xl">
-                  <div class="text-xl font-bold text-maroon">Loading...</div>
-                  <div class="text-[9px] font-bold text-gray-400 uppercase">
-                    Minat
-                  </div>
-                </div>
-                <div class="text-center p-4 bg-gray-50 rounded-2xl">
-                  <div class="text-xl font-bold text-maroon">Loading...</div>
-                  <div class="text-[9px] font-bold text-gray-400 uppercase">
-                    Skill
-                  </div>
-                </div>
-                <div class="text-center p-4 bg-gray-50 rounded-2xl">
-                  <div class="text-xl font-bold text-maroon">Loading...</div>
-                  <div class="text-[9px] font-bold text-gray-400 uppercase">
-                    Psikologi
-                  </div>
-                </div>
-                <div class="text-center p-4 bg-gray-50 rounded-2xl">
-                  <div class="text-xl font-bold text-maroon">Loading...</div>
-                  <div class="text-[9px] font-bold text-gray-400 uppercase">
-                    Akademik
-                  </div>
-                </div>
+              <div id="holland-code" class="font-bold text-maroon mb-3">
               </div>
 
-              <div class="space-y-5 border-t border-gray-100 pt-8">
-                <h4
-                  class="text-xs font-bold text-gray-400 uppercase tracking-widest"
-                >
-                  Kesesuaian Mata Pelajaran
-                </h4>
-                <div>
-                  <div class="flex justify-between text-xs font-bold mb-2">
-                    <span>Matematika</span><span class="text-maroon">Loading...</span>
-                  </div>
-                  <div
-                    class="w-full bg-gray-100 h-2 rounded-full overflow-hidden"
-                  >
-                    <div class="bg-maroon h-full" style="width: 95%"></div>
-                  </div>
-                </div>
-                <div>
-                  <div class="flex justify-between text-xs font-bold mb-2">
-                    <span>Bahasa Inggris</span><span class="text-maroon">Loading...</span>
-                  </div>
-                  <div
-                    class="w-full bg-gray-100 h-2 rounded-full overflow-hidden"
-                  >
-                    <div class="bg-maroon h-full" style="width: 88%"></div>
-                  </div>
-                </div>
+              <p id="insight-text" class="text-gray-600 leading-8">
+              </p>
+
+              <div id="dominant-riasec" class="flex flex-wrap gap-2 mt-5">
               </div>
+
             </div>
 
-            <div
-              class="bg-yellow-50 rounded-[32px] p-8 border border-yellow-100"
-            >
-              <h3 class="text-lg font-bold text-maroon mb-6 flex items-center">
-                <i class="fa-solid fa-route mr-3"></i>Rencana Aksi
+            <!-- Profil -->
+
+            <div class="bg-white rounded-3xl p-6 shadow-sm border">
+
+              <h3 class="font-bold text-xl mb-5">
+
+                📊 Profil RIASEC
+
               </h3>
-              <div class="space-y-3">
-                <div
-                  class="bg-white p-4 rounded-xl flex items-center space-x-4 border border-yellow-200"
-                >
-                  <span
-                    class="bg-maroon text-white w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold"
-                    >1</span
-                  >
-                  <p class="text-xs font-semibold text-gray-700">
-                    Pelajari Python & SQL dasar
-                  </p>
-                </div>
-                <div
-                  class="bg-white p-4 rounded-xl flex items-center space-x-4 border border-yellow-200"
-                >
-                  <span
-                    class="bg-maroon text-white w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold"
-                    >2</span
-                  >
-                  <p class="text-xs font-semibold text-gray-700">
-                    Cari info jurusan Teknik Informatika
-                  </p>
-                </div>
+
+              <div id="riasec-bars" class="space-y-4">
+
               </div>
+
             </div>
+
+            <!-- Action Plan -->
+
+            <div class="bg-yellow-50 rounded-3xl p-6 border border-yellow-200">
+
+              <h3 class="font-bold text-xl text-maroon mb-5">
+
+                🎯 Rencana Aksi
+
+              </h3>
+
+              <div id="action-plan-container" class="space-y-3">
+
+              </div>
+
+            </div>
+
           </div>
         </div>
 
@@ -350,50 +317,172 @@
             &copy; 2024 Match Major System. All rights reserved.
           </p>
         </footer>
-      </div>
-    </main>
+    </div>
+  </main>
 
-    <script>
-      const result = JSON.parse(localStorage.getItem("assessmentResult"));
+  <script>
 
-      if (!result) {
-        alert("Data hasil tidak ditemukan");
-        window.location.href = "assessment.html";
-      }
+    const result = JSON.parse(localStorage.getItem("assessmentResult"));
 
-      document.getElementById("jurusan").innerText = result.topMatch.name;
+    console.log(result.scores);
 
-      document.getElementById("deskripsi").innerText =
-        result.topMatch.description;
+    if (!result) {
+      alert("Data hasil tidak ditemukan");
+      window.location.href = "assessment.html";
+    }
 
-      document.getElementById("persentase").innerText =
-        result.topMatch.percentage + "%";
+    const QUESTIONS_PER_TRAIT = 5;
+    const MIN_SCORE = QUESTIONS_PER_TRAIT * 1; // 5
+    const MAX_SCORE = QUESTIONS_PER_TRAIT * 5; // 25
 
-      // Alternatif 1
-      if (result.alternatives[0]) {
-        document.getElementById("alt1_name").innerText =
-          result.alternatives[0].name; 
+    function toPercentage(score) {
+      return Math.round(
+        ((score - MIN_SCORE) / (MAX_SCORE - MIN_SCORE)) * 100,
+      );
+    }
 
-        document.getElementById("alt1_description").innerText =
-          result.alternatives[0].description;
+    const riasecName = {
+      R: "Realistic",
+      I: "Investigative",
+      A: "Artistic",
+      S: "Social",
+      E: "Enterprising",
+      C: "Conventional",
+    };
 
-        document.getElementById("alt1_score").innerText =
-          result.alternatives[0].percentage + "%";
-      }
+    const riasecDescription = {
+      R: "senang belajar melalui praktik dan aktivitas nyata",
+      I: "suka menganalisis, berpikir logis, dan memecahkan masalah",
+      A: "memiliki kreativitas tinggi dan menyukai ide-ide baru",
+      S: "senang membantu, bekerja sama, dan berinteraksi dengan orang lain",
+      E: "percaya diri memimpin serta mengambil keputusan",
+      C: "menyukai pekerjaan yang rapi, terstruktur, dan teliti",
+    };
 
-      // Alternatif 2
-      if (result.alternatives[1]) {
-        document.getElementById("alt2_name").innerText =
-          result.alternatives[1].name;
+    const colors = {
+      R: "#EF4444",
+      I: "#3B82F6",
+      A: "#EC4899",
+      S: "#10B981",
+      E: "#F59E0B",
+      C: "#6B7280",
+    };
 
-        document.getElementById("alt2_description").innerText =
-            result.alternatives[1].description;
+    const sortedTraits = Object.entries(result.scores).sort(
+      (a, b) => b[1] - a[1],
+    );
 
-        document.getElementById("alt2_score").innerText =
-          result.alternatives[1].percentage + "%";
-      }
+    const first = sortedTraits[0][0];
+    const second = sortedTraits[1][0];
 
-      
-    </script>
-  </body>
+    // Menampilkan insight berdasarkan hasil asesmen
+    const insightText = `
+      Berdasarkan hasil asesmen, kamu memiliki kecenderungan ${riasecDescription[first]}.
+      Selain itu, kamu juga ${riasecDescription[second]}.
+      Kombinasi tersebut membuatmu cocok pada bidang ${result.topMatch.name}.
+      `.trim();
+
+    document.getElementById("jurusan").innerText = result.topMatch.name;
+
+    document.getElementById("deskripsi").innerText =
+      result.topMatch.description;
+
+    document.getElementById("persentase").innerText =
+      result.topMatch.percentage + "%";
+
+    // Alternatif 1
+    if (result.alternatives && result.alternatives[0]) {
+      document.getElementById("alt1_name").innerText =
+        result.alternatives[0].name;
+
+      document.getElementById("alt1_description").innerText =
+        result.alternatives[0].description;
+
+      document.getElementById("alt1_score").innerText =
+        result.alternatives[0].percentage + "%";
+    }
+
+    // Alternatif 2
+    if (result.alternatives && result.alternatives[1]) {
+      document.getElementById("alt2_name").innerText =
+        result.alternatives[1].name;
+
+      document.getElementById("alt2_description").innerText =
+        result.alternatives[1].description;
+
+      document.getElementById("alt2_score").innerText =
+        result.alternatives[1].percentage + "%";
+    }
+
+    document.getElementById("insight-text").innerText = insightText;
+
+    const wrapper = document.getElementById("dominant-riasec");
+
+    wrapper.innerHTML = "";
+
+    [first, second].forEach((trait) => {
+      wrapper.innerHTML += `
+      <span
+      class="px-4 py-2 rounded-full bg-red-50 text-maroon font-semibold">
+
+      ${trait} • ${riasecName[trait]}
+
+      </span>
+      `;
+    });
+
+    function renderRiasecProfile(scores) {
+      const wrapper = document.getElementById("riasec-bars");
+
+      console.log(wrapper);
+
+      wrapper.innerHTML = "";
+
+      console.log(scores);
+      Object.entries(scores)
+        .sort((a, b) => b[1] - a[1])
+        .forEach(([trait, score]) => {
+          const percent = (score / 25) * 100;
+
+          wrapper.innerHTML += `
+
+            <div class="space-y-2">
+
+                <div class="flex justify-between items-center">
+
+                    <span class="font-semibold text-gray-700">
+
+                        ${riasecName[trait]}
+
+                    </span>
+
+                    <span class="font-bold text-maroon">
+
+                        ${score} / 25
+
+                    </span>
+
+                </div>
+
+                <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+
+                    <div
+                        class="h-full rounded-full transition-all duration-700"
+                        style="
+                            width:${percent}%;
+                            background:${colors[trait]};
+                        ">
+                    </div>
+
+                </div>
+
+            </div>
+
+            `;
+        });
+    }
+    renderRiasecProfile(result.scores);
+  </script>
+</body>
+
 </html>

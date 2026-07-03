@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Pertanyaan - Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #fdfaf3; scroll-behavior: smooth;}
+        .text-maroon { color: #7A1315;}
+        .bg-maroon { background-color: #7A1315}
+        .border-maroon {border-color: #7A1315}
+
+        select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 flex items-center justify-center min-h-screen">
+    <div class="max-w-4xl w-full mx-auto space-y-6">
+
+        <div class="flex items-center">
+            <a href="Admin.html" class="inline-flex items-center gap-2 text-sm font-bold text-maroon hover:text-red-900 bg-white border border-gray-100 px-4 py-2.5 rounded-xl shadow-sm transition-all">
+                <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard Admin
+            </a>
+        </div>
+
+        <header id="main-nav" class="bg-white border border-gray-100 rounded-2xl px-6 py-4 shadow-sm flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-user-shield text-maroon text-xl"></i>
+                <span class="font-extrabold text-gray-800 text-base tracking-tight">Admin Match Major</span>
+            </div>
+            <nav class="flex items-center gap-6 text-sm font-semibold">
+                <a href="Admin.html" class="text-gray-400 hover:text-gray-600 transition-colors">Dashboard</a>
+                <a href="#" class="text-maroon border-b-2 border-maroon pb-0.5">Tambah Soal</a>
+            </nav>
+        </header>
+
+        <div class="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-md space-y-6">
+            <div class="flex items-center gap-3 pb-4 border-b border-gray-100">
+                <i class="fa-solid fa-file-circle-plus text-2xl text-maroon"></i>
+                <h3 class="text-2xl font-bold text-maroon">Tambah Pertanyaan Baru</h3>
+            </div>
+
+            <form id="form-tambah" class="space-y-6">
+                <div class="space-y-2">
+                    <label for="input-teks" class="block font-bold text-gray-700">Isi Pertanyaan</label>
+                    <textarea id="input-teks" rows="4" required
+                        class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-maroon focus:ring-2 focus:ring-red-900/20 outline-none transition-all text-gray-700"
+                        placeholder="Masukkan pertanyaan kuisioner di sini..."></textarea>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="input-tipe" class="block font-bold text-gray-700">Kategori RIASEC</label>
+                    <select id="input-tipe" required
+                        class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-maroon focus:ring-2 focus:ring-red-900/20 outline-none transition-all text-gray-700 appearance-none pr-10">
+                        <option value="" disabled selected>-- Pilih Kategori --</option>
+                        <option value="R">Realistic (R)</option>
+                        <option value="I">Investigative (I)</option>
+                        <option value="A">Artistic (A)</option>
+                        <option value="S">Sosial (S)</option>
+                        <option value="E">Enterprising (E)</option>
+                        <option value="C">Conventional (C)</option>
+                    </select>
+                </div>
+
+                <div class="flex gap-4 pt-4 border-t border-gray-100">
+                    <button type="submit" id="btn-submit"
+                        class="bg-maroon text-white px-6 py-3 rounded-xl font-bold hover:bg-red-900 transition-all shadow-md flex-1 flex items-center justify-center gap-2">
+                        <i  class="fa-solid fa-floppy-disk"></i> Simpan Pertanyaan
+                    </button>
+                    <a href="Admin.html"
+                        class="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-bold hover:bg-gray-200 transition-all shadow-sm flex-1 text-center">Batal
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:3000";
+
+        document.getElementById('form-tambah').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const btnSubmit = document.getElementById('btn-submit');
+            const questionText = document.getElementById('input-teks').value;
+            const traitType = document.getElementById('input-tipe').value;
+
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
+            btnSubmit.disabled = true;
+
+            try {
+                const response = await fetch(`${API_URL}/questions`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        question: questionText,
+                        trait: traitType
+                    })
+                });
+
+                if (response.ok) {
+                    alert('Berhasil! Pertanyaan baru telah ditambahkan ke database.');
+                    document.getElementById('form-tambah').reset();
+                } else {
+                    alert('Gagal menambahkan pertanyaan. Silahkan periksa koneksi atau server backend.');
+                }
+            } catch (error) {
+                console.error("Terjadi kesalahan:", error);
+                alert('Terjadi kesalahan saat menghubungi server.');
+            } finally {
+                btnSubmit.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Pertanyaan';
+                btnSubmit.disabled = false;
+            }
+        });
+
+        // (Opsional) Proteksi Keamanan Admin menggunakan Firebase 
+        /* 
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                alert("Sesi Anda telah habis. Silakan login kembali sebagai admin.");
+                window.location.href = 'login.html';
+            }
+        }); 
+        */
+    </script>
+    
+</body>
+</html>
