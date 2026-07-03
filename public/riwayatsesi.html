@@ -60,32 +60,35 @@
                         <h2 class="text-2xl font-extrabold text-maroon">Riwayat Sesi Asesmen</h2>
                         <p class="text-sm text-gray-500 mt-1">Pantau dan tinjau kembali seluruh hasil eksplorasi karakter dan rekomendasi karir yang pernah kamu lakukan.</p>
                     </div>
-                    <button class="bg-white border border-gray-200 text-gray-700 hover:border-gray-300 px-4 py-2.5 rounded-xl font-bold text-xs inline-flex items-center gap-2 shadow-sm transition-all shrink-0 self-start sm:self-auto">
-                        <i class="fa-solid fa-download text-gray-400"></i> Ekspor Riwayat
-                    </button>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm flex items-center gap-4">
                     <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center text-maroon"><i class="fa-solid fa-clipboard-list"></i></div>
-                    <div>
-                        <span class="text-[11px] text-gray-400 block font-medium">Total Sesi</span>
-                        <span class="text-base font-extrabold text-gray-800">3 Kali Asesmen</span>
-                    </div>
+                    <div class="grid md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-white rounded shadow p-4">
+                        <div class="text-gray-500 text-sm">Total Sesi</div>
+                        <div id="totalSesi" class="font-bold text-xl">0 Kali Asesmen</div>
+                        </div>
                 </div>
                 <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm flex items-center gap-4">
-                    <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center text-amber-700"><i class="fa-solid fa-star"></i></div>
-                    <div>
-                        <span class="text-[11px] text-gray-400 block font-medium">Rekomendasi Utama</span>
-                        <span class="text-base font-extrabold text-gray-800">Data Scientist</span>
+                    <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center text-amber-700"><i class="fa-solid fa-star"></i></div>
+                    <div>                        
+                        <div class="bg-white rounded shadow p-4">
+                        <div class="text-gray-500 text-sm">Rekomendasi Utama</div>
+                        <div id="topRekomendasi" class="font-bold text-xl">-</div>
+                        </div>
                     </div>
                 </div>
                 <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm flex items-center gap-4">
                     <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center text-green-700"><i class="fa-solid fa-clock-rotate-left"></i></div>
                     <div>
-                        <span class="text-[11px] text-gray-400 block font-medium">Sesi Terakhir</span>
-                        <span class="text-base font-extrabold text-gray-800">Hari ini, 12:45</span>
+                        <div class="bg-white rounded shadow p-4">
+                            <div class="text-gray-500 text-sm">Sesi Terakhir</div>
+                            <div id="sesiTerakhir" class="font-bold text-xl">-</div>
+                            </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -107,59 +110,9 @@
                                 <th class="py-3.5 px-6 text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="text-sm divide-y divide-gray-100 text-gray-700">
-                            
-                            <tr class="hover:bg-gray-50/60 transition-colors">
-                                <td class="py-4 px-6 font-bold text-maroon text-xs">#ED-9824</td>
-                                <td class="py-4 px-6 whitespace-nowrap">
-                                    <span class="block font-semibold text-gray-800">16 Juni 2026</span>
-                                    <span class="text-[11px] text-gray-400 block">12:45 WIB</span>
-                                </td>
-                                <td class="py-4 px-6">
-                                    <span class="inline-block bg-yellow-50 text-yellow-800 text-[11px] font-bold px-2 py-0.5 rounded border border-yellow-100">Logic &amp; Analytical</span>
-                                end
-                                <td class="py-4 px-6 font-bold text-gray-800">Data Scientist</td>
-                                <td class="py-4 px-6 text-center">
-                                    <button class="bg-maroon text-white hover:bg-red-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm transition-all inline-flex items-center gap-1.5">
-                                        Buka Hasil <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr class="hover:bg-gray-50/60 transition-colors">
-                                <td class="py-4 px-6 font-bold text-maroon text-xs">#ED-8711</td>
-                                <td class="py-4 px-6 whitespace-nowrap">
-                                    <span class="block font-semibold text-gray-800">22 Mei 2026</span>
-                                    <span class="text-[11px] text-gray-400 block">09:15 WIB</span>
-                                </td>
-                                <td class="py-4 px-6">
-                                    <span class="inline-block bg-red-50 text-maroon text-[11px] font-bold px-2 py-0.5 rounded border border-red-100">Creativity</span>
-                                </td>
-                                <td class="py-4 px-6 font-bold text-gray-800">UI/UX Designer</td>
-                                <td class="py-4 px-6 text-center">
-                                    <button class="bg-maroon text-white hover:bg-red-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm transition-all inline-flex items-center gap-1.5">
-                                        Buka Hasil <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr class="hover:bg-gray-50/60 transition-colors">
-                                <td class="py-4 px-6 font-bold text-maroon text-xs">#ED-7402</td>
-                                <td class="py-4 px-6 whitespace-nowrap">
-                                    <span class="block font-semibold text-gray-800">14 April 2026</span>
-                                    <span class="text-[11px] text-gray-400 block">14:20 WIB</span>
-                                </td>
-                                <td class="py-4 px-6">
-                                    <span class="inline-block bg-purple-50 text-purple-800 text-[11px] font-bold px-2 py-0.5 rounded border border-purple-100">Curiosity</span>
-                                </td>
-                                <td class="py-4 px-6 font-bold text-gray-800">Aerospace Engineer</td>
-                                <td class="py-4 px-6 text-center">
-                                    <button class="bg-maroon text-white hover:bg-red-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm transition-all inline-flex items-center gap-1.5">
-                                        Buka Hasil <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                                    </button>
-                                </td>
-                            </tr>
-
+                        <tbody
+                            id="historyTable"
+                            class="text-sm divide-y divide-gray-100 text-gray-700">
                         </tbody>
                     </table>
                 </div>
@@ -173,63 +126,78 @@
                     </div>
                 </div>
             </div>
-
-        </main>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+        </div>
     <script>
-    const historyCtx = document.getElementById('historyChart');
+    async function loadHistory() {
 
-    new Chart(historyCtx, {
-        type: 'line',
-        data: {
-            labels: [
-                '14 Apr 2026',
-                '22 Mei 2026',
-                '16 Jun 2026'
-            ],
-            datasets: [{
-                label: 'Skor Kecocokan Karir',
-                data: [72, 85, 93],
-                tension: 0.4,
-                fill: true,
-                borderColor: '#7A1315',
-                backgroundColor: 'rgba(122,19,21,0.1)',
-                borderWidth: 3,
-                pointRadius: 5
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: true
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100
-                }
+        try{
+
+            const response = await fetch("http://localhost:3000/match/history");
+            const histories = await response.json();
+
+            document.getElementById("totalSesi").innerText =
+                histories.length + " Kali Asesmen";
+
+            if(histories.length > 0){
+
+                document.getElementById("topRekomendasi").innerText =
+                    histories[0].recommendation;
+
+                document.getElementById("sesiTerakhir").innerText =
+                    new Date(histories[0].tanggal).toLocaleString("id-ID");
             }
+
+            const tbody = document.getElementById("historyTable");
+            tbody.innerHTML = "";
+
+            histories.forEach((item,index)=>{
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-4 px-6 font-bold text-maroon">
+                            #ED-${1000+index}
+                        </td>
+
+                        <td class="py-4 px-6">
+                            ${new Date(item.tanggal).toLocaleString("id-ID")}
+                        </td>
+
+                        <td class="py-4 px-6">
+                            ${item.dominantStrength}
+                        </td>
+
+                        <td class="py-4 px-6">
+                            ${item.recommendation}
+                        </td>
+
+                        <td class="py-4 px-6 text-center">
+                            <button
+                                class="bg-maroon text-white px-3 py-1 rounded-lg"
+                                onclick='lihatHasil(${JSON.stringify(item)})'>
+                                Buka Hasil
+                            </button>
+                        </td>
+                    </tr>
+                `;
+
+            });
+
+        }catch(err){
+            console.error(err);
         }
-    });
-
-    // Tambahkan ini di bagian atas script di halaman assessment & riwayat sesi
-firebase.auth().onAuthStateChanged((user) => {
-    if (!user) {
-        // Jika tidak ada user yang login, arahkan kembali ke login.html
-        alert("Anda harus login terlebih dahulu untuk mengakses halaman ini!");
-        window.location.href = 'login.html';
-    } else {
-        // Jika user ada, biarkan halaman terbuka
-        console.log("Akses diizinkan untuk:", user.email);
     }
-});
-    </script>
 
+    function lihatHasil(item){
+
+        localStorage.setItem(
+            "assessmentResult",
+            JSON.stringify(item)
+        );
+
+        window.location.href = "hasil.html";
+    }
+
+    loadHistory();
+    </script>
 </body>
 </html>

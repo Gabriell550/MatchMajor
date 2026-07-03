@@ -1,4 +1,6 @@
 require("dotenv").config();
+console.log(process.env);
+console.log("MONGO_URI =", process.env.MONGO_URI);
 
 const path = require("path");
 const express = require("express");
@@ -22,6 +24,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => {
   res.send("Backend working!");
 });
+
+console.log("MONGO_URI =", process.env.MONGO_URI);
 
 mongoose
   .connect(process.env.MONGO_URI)

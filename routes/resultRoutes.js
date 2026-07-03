@@ -4,9 +4,12 @@ const express = require("express");
 const router = express.Router();
 
 const subjectToRIASEC = require("../data/subjects");
-
 const Career = require("../models/Career");
+const History = require("../models/History");
 
+// =========================
+// Fungsi mencocokkan karir
+// =========================
 async function matchCareer(userScore) {
   const careers = await Career.find();
 
@@ -23,39 +26,35 @@ async function matchCareer(userScore) {
     .map((career) => {
       let score = 0;
 
-      const traits = career.traits;
-
-      for (const key of Object.keys(traits)) {
+      for (const key of Object.keys(career.traits)) {
         score += Math.abs(
-          Number(traits[key] || 0) -
+          Number(career.traits[key] || 0) -
           Number(normalizedUser[key] || 0)
         );
       }
 
-      const maxDifference = 24;
-
       const percentage = Math.max(
         0,
-        Math.round(
-          (1 - score / maxDifference) * 100
-        )
+        Math.round((1 - score / 24) * 100)
       );
 
       return {
         id: career._id,
         name: career.name,
         description: career.description,
-        score,
         percentage,
       };
     })
     .sort((a, b) => b.percentage - a.percentage);
 }
 
+// =========================
+// Tambah nilai mapel favorit
+// =========================
 function tambahNilaiMapel(userScore, favSubjects = []) {
   const finalScores = { ...userScore };
 
-  const weights = [1.5, 1.2, 1.0];
+  const weights = [1.5, 1.2, 1];
 
   favSubjects.forEach((subject, index) => {
     const bonus = subjectToRIASEC[subject];
@@ -73,9 +72,12 @@ function tambahNilaiMapel(userScore, favSubjects = []) {
   return finalScores;
 }
 
+// =========================
+// POST HASIL ASESMEN
+// =========================
 router.post("/", async (req, res) => {
   try {
-    const { scores, favSubjects } = req.body;
+    const { scores, favSubjects, answers } = req.body;
 
     if (!scores) {
       return res.status(400).json({
@@ -98,12 +100,54 @@ router.post("/", async (req, res) => {
       });
     }
 
+    const topCareer = result[0];
+
+    // Cari skor RIASEC terbesar
+    const dominantStrength = Object.keys(finalScores).reduce((a, b) =>
+      finalScores[a] > finalScores[b] ? a : b
+    );
+
+    // Simpan ke database
+    const history = new History({
+      userId: "guest",
+      tanggal: new Date(),
+      dominantStrength,
+      recommendation: topCareer.name,
+      scores: finalScores,
+      answers: answers || [],
+    });
+
+  console.log("POST /match dipanggil");
+  console.log(req.body);
+
+    await history.save();
+    console.log("History berhasil disimpan");
+
     res.json({
       success: true,
-      topMatch: result[0],
+      topMatch: topCareer,
       alternatives: result.slice(1, 3),
       scores: finalScores,
     });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+// =========================
+// GET RIWAYAT
+// =========================
+router.get("/history", async (req, res) => {
+  try {
+    const histories = await History.find().sort({
+      tanggal: -1,
+    });
+
+    res.json(histories);
 
   } catch (error) {
     res.status(500).json({
