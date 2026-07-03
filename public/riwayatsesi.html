@@ -152,7 +152,7 @@
 
     try{
 
-    const response=await fetch("http://localhost:3000/match/history");
+    const response=await fetch("http://localhost:3000/result/history");
     const histories=await response.json();
 
     document.getElementById("totalSesi").innerText=histories.length+" Kali Asesmen";

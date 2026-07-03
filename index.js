@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/careers", careerRoutes);
 app.use("/questions", questionRoutes);
-app.use("/match", resultRoutes);
+app.use("/result", resultRoutes);
 app.use('/api/admin', adminRoutes);
 
 app.use(express.static(path.join(__dirname, "public")));

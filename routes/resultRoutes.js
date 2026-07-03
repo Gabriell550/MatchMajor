@@ -5,8 +5,6 @@ const router = express.Router();
 
 const Career = require("../models/Career");
 const subjectToRIASEC = require("../data/subjects");
-app.use("/match", resultRoutes);
-
 
 // Tambah bonus mapel
 function tambahNilaiMapel(userScore, favSubjects = []) {
@@ -135,12 +133,22 @@ router.post("/", async (req, res) => {
 
   router.get("/history", async (req, res) => {
 
-    const histories = await History.find().sort({
-        tanggal: -1
-    });
+   try {
+        const histories = await History.find().sort({
+            tanggal: -1
+        });
 
-    res.json(histories);
+        res.json(histories);
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
 });
 });
 
+
+router.get("/history", ...)
 module.exports = router;
