@@ -263,14 +263,8 @@
                             class="bg-maroon text-white px-5 py-3 rounded-xl font-bold">
                             Selanjutnya
                         </button>
-
                     </div>
-
                 </form>
-
-
-
-
             </div>
 
             <script>
@@ -465,13 +459,9 @@
                 }
 
 
-
                 function toggleMapel(button) {
-
                     const mapelName = button.innerText.trim();
-
                     if (selectedMapel.includes(mapelName)) {
-
                         selectedMapel =
                             selectedMapel.filter(
                                 item => item !== mapelName
@@ -539,7 +529,7 @@
                         Lihat Hasil Eksplorasi <i class="fa-solid fa-square-poll-vertical text-lg"></i>
                     </button>
                 </div>
-            `;
+                `;
                     wrapper.scrollIntoView({ behavior: 'smooth' });
                 }
 
@@ -563,27 +553,40 @@
                         scores[ans.trait] += ans.value;
                     });
 
-                    console.log(scores);
+                    console.log("Scores:", scores);
 
-                    const res = await fetch(`${API_URL}/match`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            scores,
-                            favSubjects: selectedMapel
-                        })
-                    });
+                    try {
 
-                    const result = await res.json();
+                        const res = await fetch(`${API_URL}/result`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                scores,
+                                favSubjects: selectedMapel
+                            })
+                        });
 
-                    localStorage.setItem(
-                        "assessmentResult",
-                        JSON.stringify(result)
-                    );
+                        if (!res.ok) {
+                            throw new Error(`Server Error ${res.status}`);
+                        }
 
-                    window.location.href = "hasil.html";
+                        const result = await res.json();
+
+                        console.log(result);
+
+                        localStorage.setItem(
+                            "assessmentResult",
+                            JSON.stringify(result)
+                        );
+
+                        window.location.href = "hasil.html";
+
+                    } catch (err) {
+                        console.error(err);
+                        alert("Gagal mengambil hasil asesmen.");
+                    }
                 }
 
                 function kembaliKeKuesionerDariHasil() {
@@ -627,7 +630,6 @@
                     loadQuestions();
                 };
 
-
                 // Tambahkan ini di bagian atas script di halaman assessment & riwayat sesi
                 firebase.auth().onAuthStateChanged((user) => {
                     if (!user) {
@@ -639,8 +641,6 @@
                         console.log("Akses diizinkan untuk:", user.email);
                     }
                 });
-
-
             </script>
 </body>
 

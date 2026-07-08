@@ -5,6 +5,7 @@ const router = express.Router();
 
 const Career = require("../models/Career");
 const subjectToRIASEC = require("../data/subjects");
+const Roadmap = require("../models/Roadmap");
 
 // Tambah bonus mapel
 function tambahNilaiMapel(userScore, favSubjects = []) {
@@ -30,9 +31,8 @@ function tambahNilaiMapel(userScore, favSubjects = []) {
 
 // Matching jurusan
 
-// =========================
+
 // Fungsi mencocokkan karir
-// =========================
 async function matchCareer(userScore) {
   const careers = await Career.find();
 
@@ -65,6 +65,7 @@ async function matchCareer(userScore) {
         id: career._id,
         name: career.name,
         description: career.description,
+        cluster: career.cluster,
         percentage,
       };
     })
@@ -74,7 +75,6 @@ async function matchCareer(userScore) {
 // API
 router.post("/", async (req, res) => {
   try {
-
     const { scores, favSubjects } = req.body;
 
     if (!scores) {
@@ -85,9 +85,7 @@ router.post("/", async (req, res) => {
     }
 
     // Skor asli asesmen
-    const assessmentScores = {
-      ...scores
-    };
+    const assessmentScores = { ...scores };
 
     // Skor untuk matching
     const matchingScores = tambahNilaiMapel(
@@ -96,9 +94,11 @@ router.post("/", async (req, res) => {
     );
 
     // Cari jurusan
-    const careers = await matchCareer(
-      matchingScores
-    );
+    const careers = await matchCareer(matchingScores);
+
+    const sortedTraits = Object.entries(matchingScores).sort((a, b) => b[1] - a[1]);
+
+    const hollandCode = sortedTraits[0][0] + sortedTraits[1][0] + sortedTraits[2][0];
 
     if (careers.length === 0) {
       return res.status(404).json({
@@ -107,48 +107,46 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // Response
+    const carreer = await Career.findById(careers[0].id);
+
+    const roadmap = await Roadmap.findOne({
+      cluster: carreer.cluster,
+      hollandCode: hollandCode,
+    });
+
     res.json({
       success: true,
       topMatch: careers[0],
       alternatives: careers.slice(1, 3),
-
-      // Dipakai Profil RIASEC
       scores: assessmentScores,
-
-      // Dipakai kalau nanti ingin debugging
-      matchingScores,
+      hollandCode: hollandCode,
+      roadmap: roadmap || null,
+      matchingScores: matchingScores,
     });
 
   } catch (error) {
-
     console.error(error);
-
     res.status(500).json({
       success: false,
       message: error.message,
     });
-
   }
-
-  router.get("/history", async (req, res) => {
-
-   try {
-        const histories = await History.find().sort({
-            tanggal: -1
-        });
-
-        res.json(histories);
-
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-    }
-});
 });
 
+// History
+const History = require("../models/History");
 
-router.get("/history", ...)
+router.get("/history", async (req, res) => {
+  try {
+    const histories = await History.find().sort({ tanggal: -1 });
+    res.json(histories);
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;
+

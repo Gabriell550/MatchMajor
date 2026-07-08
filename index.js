@@ -33,7 +33,7 @@ mongoose
     console.log("MongoDB Connected!");
 
     app.listen(3000, () => {
-      console.log("Server jalan di port 3000 nih!");
+      console.log("Server jalan di port 3000");
     });
   })
   .catch((err) => console.log(err));
