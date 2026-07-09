@@ -21,8 +21,7 @@ function tambahNilaiMapel(userScore, favSubjects = []) {
     const weight = weights[index] || 1;
 
     Object.entries(bonus).forEach(([trait, value]) => {
-      finalScores[trait] =
-        (finalScores[trait] || 0) + value * weight;
+      finalScores[trait] = (finalScores[trait] || 0) + value * weight;
     });
   });
 
@@ -30,7 +29,6 @@ function tambahNilaiMapel(userScore, favSubjects = []) {
 }
 
 // Matching jurusan
-
 
 // Fungsi mencocokkan karir
 async function matchCareer(userScore) {
@@ -51,15 +49,11 @@ async function matchCareer(userScore) {
 
       for (const key of Object.keys(career.traits)) {
         score += Math.abs(
-          Number(career.traits[key] || 0) -
-          Number(normalizedUser[key] || 0)
+          Number(career.traits[key] || 0) - Number(normalizedUser[key] || 0),
         );
       }
 
-      const percentage = Math.max(
-        0,
-        Math.round((1 - score / 24) * 100)
-      );
+      const percentage = Math.max(0, Math.round((1 - score / 24) * 100));
 
       return {
         id: career._id,
@@ -90,15 +84,17 @@ router.post("/", async (req, res) => {
     // Skor untuk matching
     const matchingScores = tambahNilaiMapel(
       assessmentScores,
-      favSubjects || []
+      favSubjects || [],
     );
 
     // Cari jurusan
     const careers = await matchCareer(matchingScores);
 
-    const sortedTraits = Object.entries(matchingScores).sort((a, b) => b[1] - a[1]);
+    const sortedTraits = Object.entries(matchingScores).sort(
+      (a, b) => b[1] - a[1],
+    );
 
-    const hollandCode = sortedTraits[0][0] + sortedTraits[1][0] + sortedTraits[2][0];
+    const hollandCode = sortedTraits[0][0] + sortedTraits[1][0];
 
     if (careers.length === 0) {
       return res.status(404).json({
@@ -107,12 +103,24 @@ router.post("/", async (req, res) => {
       });
     }
 
-    const carreer = await Career.findById(careers[0].id);
-
-    const roadmap = await Roadmap.findOne({
-      cluster: carreer.cluster,
+    console.log("Mencari roadmap dengan:", {
+      cluster: careers[0].cluster,
       hollandCode: hollandCode,
     });
+
+    console.log("DB dipakai:", Roadmap.db.name);
+    console.log("Collection dipakai:", Roadmap.collection.name);
+
+    const roadmap = await Roadmap.findOne({
+      cluster: careers[0].cluster,
+      hollandCode: hollandCode,
+    });
+
+    if (!roadmap) {
+      roadmap = await Roadmap.findOne({ cluster: careers[0].cluster });
+    }
+
+    console.log("Hasil roadmap:", roadmap);
 
     res.json({
       success: true,
@@ -123,7 +131,6 @@ router.post("/", async (req, res) => {
       roadmap: roadmap || null,
       matchingScores: matchingScores,
     });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -149,4 +156,3 @@ router.get("/history", async (req, res) => {
 });
 
 module.exports = router;
-

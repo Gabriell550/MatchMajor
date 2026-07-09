@@ -11,6 +11,11 @@ const careerSchema = new mongoose.Schema({
         required: true
     },
 
+    cluster: {
+        type: String,
+        required: true
+    },
+
     traits: {
         R: Number,
         I: Number,
