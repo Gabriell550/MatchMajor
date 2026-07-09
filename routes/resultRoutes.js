@@ -6,16 +6,15 @@ const router = express.Router();
 const Career = require("../models/Career");
 const subjectToRIASEC = require("../data/subjects");
 const Roadmap = require("../models/Roadmap");
+const History = require("../models/History"); // Memanggil model History di bagian atas
 
-// Tambah bonus mapel
+// Fungsi Tambah bonus mapel
 function tambahNilaiMapel(userScore, favSubjects = []) {
   const finalScores = { ...userScore };
-
   const weights = [1.5, 1.2, 1.0];
 
   favSubjects.forEach((subject, index) => {
     const bonus = subjectToRIASEC[subject];
-
     if (!bonus) return;
 
     const weight = weights[index] || 1;
@@ -50,6 +49,7 @@ async function matchCareer(userScore) {
       for (const key of Object.keys(career.traits)) {
         score += Math.abs(
           Number(career.traits[key] || 0) - Number(normalizedUser[key] || 0),
+          Number(career.traits[key] || 0) - Number(normalizedUser[key] || 0)
         );
       }
 
@@ -66,10 +66,12 @@ async function matchCareer(userScore) {
     .sort((a, b) => b.percentage - a.percentage);
 }
 
-// API
+// ==========================================
+// API POST / - Hitung dan Simpan Hasil Asesmen
+// ==========================================
 router.post("/", async (req, res) => {
   try {
-    const { scores, favSubjects } = req.body;
+    const { scores, favSubjects, userId } = req.body;
 
     if (!scores) {
       return res.status(400).json({
@@ -86,6 +88,7 @@ router.post("/", async (req, res) => {
       assessmentScores,
       favSubjects || [],
     );
+    const matchingScores = tambahNilaiMapel(assessmentScores, favSubjects || []);
 
     // Cari jurusan
     const careers = await matchCareer(matchingScores);
@@ -124,8 +127,8 @@ router.post("/", async (req, res) => {
 
     res.json({
       success: true,
-      topMatch: careers[0],
-      alternatives: careers.slice(1, 3),
+      topMatch: topMatch,
+      alternatives: alternatives,
       scores: assessmentScores,
       hollandCode: hollandCode,
       roadmap: roadmap || null,
@@ -140,12 +143,12 @@ router.post("/", async (req, res) => {
   }
 });
 
-// History
-const History = require("../models/History");
-
+// ==========================================
+// API GET /history - Ambil Riwayat Asesmen
+// ==========================================
 router.get("/history", async (req, res) => {
   try {
-    const histories = await History.find().sort({ tanggal: -1 });
+    const histories = await History.find().sort({ tanggal: -1 }); // Urutkan dari yang terbaru
     res.json(histories);
   } catch (error) {
     res.status(500).json({

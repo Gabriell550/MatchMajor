@@ -15,6 +15,20 @@ const historySchema = new mongoose.Schema({
 
     recommendation: String,
 
+    // Tambahkan topMatch untuk menyimpan deskripsi & persentase jurusan ke-1
+    topMatch: {
+        name: String,
+        description: String,
+        percentage: Number
+    },
+
+    // Tambahkan alternatives untuk menyimpan jurusan ke-2 dan ke-3
+    alternatives: [{
+        name: String,
+        description: String,
+        percentage: Number
+    }],
+
     scores: Object,
 
     answers: Array
