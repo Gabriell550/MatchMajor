@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Pertanyaan - Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #fdfaf3; scroll-behavior: smooth;}
+        .text-maroon { color: #7A1315;}
+        .bg-maroon { background-color: #7A1315;}
+        .border-maroon {border-color: #7A1315;}
+        
+        select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+        }
+
+        /* Scrollbar custom untuk tabel */
+        .table-container::-webkit-scrollbar { height: 8px; width: 8px; }
+        .table-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .table-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="p-4 md:p-8 flex items-start justify-center min-h-screen">
+    <div class="max-w-5xl w-full mx-auto space-y-6">
+        <div class="flex items-center">
+            <a href="Admin.html" class="inline-flex items-center gap-2 text-sm font-bold text-maroon hover:text-red-900 bg-white border border-gray-100 px-4 py-2.5 rounded-xl shadow-sm transition-all">
+                <i class="fa-solid fa-arrow-left"></i>Kembali ke Dashboard Admin
+            </a>
+        </div>
+        <header class="bg-white border border-gray-100 rounded-2xl px-6 py-4 shadow-sm flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-user-shield text-maroon text-xl"></i>
+                <span class="font-extrabold text-gray-800 text-base tracking-tight">Admin Match Major</span>
+            </div>
+            <nav class="flex items-center gap-6 text-sm font-semibold">
+                <a href="Admin.html" class="text-gray-400 hover:text-gray-600 transition-colors">Dashboard</a>
+                <a href="#" class="text-maroon border-b-2 border-maroon pb-0.5">Edit Soal</a>
+            </nav>
+        </header>
+        <div class="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-md space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-gray-100">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-pen-to-square text-2xl text-maroon"></i>
+                    <h3 class="text-2xl font-bold text-maroon">Daftar Pertanyaan</h3>
+                </div>
+                <button onclick="loadQuestions()" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-rotate-right"></i> Refresh
+                </button>
+            </div>
+
+            <div class="table-container overflow-x-auto border border-gray-200 rounded-xl max-h-96 overflow-y-auto">
+                <table class="w-full text-left text-sm text-gray-600">
+                    <thead class="text-xs uppercase bg-gray-50 text-gray-700 font-bold sticky top-0 shadow-sm">
+                        <tr>
+                            <th class="px-4 py-4 w-12 text-center">No</th>
+                            <th class="px-4 py-4">Isi Pertanyaan</th>
+                            <th class="px-4 py-4 w-32 text-center">Tipe</th>
+                            <th class="px-4 py-4 w-28 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body" class="divide-y divide-gray-100">
+                        <tr>
+                            <td colspan="4" class="px-4 py-8 text-center text-gray-500 font-medium">
+                                <i class="fa-solid fa-spinner fa-spin mr-2"></i> Memuat data pertanyaan...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="edit-form-container" class="bg-white border border-yellow-200 rounded-2xl p-6 md:p-8 shadow-lg space-y-6 hidden ring-4 ring-yellow-50/50">
+            <div class="flex items-center justify-between pb-4 border-b border-gray-100">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-file-pen text-2xl text-yellow-500"></i>
+                    <h3 class="text-2xl font-bold text-gray-800">Edit Data Pertanyaan</h3>
+                </div>
+                <button onclick="batalEdit()" class="text-gray-400 hover:text-red-500 transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <form id="form-edit" class="space-y-6">
+                <input type="hidden" id="edit-id">
+
+                <div class="space-y-2">
+                    <label for="edit-teks" class="block font-bold text-gray-700">Isi Pertanyaan Baru</label>
+                    <textarea id="edit-teks" rows="3" required
+                        class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 outline-none transition-all text-gray-700"></textarea>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="edit-tipe" class="block font-bold text-gray-700">Kategori RIASEC</label>
+                    <select id="edit-tipe" required
+                        class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 outline-none transition-all text-gray-700 appearance-none pr-10">
+                        <option value="R">Realistic (R)</option>
+                        <option value="I">Investigative (I)</option>
+                        <option value="A">Artistic (A)</option>
+                        <option value="S">Social (S)</option>
+                        <option value="E">Enterprising (E)</option>
+                        <option value="C">Conventional (C)</option>
+                    </select>
+                </div>
+
+                <div class="flex gap-4 pt-4 border-t border-gray-100">
+                    <button type="submit" id="btn-submit"
+                        class="bg-yellow-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-yellow-600 transition-all shadow-md flex-1 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
+                    </button>
+                    <button type="button" onclick="batalEdit()"
+                        class="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-bold hover:bg-gray-200 transition-all shadow-sm flex-1 text-center">
+                        Batal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = "http://localhost:3000";
+        let questionsData = []; // Menyimpan data sementara agar mudah dipanggil saat mau edit
+
+        // 1. Fungsi Mengambil Data Pertanyaan dari Server
+        async function loadQuestions() {
+            const tableBody = document.getElementById('table-body');
+            tableBody.innerHTML = '<tr><td colspan="4" class="px-4 py-8 text-center text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Memuat data...</td></tr>';
+            
+            try {
+                const response = await fetch(`${API_URL}/questions`);
+                if (!response.ok) throw new Error("Gagal mengambil data");
+                
+                const data = await response.json();
+                questionsData = data.data; // Simpan ke array global
+
+                tableBody.innerHTML = ''; // Kosongkan tabel
+
+                if(questionsData.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="4" class="px-4 py-8 text-center text-gray-500">Belum ada pertanyaan. Tambahkan soal terlebih dahulu.</td></tr>';
+                    return;
+                }
+
+                // Masukkan data ke dalam tabel
+                questionsData.forEach((q, index) => {
+                    tableBody.innerHTML += `
+                        <tr class="hover:bg-gray-50 transition-colors group">
+                            <td class="px-4 py-3 text-center font-semibold text-gray-500">${index + 1}</td>
+                            <td class="px-4 py-3 font-medium text-gray-800">${q.question}</td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="bg-gray-100 text-maroon font-bold px-3 py-1 rounded-full text-xs">
+                                    ${q.trait}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <button onclick="bukaFormEdit('${q._id}')" class="bg-yellow-100 text-yellow-700 hover:bg-yellow-500 hover:text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm">
+                                    <i class="fa-solid fa-pen"></i> Edit
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (error) {
+                console.error(error);
+                tableBody.innerHTML = '<tr><td colspan="4" class="px-4 py-8 text-center text-red-500 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> Gagal terhubung ke server.</td></tr>';
+            }
+        }
+
+        // 2. Fungsi Membuka Form Edit
+        function bukaFormEdit(id) {
+            // Cari data pertanyaan berdasarkan ID
+            const question = questionsData.find(q => q._id === id);
+            if (!question) return;
+
+            // Isi nilai form dengan data lama
+            document.getElementById('edit-id').value = question._id;
+            document.getElementById('edit-teks').value = question.question;
+            document.getElementById('edit-tipe').value = question.trait;
+
+            // Tampilkan form edit dan scroll ke form tersebut
+            const formContainer = document.getElementById('edit-form-container');
+            formContainer.classList.remove('hidden');
+            formContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            document.getElementById('edit-teks').focus();
+        }
+
+        // 3. Fungsi Menutup Form Edit
+        function batalEdit() {
+            document.getElementById('edit-form-container').classList.add('hidden');
+            document.getElementById('form-edit').reset();
+        }
+
+        // 4. Fungsi Mengirim Data Update (PUT) ke Server
+        document.getElementById('form-edit').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const btnSubmit = document.getElementById('btn-submit');
+            const idToUpdate = document.getElementById('edit-id').value;
+            const updatedText = document.getElementById('edit-teks').value;
+            const updatedTrait = document.getElementById('edit-tipe').value;
+
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
+            btnSubmit.disabled = true;
+
+            try {
+                const response = await fetch(`${API_URL}/questions/${idToUpdate}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        question: updatedText,
+                        trait: updatedTrait
+                    })
+                });
+
+                if (response.ok) {
+                    alert('Berhasil! Pertanyaan telah diperbarui.');
+                    batalEdit(); // Tutup form
+                    loadQuestions(); // Reload tabel untuk melihat hasil edit
+                } else {
+                    alert('Gagal memperbarui pertanyaan. Cek koneksi server.');
+                }
+            } catch (error) {
+                console.error("Terjadi kesalahan:", error);
+                alert('Terjadi kesalahan saat menghubungi server.');
+            } finally {
+                btnSubmit.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan';
+                btnSubmit.disabled = false;
+            }
+        });
+
+        // Panggil fungsi loadQuestions saat halaman pertama kali dimuat
+        window.onload = loadQuestions;
+
+    </script>
+</body>
+</html>
