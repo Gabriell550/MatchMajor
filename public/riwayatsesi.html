@@ -1,51 +1,39 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riwayat Sesi Asesmen - Eksplorasi Diri</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riwayat Sesi Asesmen - Eksplorasi Diri</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fdfaf3;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fdfaf3;
+    }
 
-        .text-maroon {
-            color: #7A1315;
-        }
+    .text-maroon { color: #7A1315; }
+    .bg-maroon { background-color: #7A1315; }
 
-        .bg-maroon {
-            background-color: #7A1315;
-        }
-
-        .border-maroon {
-            border-color: #7A1315;
-        }
-
-        /* Custom scrollbar untuk tabel responsif */
-        .custom-scrollbar::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
-    </style>
+    /* Custom scrollbar untuk tabel responsif */
+    .custom-scrollbar::-webkit-scrollbar { height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 
 <body class="p-4 md:p-8 flex justify-center min-h-screen">
+  <div class="max-w-4xl w-full mx-auto space-y-4">
 
+<<<<<<< HEAD
     <div class="max-w-5xl w-full mx-auto space-y-4">
 
         <div class="flex items-center">
@@ -53,35 +41,114 @@
                 class="inline-flex items-center gap-2 text-sm font-bold text-maroon hover:text-red-900 bg-white border border-gray-100 px-4 py-2.5 rounded-xl shadow-sm transition-all">
                 <i class="fa-solid fa-arrow-left text-xs"></i> Kembali ke Beranda
             </a>
+=======
+    <div class="flex items-center">
+      <a href="index.html"
+         class="inline-flex items-center gap-2 text-sm font-bold text-maroon hover:text-red-900 bg-white border border-gray-100 px-4 py-2 rounded-xl shadow-sm transition-all">
+        <i class="fa-solid fa-arrow-left text-xs"></i> Kembali ke Beranda
+      </a>
+    </div>
+
+    <header class="bg-white border border-gray-100 rounded-2xl px-6 py-4 shadow-sm flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-compass text-maroon text-xl"></i>
+        <span class="font-extrabold text-gray-800 text-base tracking-tight">Eksplorasi Diri</span>
+      </div>
+      <nav class="flex items-center gap-6 text-sm font-semibold">
+        <a href="index.html" class="text-gray-400 hover:text-gray-600 transition-colors">Beranda</a>
+        <a href="#" class="text-maroon border-b-2 border-maroon pb-0.5">Riwayat</a>
+      </nav>
+    </header>
+
+    <main class="space-y-6 pt-2">
+
+      <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+        <div class="text-xs text-gray-400 flex items-center gap-2 mb-2 font-medium">
+          <span>Aktivitas Akun</span> &bull; <span class="text-maroon font-bold">Log Riwayat</span>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-extrabold text-maroon">Riwayat Sesi Asesmen</h2>
+            <p class="text-sm text-gray-500 mt-1">
+              Pantau dan tinjau kembali seluruh hasil eksplorasi karakter dan rekomendasi karir yang pernah kamu lakukan.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5 flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center">
+          <i class="fa-solid fa-clipboard-list text-maroon text-lg"></i>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Total Sesi</p>
+          <h3 id="totalSesi" class="text-2xl font-bold text-gray-900">0</h3>
+          <p class="text-xs text-gray-400">Kali Asesmen</p>
+        </div>
+      </div>
+
+      <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5 flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-yellow-50 flex items-center justify-center">
+          <i class="fa-solid fa-star text-yellow-600 text-lg"></i>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Rekomendasi Utama</p>
+          <h3 id="topRekomendasi" class="text-xl font-bold text-gray-900">-</h3>
+          <p class="text-xs text-gray-400">Karier yang paling sesuai</p>
+        </div>
+      </div>
+
+      <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5 flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center">
+          <i class="fa-solid fa-clock-rotate-left text-green-700 text-lg"></i>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Sesi Terakhir</p>
+          <h3 id="sesiTerakhir" class="text-xl font-bold text-gray-900">-</h3>
+          <p class="text-xs text-gray-400">Riwayat terbaru</p>
+        </div>
+      </div>
+
+      <div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+          <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Daftar Sesi Aktif</span>
+          <span class="text-[11px] font-bold text-green-700 bg-green-50 px-2.5 py-1 rounded-full border border-green-100">Auto-Save Aktif</span>
+>>>>>>> 8de1c4a (menambahkan edit.html, hapus.html, edit bagian mata pelajaran)
         </div>
 
-        <header
-            class="bg-white border border-gray-100 rounded-2xl px-6 py-4 shadow-sm flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-compass text-maroon text-xl"></i>
-                <span class="font-extrabold text-gray-800 text-base tracking-tight">Eksplorasi Diri</span>
-            </div>
-            <nav class="flex items-center gap-6 text-sm font-semibold">
-                <a href="index.html" class="text-gray-400 hover:text-gray-600 transition-colors">Beranda</a>
-                <a href="#" class="text-maroon border-b-2 border-maroon pb-0.5">Riwayat</a>
-            </nav>
-        </header>
+        <div class="overflow-x-auto custom-scrollbar">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-gray-100 bg-gray-50/30 text-xs font-bold text-gray-400 uppercase">
+                <th class="py-3.5 px-6">ID Sesi</th>
+                <th class="py-3.5 px-6">Tanggal &amp; Waktu</th>
+                <th class="py-3.5 px-6">Kekuatan Dominan</th>
+                <th class="py-3.5 px-6">Top Rekomendasi</th>
+                <th class="py-3.5 px-6 text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="historyTable"></tbody>
+          </table>
+        </div>
 
-        <main class="space-y-6 pt-2">
+        <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-between flex-wrap gap-3 bg-gray-50/20">
+          <span id="paginationInfo" class="text-xs text-gray-400 font-medium">Menampilkan 0 dari 0 Sesi kuesioner</span>
+          <div class="flex items-center gap-2">
+            <button class="p-2 border border-gray-200 rounded-lg text-gray-400 cursor-not-allowed text-xs">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="w-8 h-8 rounded-lg bg-maroon text-white font-bold text-xs flex items-center justify-center">1</button>
+            <button class="p-2 border border-gray-200 rounded-lg text-gray-400 cursor-not-allowed text-xs">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
-            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-                <div class="text-xs text-gray-400 flex items-center gap-2 mb-2 font-medium">
-                    <span>Aktivitas Akun</span> &bull; <span class="text-maroon font-bold">Log Riwayat</span>
-                </div>
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2 class="text-2xl font-extrabold text-maroon">Riwayat Sesi Asesmen</h2>
-                        <p class="text-sm text-gray-500 mt-1">Pantau dan tinjau kembali seluruh hasil eksplorasi
-                            karakter dan rekomendasi karir yang pernah kamu lakukan.</p>
-                    </div>
-                </div>
-            </div>
+    </main>
+  </div>
 
+<<<<<<< HEAD
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
                 
                 <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow">
@@ -237,6 +304,87 @@
         });
         */
     </script>
-</body>
+=======
+  <script>
+    const API_HISTORY_URL = "http://localhost:3000/result/history";
 
+    function lihatHasil(item) {
+      localStorage.setItem("assessmentResult", JSON.stringify(item));
+      window.location.href = "hasil.html";
+    }
+
+    function formatTanggal(tanggal) {
+      const d = new Date(tanggal);
+      if (Number.isNaN(d.getTime())) return "-";
+      return d.toLocaleString("id-ID");
+    }
+
+    async function loadHistory() {
+      try {
+        const response = await fetch(API_HISTORY_URL);
+        if (!response.ok) throw new Error("HTTP " + response.status);
+
+        const histories = await response.json();
+        const data = Array.isArray(histories) ? histories : [];
+
+        document.getElementById("totalSesi").innerText = data.length;
+
+        if (data.length > 0) {
+          document.getElementById("topRekomendasi").innerText = data[0].recommendation ?? "-";
+          document.getElementById("sesiTerakhir").innerText = formatTanggal(data[0].tanggal);
+        }
+
+        const tbody = document.getElementById("historyTable");
+        tbody.innerHTML = "";
+
+        data.forEach((item, index) => {
+          const tr = document.createElement("tr");
+          tr.className = "border-t hover:bg-gray-50";
+
+          const idSesi = `#ED-${1000 + index}`;
+          tr.innerHTML = `
+            <td class="p-3">${idSesi}</td>
+            <td class="p-3">${formatTanggal(item.tanggal)}</td>
+            <td class="p-3">${item.dominantStrength ?? "-"}</td>
+            <td class="p-3">${item.recommendation ?? "-"}</td>
+            <td class="p-3 text-center">
+              <button
+                class="bg-maroon text-white px-3 py-1 rounded text-sm"
+                type="button"
+                data-item='${JSON.stringify(item).replace(/'/g, "&#39;")}'>
+                Buka Hasil
+              </button>
+            </td>
+          `;
+
+          tbody.appendChild(tr);
+        });
+
+        const displayed = Math.min(3, data.length);
+        document.getElementById("paginationInfo").innerText =
+          `Menampilkan 1-${displayed} dari ${data.length} Sesi kuesioner`;
+
+        tbody.querySelectorAll("button[data-item]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const raw = btn.getAttribute("data-item");
+            try {
+              const item = JSON.parse(raw.replace(/&#39;/g, "'"));
+              lihatHasil(item);
+            } catch (e) {
+              console.error(e);
+              alert("Gagal membuka hasil: data sesi tidak valid.");
+            }
+          });
+        });
+      } catch (err) {
+        console.error(err);
+        alert("Gagal mengambil data riwayat.");
+      }
+    }
+
+    loadHistory();
+  </script>
+>>>>>>> 8de1c4a (menambahkan edit.html, hapus.html, edit bagian mata pelajaran)
+</body>
 </html>
+
