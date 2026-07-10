@@ -33,15 +33,6 @@
 <body class="p-4 md:p-8 flex justify-center min-h-screen">
   <div class="max-w-4xl w-full mx-auto space-y-4">
 
-<<<<<<< HEAD
-    <div class="max-w-5xl w-full mx-auto space-y-4">
-
-        <div class="flex items-center">
-            <a href="index.html"
-                class="inline-flex items-center gap-2 text-sm font-bold text-maroon hover:text-red-900 bg-white border border-gray-100 px-4 py-2.5 rounded-xl shadow-sm transition-all">
-                <i class="fa-solid fa-arrow-left text-xs"></i> Kembali ke Beranda
-            </a>
-=======
     <div class="flex items-center">
       <a href="index.html"
          class="inline-flex items-center gap-2 text-sm font-bold text-maroon hover:text-red-900 bg-white border border-gray-100 px-4 py-2 rounded-xl shadow-sm transition-all">
@@ -113,7 +104,6 @@
         <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
           <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Daftar Sesi Aktif</span>
           <span class="text-[11px] font-bold text-green-700 bg-green-50 px-2.5 py-1 rounded-full border border-green-100">Auto-Save Aktif</span>
->>>>>>> 8de1c4a (menambahkan edit.html, hapus.html, edit bagian mata pelajaran)
         </div>
 
         <div class="overflow-x-auto custom-scrollbar">
@@ -148,163 +138,6 @@
     </main>
   </div>
 
-<<<<<<< HEAD
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                
-                <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 shrink-0 bg-red-50 rounded-xl flex items-center justify-center text-maroon text-lg">
-                        <i class="fa-solid fa-clipboard-list"></i>
-                    </div>
-                    <div>
-                        <div class="text-gray-500 text-sm font-medium mb-1">Total Sesi</div>
-                        <div id="totalSesi" class="font-extrabold text-xl text-gray-800">0 Kali Asesmen</div>
-                    </div>
-                </div>
-
-                <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 shrink-0 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600 text-lg">
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                    <div>
-                        <div class="text-gray-500 text-sm font-medium mb-1">Rekomendasi Utama</div>
-                        <div id="topRekomendasi" class="font-extrabold text-xl text-gray-800">-</div>
-                    </div>
-                </div>
-
-                <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 shrink-0 bg-green-50 rounded-xl flex items-center justify-center text-green-600 text-lg">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                    </div>
-                    <div>
-                        <div class="text-gray-500 text-sm font-medium mb-1">Sesi Terakhir</div>
-                        <div id="sesiTerakhir" class="font-extrabold text-lg text-gray-800">-</div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-                    <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Daftar Sesi Aktif</span>
-                    <span class="text-[11px] font-bold text-green-700 bg-green-50 px-2.5 py-1 rounded-full border border-green-100">Auto-Save Aktif</span>
-                </div>
-
-                <div class="overflow-x-auto custom-scrollbar max-h-[400px] overflow-y-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead class="sticky top-0 z-10 bg-gray-50/90 backdrop-blur-sm">
-                            <tr class="border-b border-gray-100 text-xs font-bold text-gray-500 uppercase">
-                                <th class="py-4 px-6">ID Sesi</th>
-                                <th class="py-4 px-6">Tanggal &amp; Waktu</th>
-                                <th class="py-4 px-6">Kekuatan Dominan</th>
-                                <th class="py-4 px-6">Top Rekomendasi</th>
-                                <th class="py-4 px-6 text-center">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="historyTable" class="divide-y divide-gray-100">
-                            <tr>
-                                <td colspan="5" class="py-8 text-center text-gray-500 font-medium">
-                                    <i class="fa-solid fa-spinner fa-spin mr-2"></i> Memuat data riwayat...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-between flex-wrap gap-3 bg-gray-50/20">
-                    <span class="text-xs text-gray-400 font-medium" id="infoPaginasi">Menampilkan data kuesioner</span>
-                    <div class="flex items-center gap-2">
-                        <button class="p-2 border border-gray-200 rounded-lg text-gray-400 cursor-not-allowed text-xs"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button class="w-8 h-8 rounded-lg bg-maroon text-white font-bold text-xs flex items-center justify-center">1</button>
-                        <button class="p-2 border border-gray-200 rounded-lg text-gray-400 cursor-not-allowed text-xs"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <script>
-        // Simpan data history secara global agar mudah diakses oleh tombol Buka Hasil
-        let globalHistories = []; 
-
-        async function loadHistory() {
-            try {
-                // Pastikan endpoint ini sesuai dengan rute backend kamu
-                const response = await fetch("http://localhost:3000/result/history");
-                
-                if (!response.ok) throw new Error("Gagal mengambil data dari server");
-                
-                const histories = await response.json();
-                globalHistories = histories; // Menyimpan data ke variabel global
-
-                document.getElementById("totalSesi").innerText = histories.length + " Kali Asesmen";
-                document.getElementById("infoPaginasi").innerText = `Menampilkan ${histories.length} Sesi kuesioner`;
-
-                if (histories.length > 0) {
-                    document.getElementById("topRekomendasi").innerText = histories[0].recommendation;
-                    document.getElementById("sesiTerakhir").innerText = new Date(histories[0].tanggal).toLocaleString("id-ID");
-                } else {
-                    document.getElementById("historyTable").innerHTML = `
-                        <tr>
-                            <td colspan="5" class="py-8 text-center text-gray-500">Belum ada riwayat asesmen yang tersimpan.</td>
-                        </tr>`;
-                    return;
-                }
-
-                const tbody = document.getElementById("historyTable");
-                tbody.innerHTML = "";
-
-                histories.forEach((item, index) => {
-                    tbody.innerHTML += `
-                    <tr class="hover:bg-gray-50/50 transition-colors group">
-                        <td class="py-4 px-6 font-semibold text-gray-600">#ED-${1000 + index}</td>
-                        <td class="py-4 px-6 text-gray-500 text-sm">${new Date(item.tanggal).toLocaleString("id-ID")}</td>
-                        <td class="py-4 px-6">
-                            <span class="bg-gray-100 text-gray-700 font-bold px-3 py-1 rounded-full text-xs border border-gray-200">
-                                ${item.dominantStrength}
-                            </span>
-                        </td>
-                        <td class="py-4 px-6 font-bold text-maroon">${item.recommendation}</td>
-                        <td class="py-4 px-6 text-center">
-                            <button class="bg-maroon text-white hover:bg-red-900 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 mx-auto"
-                            onclick='lihatHasil(${index})'>
-                                Buka Hasil <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                            </button>
-                        </td>
-                    </tr>`;
-                });
-
-            } catch (err) {
-                console.error(err);
-                document.getElementById("historyTable").innerHTML = `
-                    <tr>
-                        <td colspan="5" class="py-8 text-center text-red-500 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> Gagal memuat data riwayat dari server.</td>
-                    </tr>`;
-            }
-        }
-
-        // Fungsi membuka hasil berdasarkan index dari array global
-        function lihatHasil(index) {
-            const item = globalHistories[index];
-            localStorage.setItem("assessmentResult", JSON.stringify(item));
-            window.location.href = "hasil.html";
-        }
-
-        // Jalankan fungsi saat halaman dimuat
-        window.onload = loadHistory;
-
-        // Proteksi Halaman via Firebase (Opsional)
-        /*
-        firebase.auth().onAuthStateChanged((user) => {
-            if (!user) {
-                alert("Anda harus login terlebih dahulu untuk mengakses halaman ini!");
-                window.location.href = 'login.html';
-            } else {
-                console.log("Akses diizinkan untuk:", user.email);
-            }
-        });
-        */
-    </script>
-=======
   <script>
     const API_HISTORY_URL = "http://localhost:3000/result/history";
 
@@ -384,7 +217,6 @@
 
     loadHistory();
   </script>
->>>>>>> 8de1c4a (menambahkan edit.html, hapus.html, edit bagian mata pelajaran)
 </body>
 </html>
 
