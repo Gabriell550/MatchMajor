@@ -59,75 +59,133 @@
       .card-shadow {
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
       }
+
+      .grid-columns-equal {
+        align-items: stretch;
+      }
+
+      .col-flex {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .col-flex > .flex-fill {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .roadmap-header {
+        margin-bottom: 24px;
+      }
+
+      .roadmap-title {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #7a1315;
+        margin-bottom: 6px;
+      }
+
+      .roadmap-desc {
+        font-size: 0.9rem;
+        color: #6b7280;
+        line-height: 1.6;
+      }
+
+      .roadmap-steps {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        position: relative;
+      }
+
+      .roadmap-step {
+        display: flex;
+        gap: 16px;
+        position: relative;
+        padding-bottom: 24px;
+      }
+
+      /* Garis penghubung antar step */
+      .roadmap-step:not(:last-child)::before {
+        content: "";
+        position: absolute;
+        left: 15px;
+        top: 34px;
+        bottom: 0;
+        width: 2px;
+        background-color: #fde68a;
+      }
+
+      .roadmap-step-number {
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        border-radius: 9999px;
+        background-color: #7a1315;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+      }
+
+      .roadmap-step-content {
+        flex: 1;
+        background-color: #ffffff;
+        border: 1px solid #fde68a;
+        border-radius: 14px;
+        padding: 14px 16px;
+      }
+
+      .roadmap-step-title {
+        display: block;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 4px;
+      }
+
+      .roadmap-step-desc {
+        font-size: 0.85rem;
+        color: #6b7280;
+        line-height: 1.6;
+        margin: 0;
+      }
     </style>
   </head>
-  
-    .card-shadow {
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    }
-  </style>
-</head>
 
-<body class="flex">
-  <aside class="sidebar p-8 flex flex-col text-white">
-    <div class="mb-12">
-      <h1 class="text-2xl font-extrabold tracking-tight">
-        MATCH<br /><span class="text-yellow-400 italic font-bold text-xl">Major</span>
-      </h1>
-    </div>
-
-    <nav class="flex-grow space-y-6">
-      <a href="#" onclick="gotoBeranda(); return false;"
-        class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all">
-        <i class="fa-solid fa-house w-5"></i>
-        <span>Beranda</span>
-      </a>
-      <a href="#" onclick="gotoAssessment(); return false;"
-        class="flex items-center space-x-3 text-white font-bold border-r-4 border-yellow-400 -mr-8 pr-4">
-        <i class="fa-solid fa-vial w-5"></i>
-        <span>Assessment</span>
-      </a>
-      <a href="#" onclick="gotoRiwayat(); return false;"
-        class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all">
-        <i class="fa-solid fa-clock-rotate-left w-5"></i>
-        <span>Riwayat Sesi</span>
-      </a>
-    </nav>
-
-    <!-- Ganti bagian tombol lama di sidebar dengan ini -->
-    <div class="mt-auto pt-8 border-t border-maroon-light/30">
-      <div class="flex items-center space-x-3 mb-6">
-        <!-- ... (Profil User tetap sama) ... -->
+  <body class="flex">
+    <aside class="sidebar p-8 flex flex-col text-white">
+      <div class="mb-12">
+        <h1 class="text-2xl font-extrabold tracking-tight">
+          MATCH<br /><span class="text-yellow-400 italic font-bold text-xl"
+            >Major</span
+          >
+        </h1>
       </div>
 
-      <!-- Tombol Baru -->
-      <div class="space-y-2">
-        <button id="auth-toggle-btn" onclick="handleAuth()"
-          class="w-full text-left text-sm text-red-300 hover:text-white transition-all flex items-center space-x-2">
-          <i class="fa-solid fa-right-from-bracket"></i>
-          <span id="auth-text">Logout</span>
-        </button>
-        <button onclick="window.location.href='loginadmin.html'"
-          class="w-full text-left text-sm text-yellow-400 hover:text-white transition-all flex items-center space-x-2">
-          <i class="fa-solid fa-user-shield"></i>
-          <span>Login Admin</span>
-        </button>
-      </div>
-    </div>
-  </aside>
-
-  <main class="main-content">
-    <div class="content-wrapper">
-      <!-- HEADER -->
-    <header class="flex justify-between items-end mb-10">
-      <div>
-        <a href="#" onclick="gotoBeranda(); return false;"
-          class="flex items-center text-maroon hover:text-red-800 mb-4 font-bold text-sm">
-          <i class="fa-solid fa-arrow-left mr-2"></i>
-          Kembali ke Beranda
+      <nav class="flex-grow space-y-6">
+        <a
+          href="#"
+          onclick="
+            gotoBeranda();
+            return false;
+          "
+          class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all"
+        >
+          <i class="fa-solid fa-house w-5"></i>
+          <span>Beranda</span>
         </a>
         <a
           href="#"
+          onclick="
+            gotoAssessment();
+            return false;
+          "
           class="flex items-center space-x-3 text-white font-bold border-r-4 border-yellow-400 -mr-8 pr-4"
         >
           <i class="fa-solid fa-vial w-5"></i>
@@ -135,6 +193,10 @@
         </a>
         <a
           href="#"
+          onclick="
+            gotoRiwayat();
+            return false;
+          "
           class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all"
         >
           <i class="fa-solid fa-clock-rotate-left w-5"></i>
@@ -172,7 +234,7 @@
     <main class="main-content">
       <div class="content-wrapper">
         <!-- HEADER -->
-        <header class="flex justify-between items-end mb-10">
+        <header class="flex justify-between items-end mb-5">
           <div>
             <a
               href="index.html"
@@ -196,9 +258,9 @@
           </div>
         </header>
 
-        <div class="grid grid-cols-12 gap-8">
+        <div class="grid grid-cols-12 gap-8 grid-columns-equal">
           <!-- LEFT -->
-          <div class="col-span-12 lg:col-span-5 space-y-5">
+          <div class="col-span-12 lg:col-span-5 col-flex gap-5">
             <h3
               class="text-xs font-bold uppercase tracking-widest text-gray-400"
             >
@@ -279,7 +341,7 @@
           </div>
 
           <!-- RIGHT -->
-          <div class="col-span-12 lg:col-span-7 space-y-5">
+          <div class="col-span-12 lg:col-span-7 col-flex gap-5">
             <!-- Insight -->
 
             <div class="bg-white rounded-3xl p-6 shadow-sm border">
@@ -299,88 +361,86 @@
 
               <div id="riasec-bars" class="space-y-4"></div>
             </div>
-
-            <!-- Road Map -->
-
-            <div class="bg-yellow-50 rounded-3xl p-6 border border-yellow-200">
-              <h3 class="font-bold text-xl text-maroon mb-5 flex items-center">
-                <i class="fa-solid fa-road mr-3"></i>
-                🎯 Road Map Pengembangan Diri
-              </h3>
-
-              <div id="roadmap-container" class="space-y-3"></div>
-              <p>Loading...</p>
-            </div>
           </div>
-
+        </div>
+        <div class="mt-8 bg-yellow-50 rounded-3xl p-6 border border-yellow-200">
+          <h3 class="font-bold text-xl text-maroon mb-5 flex items-center">
+            <i class="fa-solid fa-road mr-3"></i>
+            🎯 Road Map Pengembangan Diri
+          </h3>
+          <div
+            id="roadmap-container"
+            class="grid grid-cols-1 md:grid-cols-2 gap-4"
+          ></div>
         </div>
       </div>
-
-        <footer class="mt-16 text-center py-8 border-t border-gray-100">
-          <p class="text-[10px] text-gray-400">
-            &copy; 2024 Match Major System. All rights reserved.
-          </p>
-        </footer>
-      </div>
+      <footer class="mt-16 text-center py-8 border-t border-gray-100">
+        <p class="text-[10px] text-gray-400">
+          &copy; 2024 Match Major System. All rights reserved.
+        </p>
+      </footer>
     </main>
 
-  <script>
-    // 1. Inisialisasi Firebase (sama seperti index.html / assessment.html)
-    const firebaseConfig = {
-      apiKey: "AIzaSyA0TKujQ_u9GU9eFJelMuo_ykXA1T0063c",
-      authDomain: "matchmajor-78a97.firebaseapp.com",
-      projectId: "matchmajor-78a97",
-      storageBucket: "matchmajor-78a97.firebasestorage.app",
-      messagingSenderId: "113944926778",
-      appId: "1:113944926778:web:0d4fc483d51fc5640e7303"
-    };
+    <script>
+      // 1. Inisialisasi Firebase (sama seperti index.html / assessment.html)
+      const firebaseConfig = {
+        apiKey: "AIzaSyA0TKujQ_u9GU9eFJelMuo_ykXA1T0063c",
+        authDomain: "matchmajor-78a97.firebaseapp.com",
+        projectId: "matchmajor-78a97",
+        storageBucket: "matchmajor-78a97.firebasestorage.app",
+        messagingSenderId: "113944926778",
+        appId: "1:113944926778:web:0d4fc483d51fc5640e7303",
+      };
 
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
-
-    // 2. Proteksi halaman: hanya boleh diakses jika sudah login
-    firebase.auth().onAuthStateChanged((user) => {
-      const authText = document.getElementById("auth-text");
-      if (!user) {
-        alert("Anda harus login terlebih dahulu untuk mengakses halaman ini!");
-        window.location.href = "login.html";
-      } else if (authText) {
-        authText.textContent = "Logout";
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
       }
-    });
 
-    // 3. Tombol Logout di sidebar
-    function handleAuth() {
-      const user = firebase.auth().currentUser;
-      if (user) {
-        firebase.auth().signOut().then(() => {
+      // 2. Proteksi halaman: hanya boleh diakses jika sudah login
+      firebase.auth().onAuthStateChanged((user) => {
+        const authText = document.getElementById("auth-text");
+        if (!user) {
+          alert(
+            "Anda harus login terlebih dahulu untuk mengakses halaman ini!",
+          );
           window.location.href = "login.html";
-        });
+        } else if (authText) {
+          authText.textContent = "Logout";
+        }
+      });
 
-      } else {
-        window.location.href = "login.html";
+      // 3. Tombol Logout di sidebar
+      function handleAuth() {
+        const user = firebase.auth().currentUser;
+        if (user) {
+          firebase
+            .auth()
+            .signOut()
+            .then(() => {
+              window.location.href = "login.html";
+            });
+        } else {
+          window.location.href = "login.html";
+        }
       }
-    }
 
-    // 4. Fungsi navigasi sidebar
-    // Hasil sudah otomatis tersimpan ke Riwayat Sesi (di-POST ke server saat
-    // tombol "Lihat Hasil Eksplorasi" ditekan di assessment.html), jadi di sini
-    // kita tinggal pindah halaman biasa tanpa perlu simpan ulang.
-    function gotoBeranda() {
-      window.location.href = "index.html";
-    }
+      // 4. Fungsi navigasi sidebar
+      // Hasil sudah otomatis tersimpan ke Riwayat Sesi (di-POST ke server saat
+      // tombol "Lihat Hasil Eksplorasi" ditekan di assessment.html), jadi di sini
+      // kita tinggal pindah halaman biasa tanpa perlu simpan ulang.
+      function gotoBeranda() {
+        window.location.href = "index.html";
+      }
 
-    function gotoAssessment() {
-      window.location.href = "assessment.html";
-    }
+      function gotoAssessment() {
+        window.location.href = "assessment.html";
+      }
 
-    function gotoRiwayat() {
-      window.location.href = "riwayatsesi.html";
-    }
+      function gotoRiwayat() {
+        window.location.href = "riwayatsesi.html";
+      }
 
-    
-    const result = JSON.parse(localStorage.getItem("assessmentResult"));
+      const result = JSON.parse(localStorage.getItem("assessmentResult"));
 
       if (!result) {
         alert("Data hasil tidak ditemukan");
@@ -530,10 +590,12 @@
       renderRiasecProfile(result.scores);
 
       setTimeout(() => {
-  document.querySelectorAll('#riasec-bars [data-width]').forEach(bar => {
-    bar.style.width = bar.dataset.width;
-  });
-}, 50);
+        document
+          .querySelectorAll("#riasec-bars [data-width]")
+          .forEach((bar) => {
+            bar.style.width = bar.dataset.width;
+          });
+      }, 50);
 
       function renderRoadmap() {
         const container = document.getElementById("roadmap-container");
@@ -546,23 +608,27 @@
         }
 
         container.innerHTML = `
-    <h2>${roadmap.title}</h2>
-    <p>${roadmap.description}</p>
-    <ol class="roadmap-steps">
-      ${roadmap.steps
-        .map(
-          (step) => `
-        <li>
-          <strong>${step.title}</strong>
-          <p>${step.description}</p>
-        </li>
-      `,
-        )
-        .join("")}
-    </ol>
-  `;
+          <div class="roadmap-header">
+            <h2 class ="roadmap-title">${roadmap.title}</h2>
+            <p class="roadmap-description">${roadmap.description}</p>
+          </div>
+          <ol class="roadmap-steps">
+            ${roadmap.steps
+              .map(
+                (step, index) => `
+              <li class="roadmap-step">
+                <div class="roadmap-step-number">${index + 1}</div>
+                <div class="roadmap-step-content">
+                  <strong class="roadmap-step-title">${step.title}</strong>
+                  <p class="roadmap-step-description">${step.description}</p>
+                </div>
+              </li>
+            `,
+              )
+              .join("")}
+          </ol>
+        `;
       }
-
       renderRoadmap();
     </script>
   </body>
