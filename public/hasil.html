@@ -14,16 +14,11 @@
 
     body {
       font-family: "Inter", sans-serif;
-      background-color: #f9fafb;
+      background-color: #fdfaf3; /* Disesuaikan dengan warna tema aplikasi */
     }
 
-    .text-maroon {
-      color: #7a1315;
-    }
-
-    .bg-maroon {
-      background-color: #7a1315;
-    }
+    .text-maroon { color: #7a1315; }
+    .bg-maroon { background-color: #7a1315; }
 
     /* Sidebar Fix */
     .sidebar {
@@ -39,23 +34,21 @@
     /* Container Alignment Fix */
     .main-content {
       margin-left: 260px;
-      /* Lebar Sidebar */
       width: calc(100% - 260px);
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      /* Mengetengahkan secara horizontal */
       padding: 40px;
     }
 
     .content-wrapper {
       width: 100%;
       max-width: 1000px;
-      /* Batas lebar konten agar tetap rapi */
     }
 
-    .card-shadow {
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main-content { margin-left: 0; width: 100%; padding: 20px; }
     }
   </style>
 </head>
@@ -70,6 +63,7 @@
 
     <!-- Perbaikan pada bagian navigasi -->
     <nav class="flex-grow space-y-6">
+<<<<<<< HEAD
       <a href="index.html"
         class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all cursor-pointer">
         <i class="fa-solid fa-house w-5"></i>
@@ -83,29 +77,28 @@
       <!-- Tambahkan href dan cursor-pointer di sini -->
       <a href="riwayatsesi.html"
         class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all cursor-pointer">
+=======
+      <a href="index.html" class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all">
+        <i class="fa-solid fa-house w-5"></i>
+        <span>Beranda</span>
+      </a>
+      <a href="assessment.html" class="flex items-center space-x-3 text-white font-bold border-r-4 border-yellow-400 -mr-8 pr-4">
+        <i class="fa-solid fa-vial w-5"></i>
+        <span>Assessment</span>
+      </a>
+      <a href="riwayatsesi.html" class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all">
+>>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
         <i class="fa-solid fa-clock-rotate-left w-5"></i>
         <span>Riwayat Sesi</span>
       </a>
     </nav>
     </nav>
 
-    <!-- Ganti bagian tombol lama di sidebar dengan ini -->
-    <div class="mt-auto pt-8 border-t border-maroon-light/30">
-      <div class="flex items-center space-x-3 mb-6">
-        <!-- ... (Profil User tetap sama) ... -->
-      </div>
-
-      <!-- Tombol Baru -->
-      <div class="space-y-2">
-        <button id="auth-toggle-btn" onclick="handleAuth()"
-          class="w-full text-left text-sm text-red-300 hover:text-white transition-all flex items-center space-x-2">
+    <div class="mt-auto pt-8 border-t border-red-900">
+      <div class="space-y-3">
+        <button id="auth-toggle-btn" class="w-full text-left text-sm text-red-300 hover:text-white transition-all flex items-center space-x-2">
           <i class="fa-solid fa-right-from-bracket"></i>
           <span id="auth-text">Logout</span>
-        </button>
-        <button onclick="window.location.href='loginadmin.html'"
-          class="w-full text-left text-sm text-yellow-400 hover:text-white transition-all flex items-center space-x-2">
-          <i class="fa-solid fa-user-shield"></i>
-          <span>Login Admin</span>
         </button>
       </div>
     </div>
@@ -113,6 +106,7 @@
 
   <main class="main-content">
     <div class="content-wrapper">
+<<<<<<< HEAD
       <!-- HEADER -->
       <header class="flex justify-between items-end mb-10">
         <div>
@@ -120,6 +114,15 @@
             <i class="fa-solid fa-arrow-left mr-2"></i>
             Kembali ke Beranda
           </a>
+=======
+      
+      <header class="flex justify-between items-end mb-10">
+        <div>
+          <button onclick="window.history.back()" class="flex items-center text-maroon hover:text-red-800 mb-4 font-bold text-sm transition-colors">
+            <i class="fa-solid fa-arrow-left mr-2"></i>
+            Kembali
+          </button>
+>>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
 
           <div class="flex items-center space-x-2 text-xs text-gray-400 mb-2 uppercase tracking-widest font-bold">
             <span>Asesmen</span>
@@ -127,12 +130,65 @@
             <span class="text-maroon">Hasil Rekomendasi</span>
           </div>
 
+<<<<<<< HEAD
           <h2 class="text-3xl font-black text-gray-900">
+            Pilihan Karir Terbaikmu
+          </h2>
+=======
+          <h2 class="text-3xl md:text-4xl font-black text-gray-900">
             Pilihan Karir Terbaikmu
           </h2>
         </div>
       </header>
 
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+        
+        <div class="md:col-span-5 space-y-5">
+          <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">
+            TOP 3 REKOMENDASI
+          </h3>
+
+          <div class="bg-maroon rounded-3xl p-7 text-white shadow-lg relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 opacity-10">
+              <i class="fa-solid fa-trophy text-9xl"></i>
+            </div>
+            <div class="flex justify-between relative z-10">
+              <div class="pr-4">
+                <span class="bg-yellow-400 text-maroon text-[10px] font-bold px-3 py-1 rounded-full uppercase shadow-sm">
+                  Paling Cocok
+                </span>
+                <h2 id="jurusan" class="text-3xl font-black mt-4 leading-tight">Loading...</h2>
+                <p id="deskripsi" class="text-sm text-red-100 mt-3 line-clamp-3">Loading...</p>
+              </div>
+              <div class="text-right shrink-0">
+                <div id="persentase" class="text-5xl font-black text-yellow-400">0%</div>
+                <small class="uppercase text-red-200 font-bold text-[10px] tracking-wider">Skor Match</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex justify-between items-center hover:border-red-200 transition-colors">
+            <div>
+              <div class="text-[10px] font-bold uppercase text-gray-400 mb-1">Peringkat 2</div>
+              <h3 id="alt1_name" class="font-bold text-gray-800">Loading...</h3>
+              <p id="alt1_description" class="text-xs text-gray-500 mt-1 line-clamp-1">Loading...</p>
+            </div>
+            <div id="alt1_score" class="font-black text-2xl text-maroon shrink-0 ml-4">0%</div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex justify-between items-center hover:border-red-200 transition-colors">
+            <div>
+              <div class="text-[10px] font-bold uppercase text-gray-400 mb-1">Peringkat 3</div>
+              <h3 id="alt2_name" class="font-bold text-gray-800">Loading...</h3>
+              <p id="alt2_description" class="text-xs text-gray-500 mt-1 line-clamp-1">Loading...</p>
+            </div>
+            <div id="alt2_score" class="font-black text-2xl text-maroon shrink-0 ml-4">0%</div>
+          </div>
+>>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
+        </div>
+      </header>
+
+<<<<<<< HEAD
       <div class="grid grid-cols-12 gap-8">
         <!-- LEFT -->
         <div class="col-span-12 lg:col-span-5 space-y-5">
@@ -185,9 +241,26 @@
               </div>
 
             </div>
+=======
+        <div class="md:col-span-7 space-y-6">
+          
+          <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100">
+            <h3 class="font-bold text-xl mb-4 flex items-center gap-2 text-gray-800">
+              <i class="fa-solid fa-lightbulb text-yellow-500"></i> Insight Tentang Kamu
+            </h3>
+            
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-sm text-gray-500 font-medium">Holland Code:</span>
+              <span id="holland-code" class="font-black text-lg text-maroon tracking-widest bg-red-50 px-3 py-1 rounded-lg border border-red-100"></span>
+            </div>
 
+            <p id="insight-text" class="text-gray-600 leading-relaxed text-sm md:text-base"></p>
+>>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
+
+            <div id="dominant-riasec" class="flex flex-wrap gap-2 mt-5"></div>
           </div>
 
+<<<<<<< HEAD
           <!-- TOP 2 -->
 
           <div class="bg-white rounded-2xl p-5 shadow-sm border flex justify-between">
@@ -254,10 +327,27 @@
 
             </div>
 
+=======
+          <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100">
+            <h3 class="font-bold text-xl mb-6 flex items-center gap-2 text-gray-800">
+              <i class="fa-solid fa-chart-simple text-blue-500"></i> Profil RIASEC
+            </h3>
+            <div id="riasec-bars" class="space-y-5"></div>
+          </div>
+
+          <div class="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-3xl p-6 md:p-8 border border-yellow-200 shadow-sm">
+            <h3 class="font-bold text-xl text-maroon mb-5 flex items-center gap-2">
+              <i class="fa-solid fa-bullseye text-red-500"></i> Rencana Aksi
+            </h3>
+            <div id="action-plan-container" class="space-y-3">
+              </div>
+>>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
           </div>
 
         </div>
+      </div>
 
+<<<<<<< HEAD
         <!-- RIGHT -->
         <div class="col-span-12 lg:col-span-7 space-y-5">
 
@@ -319,6 +409,10 @@
 
       <footer class="mt-16 text-center py-8 border-t border-gray-100">
         <p class="text-[10px] text-gray-400">
+=======
+      <footer class="mt-16 text-center py-8 border-t border-gray-200">
+        <p class="text-xs text-gray-400 font-medium">
+>>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
           &copy; 2024 Match Major System. All rights reserved.
         </p>
       </footer>
@@ -326,26 +420,17 @@
   </main>
 
   <script>
-
-    const result = JSON.parse(localStorage.getItem("assessmentResult"));
-
-    console.log(result.scores);
-
-    if (!result) {
-      alert("Data hasil tidak ditemukan");
+    // 1. Mengambil data dari localStorage
+    const resultRaw = localStorage.getItem("assessmentResult");
+    
+    if (!resultRaw) {
+      alert("Data hasil tidak ditemukan. Silakan lakukan asesmen terlebih dahulu.");
       window.location.href = "assessment.html";
     }
 
-    const QUESTIONS_PER_TRAIT = 5;
-    const MIN_SCORE = QUESTIONS_PER_TRAIT * 1; // 5
-    const MAX_SCORE = QUESTIONS_PER_TRAIT * 5; // 25
+    const result = JSON.parse(resultRaw);
 
-    function toPercentage(score) {
-      return Math.round(
-        ((score - MIN_SCORE) / (MAX_SCORE - MIN_SCORE)) * 100,
-      );
-    }
-
+    // Variabel Pendukung RIASEC
     const riasecName = {
       R: "Realistic",
       I: "Investigative",
@@ -356,136 +441,131 @@
     };
 
     const riasecDescription = {
-      R: "senang belajar melalui praktik dan aktivitas nyata",
-      I: "suka menganalisis, berpikir logis, dan memecahkan masalah",
-      A: "memiliki kreativitas tinggi dan menyukai ide-ide baru",
-      S: "senang membantu, bekerja sama, dan berinteraksi dengan orang lain",
-      E: "percaya diri memimpin serta mengambil keputusan",
-      C: "menyukai pekerjaan yang rapi, terstruktur, dan teliti",
+      R: "senang belajar melalui praktik dan aktivitas fisik/nyata",
+      I: "suka menganalisis, observasi, dan memecahkan masalah kompleks",
+      A: "memiliki kreativitas tinggi dan menyukai ekspresi ide-ide baru",
+      S: "senang membantu, mengajar, dan berinteraksi dengan orang lain",
+      E: "percaya diri dalam memimpin, mempengaruhi, dan mengambil keputusan",
+      C: "menyukai pekerjaan yang rapi, terstruktur, teliti, dan berbasis data",
     };
 
     const colors = {
-      R: "#EF4444",
-      I: "#3B82F6",
-      A: "#EC4899",
-      S: "#10B981",
-      E: "#F59E0B",
-      C: "#6B7280",
+      R: "#EF4444", // Red
+      I: "#3B82F6", // Blue
+      A: "#EC4899", // Pink
+      S: "#10B981", // Green
+      E: "#F59E0B", // Yellow
+      C: "#6B7280", // Gray
     };
 
-    const sortedTraits = Object.entries(result.scores).sort(
-      (a, b) => b[1] - a[1],
-    );
-
+    // 2. Mengurutkan Skor dari Tertinggi ke Terendah
+    const sortedTraits = Object.entries(result.scores).sort((a, b) => b[1] - a[1]);
     const first = sortedTraits[0][0];
     const second = sortedTraits[1][0];
+    const third = sortedTraits[2][0];
 
-    // Menampilkan insight berdasarkan hasil asesmen
-    const insightText = `
-      Berdasarkan hasil asesmen, kamu memiliki kecenderungan ${riasecDescription[first]}.
-      Selain itu, kamu juga ${riasecDescription[second]}.
-      Kombinasi tersebut membuatmu cocok pada bidang ${result.topMatch.name}.
-      `.trim();
+    // Mengambil objek rekomendasi utama dan alternatif (baik dari response riwayat maupun asesmen langsung)
+    const topMatch = result.topMatch || { name: result.recommendation, description: "Berdasarkan dominasi karaktermu.", percentage: 95 };
+    
+    // 3. Populate Top Match
+    document.getElementById("jurusan").innerText = topMatch.name || "Belum ada data";
+    document.getElementById("deskripsi").innerText = topMatch.description || "Deskripsi karir tidak tersedia.";
+    document.getElementById("persentase").innerText = (topMatch.percentage || "90") + "%";
 
-    document.getElementById("jurusan").innerText = result.topMatch.name;
-
-    document.getElementById("deskripsi").innerText =
-      result.topMatch.description;
-
-    document.getElementById("persentase").innerText =
-      result.topMatch.percentage + "%";
-
-    // Alternatif 1
-    if (result.alternatives && result.alternatives[0]) {
-      document.getElementById("alt1_name").innerText =
-        result.alternatives[0].name;
-
-      document.getElementById("alt1_description").innerText =
-        result.alternatives[0].description;
-
-      document.getElementById("alt1_score").innerText =
-        result.alternatives[0].percentage + "%";
+    // 4. Populate Alternatives
+    if (result.alternatives && result.alternatives.length > 0) {
+      document.getElementById("alt1_name").innerText = result.alternatives[0].name;
+      document.getElementById("alt1_description").innerText = result.alternatives[0].description;
+      document.getElementById("alt1_score").innerText = result.alternatives[0].percentage + "%";
+      
+      if(result.alternatives[1]){
+        document.getElementById("alt2_name").innerText = result.alternatives[1].name;
+        document.getElementById("alt2_description").innerText = result.alternatives[1].description;
+        document.getElementById("alt2_score").innerText = result.alternatives[1].percentage + "%";
+      }
+    } else {
+      // Fallback jika dibuka dari riwayat sederhana
+      document.getElementById("alt1_name").innerText = "-";
+      document.getElementById("alt1_score").innerText = "-";
+      document.getElementById("alt2_name").innerText = "-";
+      document.getElementById("alt2_score").innerText = "-";
     }
 
-    // Alternatif 2
-    if (result.alternatives && result.alternatives[1]) {
-      document.getElementById("alt2_name").innerText =
-        result.alternatives[1].name;
+    // 5. Populate Insight & Holland Code
+    const hollandCodeStr = `${first}${second}${third}`;
+    document.getElementById("holland-code").innerText = hollandCodeStr;
 
-      document.getElementById("alt2_description").innerText =
-        result.alternatives[1].description;
-
-      document.getElementById("alt2_score").innerText =
-        result.alternatives[1].percentage + "%";
-    }
-
+    const insightText = `Berdasarkan hasil asesmen, kamu memiliki kecenderungan utama yang ${riasecDescription[first]}. Selain itu, insting keduamu menunjukkan bahwa kamu juga ${riasecDescription[second]}. Kombinasi karakter ${hollandCodeStr} ini membuatmu sangat cocok berkembang dan berkarya pada bidang ${topMatch.name}.`;
     document.getElementById("insight-text").innerText = insightText;
 
-    const wrapper = document.getElementById("dominant-riasec");
-
-    wrapper.innerHTML = "";
-
+    // Badge Dominan
+    const dominantWrapper = document.getElementById("dominant-riasec");
+    dominantWrapper.innerHTML = "";
     [first, second].forEach((trait) => {
-      wrapper.innerHTML += `
-      <span
-      class="px-4 py-2 rounded-full bg-red-50 text-maroon font-semibold">
-
-      ${trait} • ${riasecName[trait]}
-
-      </span>
-      `;
+      dominantWrapper.innerHTML += `
+      <span class="px-4 py-1.5 rounded-full bg-red-50 text-maroon text-xs font-bold border border-red-100 shadow-sm">
+        ${trait} • ${riasecName[trait]}
+      </span>`;
     });
 
+    // 6. Populate Action Plan Secara Dinamis
+    const actionPlanContainer = document.getElementById("action-plan-container");
+    // Menyiapkan rencana aksi berdasarkan jurusan/karir yang didapat
+    const actionPlans = [
+      `Cari tahu kurikulum dan mata kuliah dasar yang dipelajari di program ${topMatch.name}.`,
+      `Ikuti komunitas, seminar, atau webinar yang relevan dengan bidang ${topMatch.name} untuk memperluas wawasan.`,
+      `Mulai asah *soft-skill* utama yang dibutuhkan, sesuaikan dengan karakter ${riasecName[first]} kamu.`,
+      `Diskusikan hasil rekomendasi ini dengan guru BK, mentor, atau orang tua sebagai bahan pertimbangan masa depan.`
+    ];
+    
+    actionPlanContainer.innerHTML = actionPlans.map((plan, index) => `
+      <div class="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm border border-yellow-100 hover:border-yellow-300 transition-colors">
+        <div class="bg-yellow-400 text-maroon font-black w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-sm shadow-inner">${index + 1}</div>
+        <p class="text-sm text-gray-700 font-medium leading-relaxed">${plan}</p>
+      </div>
+    `).join("");
+
+    // 7. Render Progress Bar RIASEC
     function renderRiasecProfile(scores) {
       const wrapper = document.getElementById("riasec-bars");
-
-      console.log(wrapper);
-
       wrapper.innerHTML = "";
+      
+      // Asumsi nilai maksimal satu trait adalah 25 (5 soal x nilai max 5)
+      const MAX_POSSIBLE_SCORE = 25; 
 
-      console.log(scores);
       Object.entries(scores)
         .sort((a, b) => b[1] - a[1])
         .forEach(([trait, score]) => {
-          const percent = (score / 25) * 100;
+          // Mencegah error jika dari riwayat skornya berbeda format
+          const percent = Math.min((score / MAX_POSSIBLE_SCORE) * 100, 100);
 
           wrapper.innerHTML += `
-
-            <div class="space-y-2">
-
-                <div class="flex justify-between items-center">
-
-                    <span class="font-semibold text-gray-700">
-
-                        ${riasecName[trait]}
-
+            <div class="space-y-1.5">
+                <div class="flex justify-between items-center text-sm">
+                    <span class="font-bold text-gray-700 flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full" style="background:${colors[trait]}"></span>
+                      ${riasecName[trait]}
                     </span>
-
-                    <span class="font-bold text-maroon">
-
-                        ${score} / 25
-
+                    <span class="font-bold text-gray-500">
+                        ${score} <span class="text-xs font-normal text-gray-400">/ ${MAX_POSSIBLE_SCORE}</span>
                     </span>
-
                 </div>
-
-                <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
-
-                    <div
-                        class="h-full rounded-full transition-all duration-700"
-                        style="
-                            width:${percent}%;
-                            background:${colors[trait]};
-                        ">
+                <div class="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden shadow-inner">
+                    <div class="h-full rounded-full transition-all duration-1000 ease-out"
+                        style="width: 0%; background:${colors[trait]};" data-width="${percent}%">
                     </div>
-
                 </div>
-
-            </div>
-
-            `;
+            </div>`;
         });
+
+        // Animasi bar (muncul perlahan saat dimuat)
+        setTimeout(() => {
+          document.querySelectorAll('#riasec-bars [data-width]').forEach(bar => {
+            bar.style.width = bar.getAttribute('data-width');
+          });
+        }, 100);
     }
+
     renderRiasecProfile(result.scores);
   </script>
 </body>
