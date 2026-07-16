@@ -193,7 +193,7 @@
 
                                 <button type="button" onclick="toggleMapel(this)"
                                     class="subject-btn p-4 border-2 rounded-xl">
-                                    Biologi
+                                    Kimia
                                 </button>
 
                                 <button type="button" onclick="toggleMapel(this)"
@@ -641,6 +641,24 @@
                         console.log("Akses diizinkan untuk:", user.email);
                     }
                 });
+
+                async function simpanHasil(dataAsesmen) {
+    const user = firebase.auth().currentUser;
+    const payload = {
+        userId: user.uid,
+        ...dataAsesmen,
+        tanggal: new Date().toISOString()
+    };
+
+    await fetch("http://localhost:3000/result/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    });
+    
+    // Setelah sukses, arahkan ke halaman riwayat atau hasil
+    window.location.href = "riwayat.html";
+}
             </script>
 </body>
 
