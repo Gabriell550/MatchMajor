@@ -30,37 +30,41 @@ function tambahNilaiMapel(userScore, favSubjects = []) {
 // Matching jurusan
 
 // Fungsi mencocokkan karir
+// Fungsi mencocokkan karir
 async function matchCareer(userScore) {
   const careers = await Career.find();
 
-  const normalizedUser = {
-    R: userScore.R / 5,
-    I: userScore.I / 5,
-    A: userScore.A / 5,
-    S: userScore.S / 5,
-    E: userScore.E / 5,
-    C: userScore.C / 5,
-  };
+  // Normalisasi skor user ke skala 1–5
+  const maxScore = Math.max(...Object.values(userScore), 1);
+
+  const normalizedUser = {};
+
+  Object.keys(userScore).forEach((key) => {
+    normalizedUser[key] = (userScore[key] / maxScore) * 5;
+  });
+
+  const TRAITS = ["R", "I", "A", "S", "E", "C"];
 
   return careers
     .map((career) => {
-      let score = 0;
+      let distance = 0;
 
-      for (const key of Object.keys(career.traits)) {
-        score += Math.abs(
-          Number(career.traits[key] || 0) - Number(normalizedUser[key] || 0),
-          Number(career.traits[key] || 0) - Number(normalizedUser[key] || 0),
+      TRAITS.forEach((trait) => {
+        distance += Math.abs(
+          (normalizedUser[trait] || 0) - (career.traits[trait] || 0),
         );
-      }
+      });
 
-      const percentage = Math.max(0, Math.round((1 - score / 24) * 100));
+      // Maksimum selisih = 6 trait × 4 poin = 24
+      const percentage = Math.round(((24 - distance) / 24) * 100);
 
       return {
         id: career._id,
         name: career.name,
         description: career.description,
         cluster: career.cluster,
-        percentage,
+        code: career.code,
+        percentage: Math.max(0, Math.min(100, percentage)),
       };
     })
     .sort((a, b) => b.percentage - a.percentage);
@@ -99,14 +103,27 @@ router.post("/", async (req, res) => {
       });
     }
 
+    const code1 = hollandCode;
+    const code2 = hollandCode.split("").reverse().join("");
+
     let roadmap = await Roadmap.findOne({
-      cluster: careers[0].cluster,
-      hollandCode: hollandCode,
+      career: careers[0].name,
     });
 
     if (!roadmap) {
-      roadmap = await Roadmap.findOne({ cluster: careers[0].cluster });
+      console.log(`Roadmap ${careers[0].name} belum tersedia`);
     }
+
+    await History.create({
+      userId,
+      tanggal: new Date(),
+      hollandCode,
+      scores: assessmentScores,
+      matchingScores,
+      topCareer: careers[0],
+      alternatives: careers.slice(1, 3),
+      roadmap: roadmap || null,
+    });
 
     res.json({
       success: true,
@@ -129,16 +146,16 @@ router.post("/", async (req, res) => {
 // ==========================================
 // API GET /history - Ambil Riwayat Asesmen
 // ==========================================
-router.get("/history", async (req, res) => {
-  try {
-    const histories = await History.find().sort({ tanggal: -1 }); // Urutkan dari yang terbaru
-    res.json(histories);
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
+router.get("/history/:userId", async (req,res)=>{
+
+    const histories = await History.find({
+        userId:req.params.userId
+    }).sort({
+        tanggal:-1
     });
-  }
+
+    res.json(histories);
+
 });
 
 module.exports = router;
