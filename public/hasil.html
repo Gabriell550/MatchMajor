@@ -1,553 +1,578 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hasil Rekomendasi - Match Major</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700&display=swap");
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hasil Rekomendasi - Match Major</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f9fafb;
+      }
 
-    body {
-      font-family: "Inter", sans-serif;
-      background-color: #fdfaf3; /* Disesuaikan dengan warna tema aplikasi */
-    }
+      .text-maroon {
+        color: #7a1315;
+      }
 
-    .text-maroon { color: #7a1315; }
-    .bg-maroon { background-color: #7a1315; }
+      .bg-maroon {
+        background-color: #7a1315;
+      }
 
-    /* Sidebar Fix */
-    .sidebar {
-      width: 260px;
-      height: 100vh;
-      position: fixed;
-      left: 0;
-      top: 0;
-      background-color: #7a1315;
-      z-index: 50;
-    }
+      /* Sidebar Fix */
+      .sidebar {
+        width: 260px;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background-color: #7a1315;
+        z-index: 50;
+      }
 
-    /* Container Alignment Fix */
-    .main-content {
-      margin-left: 260px;
-      width: calc(100% - 260px);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 40px;
-    }
+      /* Container Alignment Fix */
+      .main-content {
+        margin-left: 260px;
+        /* Lebar Sidebar */
+        width: calc(100% - 260px);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        /* Mengetengahkan secara horizontal */
+        padding: 40px;
+      }
 
-    .content-wrapper {
-      width: 100%;
-      max-width: 1000px;
-    }
+      .content-wrapper {
+        width: 100%;
+        max-width: 1000px;
+        /* Batas lebar konten agar tetap rapi */
+      }
 
-    @media (max-width: 768px) {
-      .sidebar { display: none; }
-      .main-content { margin-left: 0; width: 100%; padding: 20px; }
-    }
-  </style>
-</head>
+      .card-shadow {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      }
 
-<body class="flex">
-  <aside class="sidebar p-8 flex flex-col text-white">
-    <div class="mb-12">
-      <h1 class="text-2xl font-extrabold tracking-tight">
-        MATCH<br /><span class="text-yellow-400 italic font-bold text-xl">Major</span>
-      </h1>
-    </div>
+      .grid-columns-equal {
+        align-items: stretch;
+      }
 
-    <!-- Perbaikan pada bagian navigasi -->
-    <nav class="flex-grow space-y-6">
-<<<<<<< HEAD
-      <a href="index.html"
-        class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all cursor-pointer">
-        <i class="fa-solid fa-house w-5"></i>
-        <span>Beranda</span>
-      </a>
-      <a href="assessment.html"
-        class="flex items-center space-x-3 text-white font-bold border-r-4 border-yellow-400 -mr-8 pr-4">
-        <i class="fa-solid fa-vial w-5"></i>
-        <span>Assessment</span>
-      </a>
-      <!-- Tambahkan href dan cursor-pointer di sini -->
-      <a href="riwayatsesi.html"
-        class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all cursor-pointer">
-=======
-      <a href="index.html" class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all">
-        <i class="fa-solid fa-house w-5"></i>
-        <span>Beranda</span>
-      </a>
-      <a href="assessment.html" class="flex items-center space-x-3 text-white font-bold border-r-4 border-yellow-400 -mr-8 pr-4">
-        <i class="fa-solid fa-vial w-5"></i>
-        <span>Assessment</span>
-      </a>
-      <a href="riwayatsesi.html" class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all">
->>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
-        <i class="fa-solid fa-clock-rotate-left w-5"></i>
-        <span>Riwayat Sesi</span>
-      </a>
-    </nav>
-    </nav>
+      .col-flex {
+        display: flex;
+        flex-direction: column;
+      }
 
-    <div class="mt-auto pt-8 border-t border-red-900">
-      <div class="space-y-3">
-        <button id="auth-toggle-btn" class="w-full text-left text-sm text-red-300 hover:text-white transition-all flex items-center space-x-2">
-          <i class="fa-solid fa-right-from-bracket"></i>
-          <span id="auth-text">Logout</span>
-        </button>
+      .col-flex > .flex-fill {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .roadmap-header {
+        margin-bottom: 24px;
+      }
+
+      .roadmap-title {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #7a1315;
+        margin-bottom: 6px;
+      }
+
+      .roadmap-desc {
+        font-size: 0.9rem;
+        color: #6b7280;
+        line-height: 1.6;
+      }
+
+      .roadmap-steps {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        position: relative;
+      }
+
+      .roadmap-step {
+        display: flex;
+        gap: 16px;
+        position: relative;
+        padding-bottom: 24px;
+      }
+
+      /* Garis penghubung antar step */
+      .roadmap-step:not(:last-child)::before {
+        content: "";
+        position: absolute;
+        left: 15px;
+        top: 34px;
+        bottom: 0;
+        width: 2px;
+        background-color: #fde68a;
+      }
+
+      .roadmap-step-number {
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        border-radius: 9999px;
+        background-color: #7a1315;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+      }
+
+      .roadmap-step-content {
+        flex: 1;
+        background-color: #ffffff;
+        border: 1px solid #fde68a;
+        border-radius: 14px;
+        padding: 14px 16px;
+      }
+
+      .roadmap-step-title {
+        display: block;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 4px;
+      }
+
+      .roadmap-step-desc {
+        font-size: 0.85rem;
+        color: #6b7280;
+        line-height: 1.6;
+        margin: 0;
+      }
+    </style>
+  </head>
+
+  <body class="flex">
+    <aside class="sidebar p-8 flex flex-col text-white">
+      <div class="mb-12">
+        <h1 class="text-2xl font-extrabold tracking-tight">
+          MATCH<br /><span class="text-yellow-400 italic font-bold text-xl"
+            >Major</span
+          >
+        </h1>
       </div>
-    </div>
-  </aside>
 
-  <main class="main-content">
-    <div class="content-wrapper">
-<<<<<<< HEAD
-      <!-- HEADER -->
-      <header class="flex justify-between items-end mb-10">
-        <div>
-          <a href="index.html" class="flex items-center text-maroon hover:text-red-800 mb-4 font-bold text-sm">
-            <i class="fa-solid fa-arrow-left mr-2"></i>
-            Kembali ke Beranda
-          </a>
-=======
-      
-      <header class="flex justify-between items-end mb-10">
-        <div>
-          <button onclick="window.history.back()" class="flex items-center text-maroon hover:text-red-800 mb-4 font-bold text-sm transition-colors">
-            <i class="fa-solid fa-arrow-left mr-2"></i>
-            Kembali
+      <nav class="flex-grow space-y-6">
+        <a
+          href="#"
+          onclick="
+            gotoBeranda();
+            return false;
+          "
+          class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all"
+        >
+          <i class="fa-solid fa-house w-5"></i>
+          <span>Beranda</span>
+        </a>
+        <a
+          href="#"
+          onclick="
+            gotoAssessment();
+            return false;
+          "
+          class="flex items-center space-x-3 text-white font-bold border-r-4 border-yellow-400 -mr-8 pr-4"
+        >
+          <i class="fa-solid fa-vial w-5"></i>
+          <span>Assessment</span>
+        </a>
+        <a
+          href="#"
+          onclick="
+            gotoRiwayat();
+            return false;
+          "
+          class="flex items-center space-x-3 text-gray-300 hover:text-white transition-all"
+        >
+          <i class="fa-solid fa-clock-rotate-left w-5"></i>
+          <span>Riwayat Sesi</span>
+        </a>
+      </nav>
+
+      <!-- Ganti bagian tombol lama di sidebar dengan ini -->
+      <div class="mt-auto pt-8 border-t border-maroon-light/30">
+        <div class="flex items-center space-x-3 mb-6">
+          <!-- ... (Profil User tetap sama) ... -->
+        </div>
+
+        <!-- Tombol Baru -->
+        <div class="space-y-2">
+          <button
+            id="auth-toggle-btn"
+            onclick="handleAuth()"
+            class="w-full text-left text-sm text-red-300 hover:text-white transition-all flex items-center space-x-2"
+          >
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span id="auth-text">Logout</span>
           </button>
->>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
-
-          <div class="flex items-center space-x-2 text-xs text-gray-400 mb-2 uppercase tracking-widest font-bold">
-            <span>Asesmen</span>
-            <i class="fa-solid fa-chevron-right text-[8px]"></i>
-            <span class="text-maroon">Hasil Rekomendasi</span>
-          </div>
-
-<<<<<<< HEAD
-          <h2 class="text-3xl font-black text-gray-900">
-            Pilihan Karir Terbaikmu
-          </h2>
-=======
-          <h2 class="text-3xl md:text-4xl font-black text-gray-900">
-            Pilihan Karir Terbaikmu
-          </h2>
+          <button
+            onclick="window.location.href = 'loginadmin.html'"
+            class="w-full text-left text-sm text-yellow-400 hover:text-white transition-all flex items-center space-x-2"
+          >
+            <i class="fa-solid fa-user-shield"></i>
+            <span>Login Admin</span>
+          </button>
         </div>
-      </header>
+      </div>
+    </aside>
 
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-        
-        <div class="md:col-span-5 space-y-5">
-          <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">
-            TOP 3 REKOMENDASI
-          </h3>
+    <main class="main-content">
+      <div class="content-wrapper">
+        <!-- HEADER -->
+        <header class="flex justify-between items-end mb-5">
+          <div>
+            <a
+              href="index.html"
+              class="flex items-center text-maroon hover:text-red-800 mb-4 font-bold text-sm"
+            >
+              <i class="fa-solid fa-arrow-left mr-2"></i>
+              Kembali ke Beranda
+            </a>
 
-          <div class="bg-maroon rounded-3xl p-7 text-white shadow-lg relative overflow-hidden">
-            <div class="absolute -right-10 -bottom-10 opacity-10">
-              <i class="fa-solid fa-trophy text-9xl"></i>
+            <div
+              class="flex items-center space-x-2 text-xs text-gray-400 mb-2 uppercase tracking-widest font-bold"
+            >
+              <span>Asesmen</span>
+              <i class="fa-solid fa-chevron-right text-[8px]"></i>
+              <span class="text-maroon">Hasil Rekomendasi</span>
             </div>
-            <div class="flex justify-between relative z-10">
-              <div class="pr-4">
-                <span class="bg-yellow-400 text-maroon text-[10px] font-bold px-3 py-1 rounded-full uppercase shadow-sm">
-                  Paling Cocok
-                </span>
-                <h2 id="jurusan" class="text-3xl font-black mt-4 leading-tight">Loading...</h2>
-                <p id="deskripsi" class="text-sm text-red-100 mt-3 line-clamp-3">Loading...</p>
-              </div>
-              <div class="text-right shrink-0">
-                <div id="persentase" class="text-5xl font-black text-yellow-400">0%</div>
-                <small class="uppercase text-red-200 font-bold text-[10px] tracking-wider">Skor Match</small>
-              </div>
-            </div>
+
+            <h2 class="text-3xl font-black text-gray-900">
+              Pilihan Karir Terbaikmu
+            </h2>
           </div>
+        </header>
 
-          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex justify-between items-center hover:border-red-200 transition-colors">
-            <div>
-              <div class="text-[10px] font-bold uppercase text-gray-400 mb-1">Peringkat 2</div>
-              <h3 id="alt1_name" class="font-bold text-gray-800">Loading...</h3>
-              <p id="alt1_description" class="text-xs text-gray-500 mt-1 line-clamp-1">Loading...</p>
-            </div>
-            <div id="alt1_score" class="font-black text-2xl text-maroon shrink-0 ml-4">0%</div>
-          </div>
+        <div class="grid grid-cols-12 gap-8 grid-columns-equal">
+          <!-- LEFT -->
+          <div class="col-span-12 lg:col-span-5 col-flex gap-5">
+            <h3
+              class="text-xs font-bold uppercase tracking-widest text-gray-400"
+            >
+              TOP 3 REKOMENDASI
+            </h3>
 
-          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex justify-between items-center hover:border-red-200 transition-colors">
-            <div>
-              <div class="text-[10px] font-bold uppercase text-gray-400 mb-1">Peringkat 3</div>
-              <h3 id="alt2_name" class="font-bold text-gray-800">Loading...</h3>
-              <p id="alt2_description" class="text-xs text-gray-500 mt-1 line-clamp-1">Loading...</p>
-            </div>
-            <div id="alt2_score" class="font-black text-2xl text-maroon shrink-0 ml-4">0%</div>
-          </div>
->>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
-        </div>
-      </header>
+            <!-- TOP 1 -->
+            <div class="bg-maroon rounded-3xl p-7 text-white shadow-lg">
+              <div class="flex justify-between">
+                <div>
+                  <span
+                    class="bg-yellow-400 text-maroon text-[10px] font-bold px-3 py-1 rounded-full uppercase"
+                  >
+                    Paling Cocok
+                  </span>
 
-<<<<<<< HEAD
-      <div class="grid grid-cols-12 gap-8">
-        <!-- LEFT -->
-        <div class="col-span-12 lg:col-span-5 space-y-5">
+                  <h2 id="jurusan" class="text-3xl font-black mt-4">
+                    Loading...
+                  </h2>
 
-          <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">
-            TOP 3 REKOMENDASI
-          </h3>
-
-          <!-- TOP 1 -->
-          <div class="bg-maroon rounded-3xl p-7 text-white shadow-lg">
-
-            <div class="flex justify-between">
-
-              <div>
-
-                <span class="bg-yellow-400 text-maroon text-[10px] font-bold px-3 py-1 rounded-full uppercase">
-
-                  Paling Cocok
-
-                </span>
-
-                <h2 id="jurusan" class="text-3xl font-black mt-4">
-
-                  Loading...
-
-                </h2>
-
-                <p id="deskripsi" class="text-sm opacity-80 mt-3">
-
-                  Loading...
-
-                </p>
-
-              </div>
-
-              <div class="text-right">
-
-                <div id="persentase" class="text-5xl font-black text-yellow-400">
-
-                  0%
-
+                  <p id="deskripsi" class="text-sm opacity-80 mt-3">
+                    Loading...
+                  </p>
                 </div>
 
-                <small class="uppercase opacity-60">
+                <div class="text-right">
+                  <div
+                    id="persentase"
+                    class="text-5xl font-black text-yellow-400"
+                  >
+                    0%
+                  </div>
 
-                  Skor
+                  <small class="uppercase opacity-60"> Skor </small>
+                </div>
+              </div>
+            </div>
 
-                </small>
+            <!-- TOP 2 -->
 
+            <div
+              class="bg-white rounded-2xl p-5 shadow-sm border flex justify-between"
+            >
+              <div>
+                <div class="text-xs text-gray-400 mb-1">Peringkat 2</div>
+
+                <h3 id="alt1_name" class="font-bold">Loading...</h3>
+
+                <p id="alt1_description" class="text-xs text-gray-500 mt-1">
+                  Loading...
+                </p>
               </div>
 
-            </div>
-=======
-        <div class="md:col-span-7 space-y-6">
-          
-          <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100">
-            <h3 class="font-bold text-xl mb-4 flex items-center gap-2 text-gray-800">
-              <i class="fa-solid fa-lightbulb text-yellow-500"></i> Insight Tentang Kamu
-            </h3>
-            
-            <div class="flex items-center gap-3 mb-4">
-              <span class="text-sm text-gray-500 font-medium">Holland Code:</span>
-              <span id="holland-code" class="font-black text-lg text-maroon tracking-widest bg-red-50 px-3 py-1 rounded-lg border border-red-100"></span>
+              <div id="alt1_score" class="font-black text-xl text-maroon">
+                0%
+              </div>
             </div>
 
-            <p id="insight-text" class="text-gray-600 leading-relaxed text-sm md:text-base"></p>
->>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
+            <!-- TOP 3 -->
 
-            <div id="dominant-riasec" class="flex flex-wrap gap-2 mt-5"></div>
-          </div>
+            <div
+              class="bg-white rounded-2xl p-5 shadow-sm border flex justify-between"
+            >
+              <div>
+                <div class="text-xs text-gray-400 mb-1">Peringkat 3</div>
 
-<<<<<<< HEAD
-          <!-- TOP 2 -->
+                <h3 id="alt2_name" class="font-bold">Loading...</h3>
 
-          <div class="bg-white rounded-2xl p-5 shadow-sm border flex justify-between">
-
-            <div>
-
-              <div class="text-xs text-gray-400 mb-1">
-
-                Peringkat 2
-
+                <p id="alt2_description" class="text-xs text-gray-500 mt-1">
+                  Loading...
+                </p>
               </div>
 
-              <h3 id="alt1_name" class="font-bold">
-
-                Loading...
-
-              </h3>
-
-              <p id="alt1_description" class="text-xs text-gray-500 mt-1">
-
-                Loading...
-
-              </p>
-
-            </div>
-
-            <div id="alt1_score" class="font-black text-xl text-maroon">
-
-              0%
-
-            </div>
-
-          </div>
-
-          <!-- TOP 3 -->
-
-          <div class="bg-white rounded-2xl p-5 shadow-sm border flex justify-between">
-
-            <div>
-
-              <div class="text-xs text-gray-400 mb-1">
-
-                Peringkat 3
-
+              <div id="alt2_score" class="font-black text-xl text-maroon">
+                0%
               </div>
-
-              <h3 id="alt2_name" class="font-bold">
-
-                Loading...
-
-              </h3>
-
-              <p id="alt2_description" class="text-xs text-gray-500 mt-1">
-
-                Loading...
-
-              </p>
-
             </div>
-
-            <div id="alt2_score" class="font-black text-xl text-maroon">
-
-              0%
-
-            </div>
-
-=======
-          <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100">
-            <h3 class="font-bold text-xl mb-6 flex items-center gap-2 text-gray-800">
-              <i class="fa-solid fa-chart-simple text-blue-500"></i> Profil RIASEC
-            </h3>
-            <div id="riasec-bars" class="space-y-5"></div>
           </div>
 
-          <div class="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-3xl p-6 md:p-8 border border-yellow-200 shadow-sm">
-            <h3 class="font-bold text-xl text-maroon mb-5 flex items-center gap-2">
-              <i class="fa-solid fa-bullseye text-red-500"></i> Rencana Aksi
-            </h3>
-            <div id="action-plan-container" class="space-y-3">
-              </div>
->>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
-          </div>
+          <!-- RIGHT -->
+          <div class="col-span-12 lg:col-span-7 col-flex gap-5">
+            <!-- Insight -->
 
+            <div class="bg-white rounded-3xl p-6 shadow-sm border">
+              <h3 class="font-bold text-xl mb-4">💡 Insight Tentang Kamu</h3>
+
+              <div id="holland-code" class="font-bold text-maroon mb-3"></div>
+
+              <p id="insight-text" class="text-gray-600 leading-8"></p>
+
+              <div id="dominant-riasec" class="flex flex-wrap gap-2 mt-5"></div>
+            </div>
+
+            <!-- Profil -->
+
+            <div class="bg-white rounded-3xl p-6 shadow-sm border">
+              <h3 class="font-bold text-xl mb-5">📊 Profil RIASEC</h3>
+
+              <div id="riasec-bars" class="space-y-4"></div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-8 bg-yellow-50 rounded-3xl p-6 border border-yellow-200">
+          <h3 class="font-bold text-xl text-maroon mb-5 flex items-center">
+            <i class="fa-solid fa-road mr-3"></i>
+            🎯 Road Map Pengembangan Diri
+          </h3>
+          <div
+            id="roadmap-container"
+            class="grid grid-cols-1 md:grid-cols-2 gap-4"
+          ></div>
         </div>
       </div>
-
-<<<<<<< HEAD
-        <!-- RIGHT -->
-        <div class="col-span-12 lg:col-span-7 space-y-5">
-
-          <!-- Insight -->
-
-          <div class="bg-white rounded-3xl p-6 shadow-sm border">
-
-            <h3 class="font-bold text-xl mb-4">
-
-              💡 Insight Tentang Kamu
-
-            </h3>
-
-            <div id="holland-code" class="font-bold text-maroon mb-3">
-            </div>
-
-            <p id="insight-text" class="text-gray-600 leading-8">
-            </p>
-
-            <div id="dominant-riasec" class="flex flex-wrap gap-2 mt-5">
-            </div>
-
-          </div>
-
-          <!-- Profil -->
-
-          <div class="bg-white rounded-3xl p-6 shadow-sm border">
-
-            <h3 class="font-bold text-xl mb-5">
-
-              📊 Profil RIASEC
-
-            </h3>
-
-            <div id="riasec-bars" class="space-y-4">
-
-            </div>
-
-          </div>
-
-          <!-- Action Plan -->
-
-          <div class="bg-yellow-50 rounded-3xl p-6 border border-yellow-200">
-
-            <h3 class="font-bold text-xl text-maroon mb-5">
-
-              🎯 Rencana Aksi
-
-            </h3>
-
-            <div id="action-plan-container" class="space-y-3">
-
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-
       <footer class="mt-16 text-center py-8 border-t border-gray-100">
         <p class="text-[10px] text-gray-400">
-=======
-      <footer class="mt-16 text-center py-8 border-t border-gray-200">
-        <p class="text-xs text-gray-400 font-medium">
->>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
           &copy; 2024 Match Major System. All rights reserved.
         </p>
       </footer>
-    </div>
-  </main>
+    </main>
 
-  <script>
-    // 1. Mengambil data dari localStorage
-    const resultRaw = localStorage.getItem("assessmentResult");
-    
-    if (!resultRaw) {
-      alert("Data hasil tidak ditemukan. Silakan lakukan asesmen terlebih dahulu.");
-      window.location.href = "assessment.html";
-    }
+    <script>
+      // 1. Inisialisasi Firebase (sama seperti index.html / assessment.html)
+      const firebaseConfig = {
+        apiKey: "AIzaSyA0TKujQ_u9GU9eFJelMuo_ykXA1T0063c",
+        authDomain: "matchmajor-78a97.firebaseapp.com",
+        projectId: "matchmajor-78a97",
+        storageBucket: "matchmajor-78a97.firebasestorage.app",
+        messagingSenderId: "113944926778",
+        appId: "1:113944926778:web:0d4fc483d51fc5640e7303",
+      };
 
-    const result = JSON.parse(resultRaw);
-
-    // Variabel Pendukung RIASEC
-    const riasecName = {
-      R: "Realistic",
-      I: "Investigative",
-      A: "Artistic",
-      S: "Social",
-      E: "Enterprising",
-      C: "Conventional",
-    };
-
-    const riasecDescription = {
-      R: "senang belajar melalui praktik dan aktivitas fisik/nyata",
-      I: "suka menganalisis, observasi, dan memecahkan masalah kompleks",
-      A: "memiliki kreativitas tinggi dan menyukai ekspresi ide-ide baru",
-      S: "senang membantu, mengajar, dan berinteraksi dengan orang lain",
-      E: "percaya diri dalam memimpin, mempengaruhi, dan mengambil keputusan",
-      C: "menyukai pekerjaan yang rapi, terstruktur, teliti, dan berbasis data",
-    };
-
-    const colors = {
-      R: "#EF4444", // Red
-      I: "#3B82F6", // Blue
-      A: "#EC4899", // Pink
-      S: "#10B981", // Green
-      E: "#F59E0B", // Yellow
-      C: "#6B7280", // Gray
-    };
-
-    // 2. Mengurutkan Skor dari Tertinggi ke Terendah
-    const sortedTraits = Object.entries(result.scores).sort((a, b) => b[1] - a[1]);
-    const first = sortedTraits[0][0];
-    const second = sortedTraits[1][0];
-    const third = sortedTraits[2][0];
-
-    // Mengambil objek rekomendasi utama dan alternatif (baik dari response riwayat maupun asesmen langsung)
-    const topMatch = result.topMatch || { name: result.recommendation, description: "Berdasarkan dominasi karaktermu.", percentage: 95 };
-    
-    // 3. Populate Top Match
-    document.getElementById("jurusan").innerText = topMatch.name || "Belum ada data";
-    document.getElementById("deskripsi").innerText = topMatch.description || "Deskripsi karir tidak tersedia.";
-    document.getElementById("persentase").innerText = (topMatch.percentage || "90") + "%";
-
-    // 4. Populate Alternatives
-    if (result.alternatives && result.alternatives.length > 0) {
-      document.getElementById("alt1_name").innerText = result.alternatives[0].name;
-      document.getElementById("alt1_description").innerText = result.alternatives[0].description;
-      document.getElementById("alt1_score").innerText = result.alternatives[0].percentage + "%";
-      
-      if(result.alternatives[1]){
-        document.getElementById("alt2_name").innerText = result.alternatives[1].name;
-        document.getElementById("alt2_description").innerText = result.alternatives[1].description;
-        document.getElementById("alt2_score").innerText = result.alternatives[1].percentage + "%";
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
       }
-    } else {
-      // Fallback jika dibuka dari riwayat sederhana
-      document.getElementById("alt1_name").innerText = "-";
-      document.getElementById("alt1_score").innerText = "-";
-      document.getElementById("alt2_name").innerText = "-";
-      document.getElementById("alt2_score").innerText = "-";
-    }
 
-    // 5. Populate Insight & Holland Code
-    const hollandCodeStr = `${first}${second}${third}`;
-    document.getElementById("holland-code").innerText = hollandCodeStr;
+      // 2. Proteksi halaman: hanya boleh diakses jika sudah login
+      firebase.auth().onAuthStateChanged((user) => {
+        const authText = document.getElementById("auth-text");
+        if (!user) {
+          alert(
+            "Anda harus login terlebih dahulu untuk mengakses halaman ini!",
+          );
+          window.location.href = "login.html";
+        } else if (authText) {
+          authText.textContent = "Logout";
+        }
+      });
 
-    const insightText = `Berdasarkan hasil asesmen, kamu memiliki kecenderungan utama yang ${riasecDescription[first]}. Selain itu, insting keduamu menunjukkan bahwa kamu juga ${riasecDescription[second]}. Kombinasi karakter ${hollandCodeStr} ini membuatmu sangat cocok berkembang dan berkarya pada bidang ${topMatch.name}.`;
-    document.getElementById("insight-text").innerText = insightText;
+      // 3. Tombol Logout di sidebar
+      function handleAuth() {
+        const user = firebase.auth().currentUser;
+        if (user) {
+          firebase
+            .auth()
+            .signOut()
+            .then(() => {
+              window.location.href = "login.html";
+            });
+        } else {
+          window.location.href = "login.html";
+        }
+      }
 
-    // Badge Dominan
-    const dominantWrapper = document.getElementById("dominant-riasec");
-    dominantWrapper.innerHTML = "";
-    [first, second].forEach((trait) => {
-      dominantWrapper.innerHTML += `
-      <span class="px-4 py-1.5 rounded-full bg-red-50 text-maroon text-xs font-bold border border-red-100 shadow-sm">
-        ${trait} • ${riasecName[trait]}
-      </span>`;
-    });
+      // 4. Fungsi navigasi sidebar
+      // Hasil sudah otomatis tersimpan ke Riwayat Sesi (di-POST ke server saat
+      // tombol "Lihat Hasil Eksplorasi" ditekan di assessment.html), jadi di sini
+      // kita tinggal pindah halaman biasa tanpa perlu simpan ulang.
+      function gotoBeranda() {
+        window.location.href = "index.html";
+      }
 
-    // 6. Populate Action Plan Secara Dinamis
-    const actionPlanContainer = document.getElementById("action-plan-container");
-    // Menyiapkan rencana aksi berdasarkan jurusan/karir yang didapat
-    const actionPlans = [
-      `Cari tahu kurikulum dan mata kuliah dasar yang dipelajari di program ${topMatch.name}.`,
-      `Ikuti komunitas, seminar, atau webinar yang relevan dengan bidang ${topMatch.name} untuk memperluas wawasan.`,
-      `Mulai asah *soft-skill* utama yang dibutuhkan, sesuaikan dengan karakter ${riasecName[first]} kamu.`,
-      `Diskusikan hasil rekomendasi ini dengan guru BK, mentor, atau orang tua sebagai bahan pertimbangan masa depan.`
-    ];
-    
-    actionPlanContainer.innerHTML = actionPlans.map((plan, index) => `
-      <div class="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm border border-yellow-100 hover:border-yellow-300 transition-colors">
-        <div class="bg-yellow-400 text-maroon font-black w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-sm shadow-inner">${index + 1}</div>
-        <p class="text-sm text-gray-700 font-medium leading-relaxed">${plan}</p>
-      </div>
-    `).join("");
+      function gotoAssessment() {
+        window.location.href = "assessment.html";
+      }
 
-    // 7. Render Progress Bar RIASEC
-    function renderRiasecProfile(scores) {
-      const wrapper = document.getElementById("riasec-bars");
+      function gotoRiwayat() {
+        window.location.href = "riwayatsesi.html";
+      }
+
+      const result = JSON.parse(localStorage.getItem("assessmentResult"));
+
+      if (!result) {
+        alert("Data hasil tidak ditemukan");
+        window.location.href = "assessment.html";
+      }
+
+      const QUESTIONS_PER_TRAIT = 5;
+      const MIN_SCORE = QUESTIONS_PER_TRAIT * 1; // 5
+      const MAX_SCORE = QUESTIONS_PER_TRAIT * 5; // 25
+
+      function toPercentage(score) {
+        return Math.round(
+          ((score - MIN_SCORE) / (MAX_SCORE - MIN_SCORE)) * 100,
+        );
+      }
+
+      const riasecName = {
+        R: "Realistic",
+        I: "Investigative",
+        A: "Artistic",
+        S: "Social",
+        E: "Enterprising",
+        C: "Conventional",
+      };
+
+      const riasecDescription = {
+        R: "senang belajar melalui praktik dan aktivitas nyata",
+        I: "suka menganalisis, berpikir logis, dan memecahkan masalah",
+        A: "memiliki kreativitas tinggi dan menyukai ide-ide baru",
+        S: "senang membantu, bekerja sama, dan berinteraksi dengan orang lain",
+        E: "percaya diri memimpin serta mengambil keputusan",
+        C: "menyukai pekerjaan yang rapi, terstruktur, dan teliti",
+      };
+
+      const colors = {
+        R: "#EF4444",
+        I: "#3B82F6",
+        A: "#EC4899",
+        S: "#10B981",
+        E: "#F59E0B",
+        C: "#6B7280",
+      };
+
+      const sortedTraits = Object.entries(result.scores).sort(
+        (a, b) => b[1] - a[1],
+      );
+
+      const first = sortedTraits[0][0];
+      const second = sortedTraits[1][0];
+
+      // Menampilkan insight berdasarkan hasil asesmen
+      const insightText = `
+      Berdasarkan hasil asesmen, kamu memiliki kecenderungan ${riasecDescription[first]}.
+      Selain itu, kamu juga ${riasecDescription[second]}.
+      Kombinasi tersebut membuatmu cocok pada bidang ${result.topMatch.name}.
+      `.trim();
+
+      document.getElementById("jurusan").innerText = result.topMatch.name;
+
+      document.getElementById("deskripsi").innerText =
+        result.topMatch.description;
+
+      document.getElementById("persentase").innerText =
+        result.topMatch.percentage + "%";
+
+      // Alternatif 1
+      if (result.alternatives && result.alternatives[0]) {
+        document.getElementById("alt1_name").innerText =
+          result.alternatives[0].name;
+
+        document.getElementById("alt1_description").innerText =
+          result.alternatives[0].description;
+
+        document.getElementById("alt1_score").innerText =
+          result.alternatives[0].percentage + "%";
+      }
+
+      // Alternatif 2
+      if (result.alternatives && result.alternatives[1]) {
+        document.getElementById("alt2_name").innerText =
+          result.alternatives[1].name;
+
+        document.getElementById("alt2_description").innerText =
+          result.alternatives[1].description;
+
+        document.getElementById("alt2_score").innerText =
+          result.alternatives[1].percentage + "%";
+      }
+
+      document.getElementById("insight-text").innerText = insightText;
+
+      const wrapper = document.getElementById("dominant-riasec");
+
       wrapper.innerHTML = "";
-      
-      // Asumsi nilai maksimal satu trait adalah 25 (5 soal x nilai max 5)
-      const MAX_POSSIBLE_SCORE = 25; 
 
-      Object.entries(scores)
-        .sort((a, b) => b[1] - a[1])
-        .forEach(([trait, score]) => {
-          // Mencegah error jika dari riwayat skornya berbeda format
-          const percent = Math.min((score / MAX_POSSIBLE_SCORE) * 100, 100);
+      [first, second].forEach((trait) => {
+        wrapper.innerHTML += `
+      <span
+      class="px-4 py-2 rounded-full bg-red-50 text-maroon font-semibold">
 
-          wrapper.innerHTML += `
-            <div class="space-y-1.5">
-                <div class="flex justify-between items-center text-sm">
-                    <span class="font-bold text-gray-700 flex items-center gap-2">
-                      <span class="w-2 h-2 rounded-full" style="background:${colors[trait]}"></span>
-                      ${riasecName[trait]}
+      ${trait} • ${riasecName[trait]}
+
+      </span>
+      `;
+      });
+
+      function renderRiasecProfile(scores) {
+        const wrapper = document.getElementById("riasec-bars");
+
+        console.log(wrapper);
+
+        wrapper.innerHTML = "";
+
+        console.log(scores);
+        Object.entries(scores)
+          .sort((a, b) => b[1] - a[1])
+          .forEach(([trait, score]) => {
+            const percent = (score / 25) * 100;
+
+            wrapper.innerHTML += `
+
+            <div class="space-y-2">
+
+                <div class="flex justify-between items-center">
+
+                    <span class="font-semibold text-gray-700">
+
+                        ${riasecName[trait]}
+
                     </span>
                     <span class="font-bold text-gray-500">
-                        ${score} <span class="text-xs font-normal text-gray-400">/ ${MAX_POSSIBLE_SCORE}</span>
+                        ${score} <span class="text-xs font-normal text-gray-400">/ ${MAX_SCORE}</span>
                     </span>
                 </div>
                 <div class="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden shadow-inner">
@@ -555,19 +580,56 @@
                         style="width: 0%; background:${colors[trait]};" data-width="${percent}%">
                     </div>
                 </div>
-            </div>`;
-        });
 
-        // Animasi bar (muncul perlahan saat dimuat)
-        setTimeout(() => {
-          document.querySelectorAll('#riasec-bars [data-width]').forEach(bar => {
-            bar.style.width = bar.getAttribute('data-width');
+            </div>
+
+            `;
           });
-        }, 100);
-    }
+      }
 
-    renderRiasecProfile(result.scores);
-  </script>
-</body>
+      renderRiasecProfile(result.scores);
 
+      setTimeout(() => {
+        document
+          .querySelectorAll("#riasec-bars [data-width]")
+          .forEach((bar) => {
+            bar.style.width = bar.dataset.width;
+          });
+      }, 50);
+
+      function renderRoadmap() {
+        const container = document.getElementById("roadmap-container");
+        const roadmap = result.roadmap;
+
+        if (!roadmap) {
+          container.innerHTML =
+            "<p>Roadmap belum tersedia untuk kombinasi ini.</p>";
+          return;
+        }
+
+        container.innerHTML = `
+          <div class="roadmap-header">
+            <h2 class ="roadmap-title">${roadmap.title}</h2>
+            <p class="roadmap-description">${roadmap.description}</p>
+          </div>
+          <ol class="roadmap-steps">
+            ${roadmap.steps
+              .map(
+                (step, index) => `
+              <li class="roadmap-step">
+                <div class="roadmap-step-number">${index + 1}</div>
+                <div class="roadmap-step-content">
+                  <strong class="roadmap-step-title">${step.title}</strong>
+                  <p class="roadmap-step-description">${step.description}</p>
+                </div>
+              </li>
+            `,
+              )
+              .join("")}
+          </ol>
+        `;
+      }
+      renderRoadmap();
+    </script>
+  </body>
 </html>

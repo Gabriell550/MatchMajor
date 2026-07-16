@@ -21,6 +21,15 @@ app.use("/result", resultRoutes);
 app.use('/api/admin', adminRoutes);
 
 app.use(express.static(path.join(__dirname, "public")));
+
+// Fallback untuk file statis (mis. /edit.html) agar tidak kena route lain
+app.get(/^\/.*\.html$/, (req, res) => {
+  const filePath = path.join(__dirname, 'public', req.path.replace(/^\//, ''));
+  res.sendFile(filePath, (err) => {
+    if (err) res.status(404).send('File tidak ditemukan');
+  });
+});
+
 app.get("/", (req, res) => {
   res.send("Backend working!");
 });
@@ -37,3 +46,4 @@ mongoose
     });
   })
   .catch((err) => console.log(err));
+

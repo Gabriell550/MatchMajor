@@ -1,35 +1,23 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Sesi Asesmen - Eksplorasi Diri</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Firebase SDK - Pastikan sudah di-setup -->
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth-compat.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fdfaf3;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fdfaf3;
+    }
 
-        .text-maroon {
-            color: #7A1315;
-        }
+    .text-maroon { color: #7A1315; }
+    .bg-maroon { background-color: #7A1315; }
 
-        .bg-maroon {
-            background-color: #7A1315;
-        }
-
-        .border-maroon {
-            border-color: #7A1315;
-        }
-
+        /* Custom scrollbar untuk tabel responsif */
         .custom-scrollbar::-webkit-scrollbar {
             height: 6px;
         }
@@ -52,10 +40,7 @@
 <body class="p-4 md:p-8 flex justify-center min-h-screen">
 
     <div class="max-w-5xl w-full mx-auto space-y-4">
->>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
 
-    <div class="max-w-4xl w-full mx-auto space-y-6">
-        <!-- Back Button -->
         <div class="flex items-center">
             <a href="index.html"
                 class="inline-flex items-center gap-2 text-sm font-bold text-maroon hover:text-red-900 bg-white border border-gray-100 px-4 py-2.5 rounded-xl shadow-sm transition-all">
@@ -63,7 +48,6 @@
             </a>
         </div>
 
-        <!-- Header -->
         <header
             class="bg-white border border-gray-100 rounded-2xl px-6 py-4 shadow-sm flex items-center justify-between">
             <div class="flex items-center gap-2">
@@ -76,46 +60,42 @@
             </nav>
         </header>
 
-        <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center text-maroon text-xl"><i
-                        class="fa-solid fa-clipboard-list"></i></div>
-                <div>
-                    <div class="text-gray-500 text-xs uppercase font-bold">Total Sesi</div>
-                    <div id="totalSesi" class="font-bold text-lg text-gray-800">0 Sesi</div>
+        <main class="space-y-6 pt-2">
+
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+                <div class="text-xs text-gray-400 flex items-center gap-2 mb-2 font-medium">
+                    <span>Aktivitas Akun</span> &bull; <span class="text-maroon font-bold">Log Riwayat</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-maroon">Riwayat Sesi Asesmen</h2>
+                        <p class="text-sm text-gray-500 mt-1">Pantau dan tinjau kembali seluruh hasil eksplorasi
+                            karakter dan rekomendasi karir yang pernah kamu lakukan.</p>
+                    </div>
                 </div>
             </div>
-<<<<<<< HEAD
-            <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center text-amber-700 text-xl"><i
-                        class="fa-solid fa-star"></i></div>
-                <div>
-                    <div class="text-gray-500 text-xs uppercase font-bold">Rekomendasi Utama</div>
-                    <div id="topRekomendasi" class="font-bold text-lg text-gray-800 truncate max-w-[150px]">-</div>
-=======
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                
-                <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 shrink-0 bg-red-50 rounded-xl flex items-center justify-center text-maroon text-lg">
-                        <i class="fa-solid fa-clipboard-list"></i>
-                    </div>
-                    <div>
-                        <div class="text-gray-500 text-sm font-medium mb-1">Total Sesi</div>
-                        <div id="totalSesi" class="font-extrabold text-xl text-gray-800">0 Kali Asesmen</div>
-                    </div>
-                </div>
+      <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5 flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center">
+          <i class="fa-solid fa-clipboard-list text-maroon text-lg"></i>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Total Sesi</p>
+          <h3 id="totalSesi" class="text-2xl font-bold text-gray-900">0</h3>
+          <p class="text-xs text-gray-400">Kali Asesmen</p>
+        </div>
+      </div>
 
-                <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 shrink-0 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600 text-lg">
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                    <div>
-                        <div class="text-gray-500 text-sm font-medium mb-1">Rekomendasi Utama</div>
-                        <div id="topRekomendasi" class="font-extrabold text-xl text-gray-800">-</div>
-                    </div>
-                </div>
+      <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5 flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-yellow-50 flex items-center justify-center">
+          <i class="fa-solid fa-star text-yellow-600 text-lg"></i>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Rekomendasi Utama</p>
+          <h3 id="topRekomendasi" class="text-xl font-bold text-gray-900">-</h3>
+          <p class="text-xs text-gray-400">Karier yang paling sesuai</p>
+        </div>
+      </div>
 
                 <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow">
                     <div class="w-12 h-12 shrink-0 bg-green-50 rounded-xl flex items-center justify-center text-green-600 text-lg">
@@ -125,172 +105,79 @@
                         <div class="text-gray-500 text-sm font-medium mb-1">Sesi Terakhir</div>
                         <div id="sesiTerakhir" class="font-extrabold text-lg text-gray-800">-</div>
                     </div>
->>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
                 </div>
 
             </div>
-<<<<<<< HEAD
-            <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center text-green-700 text-xl"><i
-                        class="fa-solid fa-clock-rotate-left"></i></div>
-                <div>
-                    <div class="text-gray-500 text-xs uppercase font-bold">Sesi Terakhir</div>
-                    <div id="sesiTerakhir" class="font-bold text-sm text-gray-800">-</div>
-                </div>
-            </div>
+
+      <div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+          <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Daftar Sesi Aktif</span>
+          <span class="text-[11px] font-bold text-green-700 bg-green-50 px-2.5 py-1 rounded-full border border-green-100">Auto-Save Aktif</span>
         </div>
 
-        <!-- Table Section -->
-        <div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Daftar Sesi</span>
-                <span
-                    class="text-[10px] font-bold text-green-700 bg-green-50 px-2 py-1 rounded-full border border-green-100">AUTO-SAVE
-                    AKTIF</span>
-            </div>
-            <div class="overflow-x-auto custom-scrollbar">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="border-b border-gray-100 text-xs font-bold text-gray-400 uppercase">
-                            <th class="py-4 px-6">ID Sesi</th>
-                            <th class="py-4 px-6">Tanggal</th>
-                            <th class="py-4 px-6">Kekuatan</th>
-                            <th class="py-4 px-6">Rekomendasi</th>
-                            <th class="py-4 px-6 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="historyTable" class="text-sm text-gray-600"></tbody>
-                </table>
-            </div>
+        <div class="overflow-x-auto custom-scrollbar">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-gray-100 bg-gray-50/30 text-xs font-bold text-gray-400 uppercase">
+                <th class="py-3.5 px-6">ID Sesi</th>
+                <th class="py-3.5 px-6">Tanggal &amp; Waktu</th>
+                <th class="py-3.5 px-6">Kekuatan Dominan</th>
+                <th class="py-3.5 px-6">Top Rekomendasi</th>
+                <th class="py-3.5 px-6 text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="historyTable"></tbody>
+          </table>
         </div>
-    </div>
 
-    <script>
-        async function loadHistory() {
-            try {
-                const user = firebase.auth().currentUser;
-                if (user) {
-                    const response = await fetch(`http://localhost:3000/result/history?userId=${user.uid}`);
-                    const histories = await response.json();
+        <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-between flex-wrap gap-3 bg-gray-50/20">
+          <span id="paginationInfo" class="text-xs text-gray-400 font-medium">Menampilkan 0 dari 0 Sesi kuesioner</span>
+          <div class="flex items-center gap-2">
+            <button class="p-2 border border-gray-200 rounded-lg text-gray-400 cursor-not-allowed text-xs">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="w-8 h-8 rounded-lg bg-maroon text-white font-bold text-xs flex items-center justify-center">1</button>
+            <button class="p-2 border border-gray-200 rounded-lg text-gray-400 cursor-not-allowed text-xs">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
-                    src = "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"
-                    src = "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"
+    </main>
+  </div>
 
-                    // WAJIB ADA: Konfigurasi dari Firebase Console Anda
-                    const firebaseConfig = {
-                        apiKey: "AIzaSyA1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q",
-                        authDomain: "matchmajoor.firebaseapp.com",
-                        projectId: "matchmajor-78a97",
-                        storageBucket: "matchmajor-78a97.appspot.com",
-                        messagingSenderId: "113944926778",
-                        appId: "1:113944926778:web:0d4fc483d51fc5640e7303"
-                    };
+  <script>
+    const API_HISTORY_URL = "http://localhost:3000/result/history";
 
-                    // Inisialisasi Firebase
-                    firebase.initializeApp(firebaseConfig);
+    function lihatHasil(item) {
+      localStorage.setItem("assessmentResult", JSON.stringify(item));
+      window.location.href = "hasil.html";
+    }
 
-                    document.getElementById("totalSesi").innerText = histories.length + " Sesi";
+    function formatTanggal(tanggal) {
+      const d = new Date(tanggal);
+      if (Number.isNaN(d.getTime())) return "-";
+      return d.toLocaleString("id-ID");
+    }
 
-                    if (histories.length > 0) {
-                        document.getElementById("topRekomendasi").innerText = histories[0].recommendation;
-                        document.getElementById("sesiTerakhir").innerText = new Date(histories[0].tanggal).toLocaleDateString("id-ID");
-                    }
+    async function loadHistory() {
+      try {
+        const response = await fetch(API_HISTORY_URL);
+        if (!response.ok) throw new Error("HTTP " + response.status);
 
-                    // --- TEMPATKAN DI SINI ---
-                    const tbody = document.getElementById("historyTable");
-                    tbody.innerHTML = histories.length > 0 ? histories.map((item, index) => `
-                <tr class="border-t hover:bg-gray-50 transition-colors">
-                    <td class="p-4 font-medium text-xs text-gray-500">#ED-${1000 + index}</td>
-                    <td class="p-4">${new Date(item.tanggal).toLocaleDateString("id-ID")}</td>
-                    <td class="p-4 font-semibold text-maroon">${item.dominantStrength || '-'}</td>
-                    <td class="p-4 text-gray-700">${item.recommendation || '-'}</td>
-                    <td class="p-4 text-center">
-                        <button class="bg-white border border-maroon text-maroon hover:bg-maroon hover:text-white px-4 py-2 rounded-lg text-xs font-bold transition-all" 
-                                onclick='lihatHasil(${JSON.stringify(item)})'>
-                            Lihat Detail
-                        </button>
-                    </td>
-                </tr>
-            `).join('') : `<tr><td colspan="5" class="p-8 text-center text-gray-400">Belum ada riwayat asesmen.</td></tr>`;
-                    // -------------------------
-                }
-            } catch (err) {
-                console.error("Error memuat riwayat:", err);
-            }
+        const histories = await response.json();
+        const data = Array.isArray(histories) ? histories : [];
+
+        document.getElementById("totalSesi").innerText = data.length;
+
+        if (data.length > 0) {
+          document.getElementById("topRekomendasi").innerText = data[0].recommendation ?? "-";
+          document.getElementById("sesiTerakhir").innerText = formatTanggal(data[0].tanggal);
         }
 
-        function lihatHasil(item) {
-=======
-
-            <div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-                    <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Daftar Sesi Aktif</span>
-                    <span class="text-[11px] font-bold text-green-700 bg-green-50 px-2.5 py-1 rounded-full border border-green-100">Auto-Save Aktif</span>
-                </div>
-
-                <div class="overflow-x-auto custom-scrollbar max-h-[400px] overflow-y-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead class="sticky top-0 z-10 bg-gray-50/90 backdrop-blur-sm">
-                            <tr class="border-b border-gray-100 text-xs font-bold text-gray-500 uppercase">
-                                <th class="py-4 px-6">ID Sesi</th>
-                                <th class="py-4 px-6">Tanggal &amp; Waktu</th>
-                                <th class="py-4 px-6">Kekuatan Dominan</th>
-                                <th class="py-4 px-6">Top Rekomendasi</th>
-                                <th class="py-4 px-6 text-center">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="historyTable" class="divide-y divide-gray-100">
-                            <tr>
-                                <td colspan="5" class="py-8 text-center text-gray-500 font-medium">
-                                    <i class="fa-solid fa-spinner fa-spin mr-2"></i> Memuat data riwayat...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-between flex-wrap gap-3 bg-gray-50/20">
-                    <span class="text-xs text-gray-400 font-medium" id="infoPaginasi">Menampilkan data kuesioner</span>
-                    <div class="flex items-center gap-2">
-                        <button class="p-2 border border-gray-200 rounded-lg text-gray-400 cursor-not-allowed text-xs"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button class="w-8 h-8 rounded-lg bg-maroon text-white font-bold text-xs flex items-center justify-center">1</button>
-                        <button class="p-2 border border-gray-200 rounded-lg text-gray-400 cursor-not-allowed text-xs"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <script>
-        // Simpan data history secara global agar mudah diakses oleh tombol Buka Hasil
-        let globalHistories = []; 
-
-        async function loadHistory() {
-            try {
-                // Pastikan endpoint ini sesuai dengan rute backend kamu
-                const response = await fetch("http://localhost:3000/result/history");
-                
-                if (!response.ok) throw new Error("Gagal mengambil data dari server");
-                
-                const histories = await response.json();
-                globalHistories = histories; // Menyimpan data ke variabel global
-
-                document.getElementById("totalSesi").innerText = histories.length + " Kali Asesmen";
-                document.getElementById("infoPaginasi").innerText = `Menampilkan ${histories.length} Sesi kuesioner`;
-
-                if (histories.length > 0) {
-                    document.getElementById("topRekomendasi").innerText = histories[0].recommendation;
-                    document.getElementById("sesiTerakhir").innerText = new Date(histories[0].tanggal).toLocaleString("id-ID");
-                } else {
-                    document.getElementById("historyTable").innerHTML = `
-                        <tr>
-                            <td colspan="5" class="py-8 text-center text-gray-500">Belum ada riwayat asesmen yang tersimpan.</td>
-                        </tr>`;
-                    return;
-                }
-
-                const tbody = document.getElementById("historyTable");
-                tbody.innerHTML = "";
+        const tbody = document.getElementById("historyTable");
+        tbody.innerHTML = "";
 
                 histories.forEach((item, index) => {
                     tbody.innerHTML += `
@@ -324,23 +211,10 @@
         // Fungsi membuka hasil berdasarkan index dari array global
         function lihatHasil(index) {
             const item = globalHistories[index];
->>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
             localStorage.setItem("assessmentResult", JSON.stringify(item));
             window.location.href = "hasil.html";
         }
 
-<<<<<<< HEAD
-        // Firebase Auth Guard
-        firebase.auth().onAuthStateChanged((user) => {
-            if (!user) {
-                window.location.href = 'login.html';
-            } else {
-                loadHistory();
-            }
-        });
-
-
-=======
         // Jalankan fungsi saat halaman dimuat
         window.onload = loadHistory;
 
@@ -355,8 +229,7 @@
             }
         });
         */
->>>>>>> 662722398cd9650d0734c64c533cd3806c14ea45
     </script>
 </body>
-
 </html>
+

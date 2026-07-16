@@ -27,6 +27,8 @@ function tambahNilaiMapel(userScore, favSubjects = []) {
   return finalScores;
 }
 
+// Matching jurusan
+
 // Fungsi mencocokkan karir
 async function matchCareer(userScore) {
   const careers = await Career.find();
@@ -46,7 +48,8 @@ async function matchCareer(userScore) {
 
       for (const key of Object.keys(career.traits)) {
         score += Math.abs(
-          Number(career.traits[key] || 0) - Number(normalizedUser[key] || 0)
+          Number(career.traits[key] || 0) - Number(normalizedUser[key] || 0),
+          Number(career.traits[key] || 0) - Number(normalizedUser[key] || 0),
         );
       }
 
@@ -77,18 +80,17 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // Skor asli asesmen
     const assessmentScores = { ...scores };
-
-    // Skor untuk matching
-    const matchingScores = tambahNilaiMapel(assessmentScores, favSubjects || []);
-
-    // Cari jurusan
+    const matchingScores = tambahNilaiMapel(
+      assessmentScores,
+      favSubjects || [],
+    );
     const careers = await matchCareer(matchingScores);
 
-    const sortedTraits = Object.entries(matchingScores).sort((a, b) => b[1] - a[1]);
-    const hollandCode = sortedTraits[0][0] + sortedTraits[1][0] + sortedTraits[2][0];
-    const dominan = sortedTraits[0][0]; // RIASEC trait yang paling tinggi
+    const sortedTraits = Object.entries(matchingScores).sort(
+      (a, b) => b[1] - a[1],
+    );
+    const hollandCode = sortedTraits[0][0] + sortedTraits[1][0];
 
     if (careers.length === 0) {
       return res.status(404).json({
@@ -97,43 +99,24 @@ router.post("/", async (req, res) => {
       });
     }
 
-    const topMatch = careers[0];
-    const alternatives = careers.slice(1, 3);
-    const careerObj = await Career.findById(topMatch.id);
-    const roadmap = await Roadmap.findOne({
-      cluster: careerObj.cluster,
+    let roadmap = await Roadmap.findOne({
+      cluster: careers[0].cluster,
       hollandCode: hollandCode,
     });
 
-    // -------------------------------------------------------------
-    // BAGIAN BARU: MENYIMPAN HASIL KE DATABASE (HISTORY)
-    // -------------------------------------------------------------
-    await History.create({
-      userId: userId || "guest", // Jika pakai auth, ini bisa diisi UID Firebase
-      dominantStrength: dominan,
-      recommendation: topMatch.name,
-      topMatch: {
-        name: topMatch.name,
-        description: topMatch.description,
-        percentage: topMatch.percentage
-      },
-      alternatives: alternatives, // Menyimpan peringkat 2 dan 3
-      scores: assessmentScores, // Menyimpan skor agar grafik menyala
-      answers: req.body.answers || [] 
-    });
-    // -------------------------------------------------------------
+    if (!roadmap) {
+      roadmap = await Roadmap.findOne({ cluster: careers[0].cluster });
+    }
 
-    // Kembalikan respons ke frontend (assessment.html)
     res.json({
       success: true,
-      topMatch: topMatch,
-      alternatives: alternatives,
+      topMatch: careers[0],
+      alternatives: careers.slice(1, 3),
       scores: assessmentScores,
       hollandCode: hollandCode,
       roadmap: roadmap || null,
       matchingScores: matchingScores,
     });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({
