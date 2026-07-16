@@ -23,7 +23,14 @@ const careerSchema = new mongoose.Schema({
         S: Number,
         E: Number,
         C: Number
+    },
+
+    code: {
+        type: String,
+        required: true
     }
 });
 
+
 module.exports = mongoose.model('Career', careerSchema);
+
