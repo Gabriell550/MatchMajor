@@ -1,71 +1,184 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Match Major</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <style>
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login User - Match Major</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <style>
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    .tab-active {
+      border-bottom: 3px solid #800000;
+      color: #800000;
+    }
+  </style>
 </head>
-
-<body class="bg-gradient-to-br from-[#800000] to-[#FFD700] flex items-center justify-center h-screen">
-
-    <div class="glass-card p-10 rounded-3xl shadow-2xl w-96 text-center border border-white/20">
-        <div class="mb-8">
-            <h1 class="text-4xl font-black text-gray-800">MATCH<span class="text-[#800000]">Major</span></h1>
-            <p class="text-gray-500 mt-2 font-medium">Silakan masuk untuk memulai asesmen</p>
-        </div>
-
-        <button id="google-login"
-            class="w-full bg-white border-2 border-gray-100 text-gray-700 font-bold py-3 rounded-2xl flex items-center justify-center gap-3 hover:border-[#FFD700] hover:shadow-lg transition-all duration-300">
-            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-5 h-5">
-            Masuk dengan Google
-        </button>
-
-        <a href="index.html"
-            class="text-sm text-gray-400 mt-6 block hover:text-[#800000] transition font-semibold">Kembali ke
-            Beranda</a>
+<body class="bg-gradient-to-br from-[#800000] to-[#FFD700] flex items-center justify-center min-h-screen">
+  <div class="glass-card p-10 rounded-3xl shadow-2xl w-full max-w-md text-center border border-white/20">
+    <div class="mb-8">
+      <h1 class="text-4xl font-black text-gray-800">MATCH<span class="text-[#800000]">Major</span></h1>
+      <p class="text-gray-500 mt-2 font-medium">Silakan masuk atau daftar untuk memulai asesmen</p>
     </div>
 
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyA0TKujQ_u9GU9eFJelMuo_ykXA1T0063c",
-            authDomain: "matchmajor-78a97.firebaseapp.com",
-            projectId: "matchmajor-78a97",
-            storageBucket: "matchmajor-78a97.firebasestorage.app",
-            messagingSenderId: "113944926778",
-            appId: "1:113944926778:web:0d4fc483d51fc5640e7303"
-        };
-        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    <div class="flex justify-center gap-2 mb-8">
+      <button id="tab-login" class="px-6 py-3 font-semibold text-gray-700 hover:text-[#800000] transition-all">LOGIN</button>
+      <button id="tab-register" class="px-6 py-3 font-semibold text-gray-700 hover:text-[#800000] transition-all">DAFTAR</button>
+    </div>
 
-        const auth = firebase.auth();
-        const provider = new firebase.auth.GoogleAuthProvider();
-        const btnLogin = document.getElementById('google-login');
+    <div id="panel-login" class="space-y-5">
+      <form id="loginForm" class="space-y-4">
+        <input id="loginEmail" type="email" required
+          class="w-full px-4 py-3 border rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#800000]"
+          placeholder="Email" />
+        <input id="loginPassword" type="password" required
+          class="w-full px-4 py-3 border rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#800000]"
+          placeholder="Password" />
+        <button type="submit"
+          class="w-full bg-[#800000] text-white py-3 rounded-2xl font-bold hover:bg-[#660000] transition-all">
+          Masuk
+        </button>
+      </form>
 
-        btnLogin.addEventListener('click', () => {
-            btnLogin.disabled = true;
-            btnLogin.innerHTML = "Memproses...";
+      <button id="google-login"
+        class="w-full bg-white border-2 border-gray-100 text-gray-700 font-bold py-3 rounded-2xl flex items-center justify-center gap-3 hover:border-[#FFD700] hover:shadow-lg transition-all duration-300"
+        type="button">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-5 h-5">
+        Masuk dengan Google
+      </button>
+    </div>
 
-            auth.signInWithPopup(provider)
-                .then(() => {
-                    // Berhasil login, arahkan ke index.html
-                    window.location.href = 'index.html';
-                })
-                .catch((error) => {
-                    btnLogin.disabled = false;
-                    btnLogin.innerHTML = `<img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5"> Masuk dengan Google`;
-                    alert("Login Gagal: " + error.message);
-                });
-        });
-    </script>
+    <div id="panel-register" class="hidden space-y-5">
+      <form id="registerForm" class="space-y-4">
+        <input id="registerName" type="text" required
+          class="w-full px-4 py-3 border rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#800000]"
+          placeholder="Nama lengkap" />
+        <input id="registerEmail" type="email" required
+          class="w-full px-4 py-3 border rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#800000]"
+          placeholder="Email" />
+        <input id="registerPassword" type="password" required
+          class="w-full px-4 py-3 border rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#800000]"
+          placeholder="Password" />
+        <input id="registerConfirmPassword" type="password" required
+          class="w-full px-4 py-3 border rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#800000]"
+          placeholder="Konfirmasi password" />
+        <button type="submit"
+          class="w-full bg-[#800000] text-white py-3 rounded-2xl font-bold hover:bg-[#660000] transition-all">
+          Daftar
+        </button>
+      </form>
+    </div>
+
+    <a href="index.html"
+      class="text-sm text-gray-400 mt-6 block hover:text-[#800000] transition font-semibold">Kembali ke Beranda</a>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyA0TKujQ_u9GU9eFJelMuo_ykXA1T0063c",
+      authDomain: "matchmajor-78a97.firebaseapp.com",
+      projectId: "matchmajor-78a97",
+      storageBucket: "matchmajor-78a97.appspot.com",
+      messagingSenderId: "113944926778",
+      appId: "1:113944926778:web:0d4fc483d51fc5640e7303"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    const auth = firebase.auth();
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const googleLogin = document.getElementById('google-login');
+    const loginEmail = document.getElementById('loginEmail');
+    const loginPassword = document.getElementById('loginPassword');
+    const registerName = document.getElementById('registerName');
+    const registerEmail = document.getElementById('registerEmail');
+    const registerPassword = document.getElementById('registerPassword');
+    const registerConfirmPassword = document.getElementById('registerConfirmPassword');
+    const tabLogin = document.getElementById('tab-login');
+    const tabRegister = document.getElementById('tab-register');
+    const panelLogin = document.getElementById('panel-login');
+    const panelRegister = document.getElementById('panel-register');
+    let isRegistering = false; // 
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        await auth.signInWithEmailAndPassword(loginEmail.value, loginPassword.value);
+        window.location.href = 'index.html';
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (registerPassword.value !== registerConfirmPassword.value) {
+        alert('Password dan konfirmasi tidak cocok.');
+        return;
+      }
+
+      try {
+        isRegistering = true;
+        await auth.createUserWithEmailAndPassword(registerEmail.value, registerPassword.value);
+        const user = auth.currentUser;
+        if (user) {
+          await user.updateProfile({ displayName: registerName.value });
+          await auth.signOut();
+        }
+
+        alert('Registrasi berhasil. Silakan login.');
+        setTab('login');
+        loginEmail.value = registerEmail.value;
+        loginPassword.value = '';
+        registerForm.reset();
+      } catch (err) {
+        alert(err.message);
+      } finally {
+        isRegistering = false;
+      }
+    });
+
+    googleLogin.addEventListener('click', async () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      try {
+        await auth.signInWithPopup(provider);
+        window.location.href = 'index.html';
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+    auth.onAuthStateChanged((user) => {
+      // Jika user sudah login dan membuka login.html, langsung ke assessment
+      if (user && !isRegistering) {
+        window.location.href = 'index.html';
+      }
+    });
+
+    function setTab(tab) {
+      if (tab === 'login') {
+        panelLogin.classList.remove('hidden');
+        panelRegister.classList.add('hidden');
+        tabLogin.classList.add('tab-active');
+        tabRegister.classList.remove('tab-active');
+      } else {
+        panelLogin.classList.add('hidden');
+        panelRegister.classList.remove('hidden');
+        tabLogin.classList.remove('tab-active');
+        tabRegister.classList.add('tab-active');
+      }
+    }
+
+    tabLogin.addEventListener('click', () => setTab('login'));
+    tabRegister.addEventListener('click', () => setTab('register'));
+    setTab('login');
+  </script>
 </body>
-
 </html>
